@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>ADMIN - Notice Detail</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-8">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Notice</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice-area bg-white pb-130">
+            <div class="container">
+                <div class="notice-info-wrap">
+                    <form th:action="@{/admin_noticedetail}" method="post" th:object="${noticeDTO}">
+                        <input type="hidden" name="adminnoticeid" th:value="*{adminnoticeid}">
+                        <input type="hidden" name="modDate" th:value="*{modDate}">
+                        <table class="table notice-table">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="notice-padding">제목</th>
+                                <td class="notice-info">
+                                    <input type="text" id="admintitle" name="admintitle" th:field="*{admintitle}">
+                                    <span class="text-warning" th:if="${#fields.hasErrors('admintitle')}" th:errors="*{admintitle}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">작성자</th>
+                                <td class="notice-info">
+                                    <input type="text" id="adminwriter" name="adminwriter" th:field="*{adminwriter}" >
+                                    <span class="text-warning" th:if="${#fields.hasErrors('adminwriter')}" th:errors="*{adminwriter}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">공지유형</th>
+                                <td>
+                                    <div class="sidebar-widget update">
+                                        <div class="sidebar-archive-wrap">
+                                            <select th:field="*{admincategory}" name="admincategory">
+                                                <option value="">--공지유형--</option>
+                                                <option value="배송공지" th:selected="${value=='배송공지'}">배송공지</option>
+                                                <option value="상품공지" th:selected="${value=='상품공지'}">상품공지</option>
+                                                <option value="이벤트" th:selected="${value=='이벤트'}">이벤트</option>
+                                                <option value="기타" th:selected="${value=='기타'}">기타</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="text-warning" th:if="${#fields.hasErrors('admincategory')}" th:errors="*{admincategory}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">공지</th>
+                                <td class="notice-info">
+                                    <textarea rows="15" th:field="*{admincontent}" name="admincontent">
+                                        공지내용
+                                    </textarea>
+                                    <span class="text-warning" th:if="${#fields.hasErrors('admincontent')}" th:errors="*{admincontent}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col d-flex justify-content-center">
+                                <div class="notice-button-container">
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <div class="notice-btn">
+                                                    <button type="button" class="btn btn-sm"
+                                                            th:onclick="|location.href='@{/admin_noticelist}'|">목록</button>
+                                                    <button type="submit" class="btn btn-sm">수정</button>
+                                                </div>
+                                                <!--"@{/notice_detail(adminnoticeid=${data.adminnoticeid})}" th:text="${data.admintitle}">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

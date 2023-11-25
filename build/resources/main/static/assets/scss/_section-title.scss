@@ -1,0 +1,101 @@
+/*-------- 05. Section title style ---------*/
+
+.section-title {
+    h2 {
+        font-size: 36px;
+        margin: 0;
+        text-transform: uppercase;
+        @media #{$md-layout} {
+            font-size: 30px;
+        }
+        @media #{$xs-layout} {
+            font-size: 28px;
+        }
+        &.white {
+            color: $white;
+        }
+    }
+    p {
+        color: $white;
+        width: 54%;
+        margin: 11px auto 0;
+        @media #{$lg-layout} {
+            width: 68%;
+        }
+        @media #{$md-layout} {
+            width: 91%;
+        }
+        @media #{$xs-layout} {
+            width: 100%;
+        }
+    }
+}
+
+.section-title-2 {
+    h2 {
+        font-size: 56px;
+        line-height: 1;
+        margin: 0;
+        @media #{$md-layout} {
+            font-size: 45px;
+        }
+        @media #{$xs-layout} {
+            font-size: 30px;
+        }
+    }
+}
+
+.section-title-3 {
+    h2 {
+        font-size: 46px;
+        line-height: 1;
+        letter-spacing: -1.64px;
+        margin: 0;
+        @media #{$md-layout} {
+            font-size: 35px;
+        }
+        @media #{$xs-layout} {
+            font-size: 30px;
+        }
+    }
+    @media #{$lg-layout} {
+        &.mb-100 {
+            margin-bottom: 50px;
+        }
+    }
+    @media #{$md-layout} {
+        &.mb-100 {
+            margin-bottom: 40px;
+        }
+    }
+    @media #{$xs-layout} {
+        &.mb-100 {
+            margin-bottom: 30px;
+        }
+    }
+}
+
+.section-title-4 {
+    h2 {
+        font-size: 32px;
+        line-height: 1;
+        letter-spacing: -1.64px;
+        margin: 0;
+        display: inline-block;
+        transform: translateY(-18px);
+        background-color: $white;
+        padding: 0 35px;
+    }
+    @media #{$md-layout} {
+        &.mb-100 {
+            margin-bottom: 30px;
+        }
+    }
+    @media #{$xs-layout} {
+        &.mb-100 {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+

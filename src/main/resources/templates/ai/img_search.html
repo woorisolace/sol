@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Img Search</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Img Search</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-register-area pb-130">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 offset-lg-2">
+                        <div class="login-register-wrapper">
+                            <div class="tab-content">
+                                <div id="lg1" class="tab-pane active">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form action="#" method="post">
+                                                <input type="file" name="ai_img" placeholder="이미지를 넣어주세요.">
+                                                <div class="button-box text-center">
+                                                    <button type="button" href="/ai_img_result">꿀팁확인</button>&nbsp;&nbsp;
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="lg2" class="tab-pane">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form action="#" method="post">
+                                                <input type="text" name="user-name" placeholder="Username">
+                                                <input type="password" name="user-password" placeholder="Password">
+                                                <input name="user-email" placeholder="Email" type="email">
+                                                <div class="button-box">
+                                                    <button type="submit">Register</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+    </div>
+</div>
+</body>
+</html>

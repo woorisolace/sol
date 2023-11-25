@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>cart</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="breadcrumb-area breadcrumb-padding-6">
+        <div class="container">
+            <div class="breadcrumb-content text-center">
+                <div class="breadcrumb-title">
+                    <h2>Cart Page</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 테이블 시작 부분 -->
+    <div class="cart-area pb-130">
+        <div class="container">
+            <div class="row pb-80">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="cart-table-content">
+                            <div class="table-content table-responsive">
+                                <table>     <!-- 테이블 사이의 간격 줄이기 -->
+                                    <thead>
+                                    <tr>
+                                        <th class="width-thumbnail"></th>
+                                        <th class="width-name">상품명</th>
+                                        <th class="width-price">가격</th>
+                                        <th class="width-quantity">수량</th>
+                                        <th class="width-subtotal">총 금액</th>
+                                        <th class="width-remove"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href="product-details.html"><img src="assets/images/cart/cart-1.jpg" alt=""></a>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5><a href="product-details.html">BAS 바스 초강력 백악관 탈취제 397g 방 화장실 실내 신발장 담배냄새 새집증후군</a></h5>
+                                        </td>
+                                        <td class="product-price"><span class="amount">15,800원</span></td>
+                                        <td class="cart-quality">
+                                            <div class="product-quality">
+                                                <input class="cart-plus-minus-box input-text qty text" name="qtybutton" value="1">      <!-- 상세페이지에 있는 버튼으로 교체 -->
+                                            </div>
+                                        </td>
+                                        <td class="product-total"><span>15,800원</span></td>
+                                        <td class="product-remove"><a href="#"><i class="las la-trash"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href="product-details.html"><img src="assets/images/cart/cart-2.jpg" alt=""></a>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5><a href="product-details.html">BAS 캡슐형 세탁조클리너 6개월분 캡슐세탁조 드럼 통돌이 세탁기 청소 빨래 바스</a></h5>
+                                        </td>
+                                        <td class="product-price"><span class="amount">9,900원</span></td>
+                                        <td class="cart-quality">
+                                            <div class="product-quality">
+                                                <input class="cart-plus-minus-box input-text qty text" name="qtybutton" value="1">  <!-- 상품 수량 변경 버튼으로 수정 -->
+                                            </div>
+                                        </td>
+                                        <td class="product-total"><span>9,900원</span></td>
+                                        <td class="product-remove"><a href="#"><i class="las la-trash"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 사이 여백 -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="cart-shiping-update-wrapper">
+                                    <div class="cart-shiping-update">
+                                        <!-- 여백-->
+                                    </div>
+                                    <div class="cart-clear">    <!-- 효과 적용 되어 있어서 이동이 이상한 곳으로 가는 듯. 수정 필요 -->
+                                        <button th:onclick="|location.href='@{/product/list}'|">쇼핑하기</button>
+                                        <a href="#">장바구니 비우기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 사이 여백 -->
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="cart-calculate-discount-wrap mb-40">
+                        <!-- <h4>Calculate shipping </h4> -->
+                        <div class="calculate-discount-content">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="cart-calculate-discount-wrap mb-40">
+                        <div class="calculate-discount-content">
+                            <div class="input-style">
+                                <div class="cart-shiping-update-wrapper">
+                                    <div class="cart-shiping-update">
+                                        <!-- 좌측 여백 -->
+                                    </div>
+                                    <div class="cart-clear">
+                                        <!-- 좌측 여백 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">  <!-- 합계 부분 -->
+                    <div class="grand-total-wrap">
+                        <div class="grand-total-content">
+                            <div class="grand-total">
+                                <h4>Total <span>$185.00</span></h4> <!-- 장바구니에 담긴 상품 전체의 합계 금액 -->
+                            </div>
+                        </div>
+                        <div class="grand-total-btn">
+                            <a class="btn btn-link" href="/order/order">구매 하기</a>
+                        </div>
+                        <div class="grand-total-btn">
+                            <a class="btn btn-link" href="/order/order">카카오 간편 구매</a>   <!-- 비회원에게 표시 -->
+                        </div>
+                    </div>
+                </div>      <!-- 합계 부분 끝 -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

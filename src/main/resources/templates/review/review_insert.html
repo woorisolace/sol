@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Review Insert</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h3>리뷰 작성</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice-area bg-white pb-130">
+            <div class="container">
+                <div class="notice-info-wrap">
+                    <form action="#">
+                        <table class="table notice-table">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="notice-padding">제목</th>
+                                <td class="notice-info">
+                                    <input type="text" name="qna_title">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">작성자</th>
+                                <td class="notice-info">
+                                    <input type="text" name="userid">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">만족도</th>
+                                <td class="notice-info">
+                                    <select class="form-select">
+                                        <option>== 점수선택 ==</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">후기</th>
+                                <td class="notice-info">
+                                    <textarea rows="15"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">첨부파일1</th>
+                                <td class="notice-info">
+                                    <input type="file" name="qna_img[]">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>개인정보 수집 및 이용 동의</th>
+                                <td>
+                                    <p>■ 개인정보의 수집·이용 목적
+                                        서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적
+                                    </p>
+                                    <p>
+                                        ■ 수집하려는 개인정보의 항목
+                                        이름, 주소, 연락처, 이메일 등
+                                    </p>
+                                    개인 정보 수집 및 이용에 동의하십니까 ?
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
+                                        <label class="form-check-label" for="radio1">예</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
+                                        <label class="form-check-label" for="radio2">아니오</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-3">
+                                <div class="notice-button-container">
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" href="/noticelist">목록</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">등록</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">취소</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

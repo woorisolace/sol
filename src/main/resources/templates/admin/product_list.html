@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>ADMIN - Product List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-8">
+
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>PRODUCT</h2>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="/admin_productlist">상품목록</a>
+                        </li>
+                        <li>
+                            |
+                        </li>
+                        <li>
+                            <a href="/admin_product_insert">상품등록</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="wishlist-area bg-white pb-130">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-8">
+                        <!-- 검색 폼 (searchType 셀렉트 리스트의 값에 따라 다른 셀렉트 리스트를 보이거나 숨기는 부분이 동작)-->
+                        <form th:action="@{/admin_productlist}" method="get" id="searchForm">
+                            <input type="hidden" name="page" value="1">
+                            <div class="input-group mb-3 mt-5">
+                                <!-- 대분류 셀렉트 리스트 -->
+                                <select class="form-select" name="type" id="searchType">
+                                    <option value="" th:selected="${type == ''}">== 선택 ==</option>
+                                    <option value="n" th:selected="${type == 'n'}">상품명</option>
+                                    <option value="nc" th:selected="${type == 'nc'}">상품명+내용</option>
+                                    <option value="ca" th:selected="${type == 'ca'}">카테고리</option>
+                                    <option value="s" th:selected="${type == 's'}">판매상태</option>
+                                </select>
+
+                                <!-- 검색창 -->
+                                <input type="text" class="form-control" name="keyword" id="keyword" th:value="${keyword}" style="display: none;"></input>
+
+                                <!-- 카테고리 셀렉트 리스트 -->
+                                <select class="form-select" name="categoryType" id="categoryType" style="display: none;">
+                                    <option value="" th:selected="${categoryType == ''}">== 선택 ==</option>
+                                    <option th:each="cat : ${T(com.example.clean.Constant.CategoryTypeRole).values()}"
+                                            th:value="${cat.name()}"
+                                            th:text="${cat.getDescription()}"
+                                            th:selected="${cat.name() == categoryType}">
+                                    </option>
+                                </select>
+
+                                <!-- 중분류(판매상태) 셀렉트 리스트 -->
+                                <select class="form-select" name="sellStateOptions" id="sellStateOptions" style="display: none;">
+                                    <option value="" th:selected="${sellsState == ''}">== 선택 ==</option>
+                                    <option value="판매중" th:selected="${sellsState == '판매중'}">판매중</option>
+                                    <option value="판매중지" th:selected="${sellsState == '판매중지'}">판매중지</option>
+                                    <option value="재고없음" th:selected="${sellsState == '재고없음'}">재고없음</option>
+                                </select>
+
+                                <!-- 검색 버튼 -->
+                                <button type="submit" class="btn btn-primary" name="searchButton">검색</button>
+
+                                <!-- 리셋 버튼 -->
+                                <button type="reset" class="btn btn-light" name="searchButton" onclick="resetSearchForm()">다시</button>
+                            </div>
+                        </form>
+
+                        <!-- JavaScript 코드 -->
+                        <script>
+                            function resetSearchForm() {
+                                // 모든 입력 필드를 초기화
+                                document.getElementById('keyword').value = '';
+                                document.getElementById('categoryType').value = '';
+                                document.getElementById('sellStateOptions').value = '';
+
+                                // 검색 유형이 '카테고리'일 때만 카테고리 셀렉트 리스트를 보이도록 함
+                                var selectedValue = document.getElementById('searchType').value;
+                                if (selectedValue === 'ca') {
+                                    document.getElementById('categoryType').style.display = 'block';
+                                } else {
+                                    document.getElementById('categoryType').style.display = 'none';
+                                }
+
+                                // 다른 검색 유형에 대한 초기화 처리 추가
+
+                                // 검색창, 중분류(판매상태), 카테고리 셀렉트 리스트를 제어
+                                if (selectedValue === 's') {
+                                    document.getElementById('sellStateOptions').style.display = 'block';
+                                    document.getElementById('categoryType').style.display = 'none';
+                                    document.getElementById('keyword').style.display = 'none';
+                                } else if (selectedValue === 'ca') {
+                                    document.getElementById('sellStateOptions').style.display = 'none';
+                                    document.getElementById('categoryType').style.display = 'block';
+                                    document.getElementById('keyword').style.display = 'none';
+                                } else {
+                                    document.getElementById('sellStateOptions').style.display = 'none';
+                                    document.getElementById('categoryType').style.display = 'none';
+                                    document.getElementById('keyword').style.display = 'block';
+                                }
+                            }
+
+                            document.getElementById('searchType').addEventListener('change', function () {
+                                resetSearchForm(); // 검색 유형이 변경될 때마다 초기화 함수 호출
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-20"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="wishlist-table-content">
+                            <div class="table-content">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th class="width-price">번호</th>
+                                        <!-- <th class="width-price"></th> -->
+                                        <th class="width-price">상품종류</th>
+                                        <th class="width-price">상품명</th>
+                                        <th class="width-price">소비자가</th>
+                                        <th class="width-price">판매자가</th>
+                                        <th class="width-price">재고수</th>
+                                        <th class="width-price">판매상태</th>
+                                        <th class="width-price">등록일</th>
+                                        <th class="width-price">수정일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="data:${productDTOS}">  <!--반복 영역-->
+                                        <td class="product-name" th:text="${data.productId}">
+                                            <h5>상품번호</h5>
+                                        </td>
+
+                                        <!--
+                                        <td class="product-name">
+                                            <img th:if="${data.imageDTOs[0].imageFile != null}" th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">
+                                            <span th:if="${data.imageDTOs[0].imageFile == null}"></span>
+                                        </td>
+                                        -->
+
+                                        <!-- 카테고리 유형 -->
+                                        <td class="product-name" th:if="${data != null}">
+                                            <div th:if="${data.categoryTypeRole != null}">
+                                                <div th:utext="${#strings.replace(data.categoryTypeRole.description, '\n', '&#10;')}"></div>
+                                            </div>
+                                            <div th:unless="${data.categoryTypeRole != null}"></div>
+                                        </td>
+
+                                        <td class="product-name">
+                                            <h5>
+                                                <a th:href="@{/admin_product_indetail(productId=${data.productId})}" th:text="${data.productName}">상품이름</a>
+                                            </h5>
+                                        </td>
+
+                                        <td class="product-name" th:text="${data.productCost}">
+                                            <h5>소비자가</h5>
+                                        </td>
+
+                                        <td class="product-name" th:text="${data.productPrice}">
+                                            <h5>판매가</h5>
+                                        </td>
+
+                                        <td class="product-name" th:text="${data.productCnt}">
+                                            <h5>상품재고수량</h5>
+                                        </td>
+
+                                        <!-- 판매상태 -->
+                                        <td class="product-name" th:if="${data != null}">
+                                            <div th:if="${data.SellStateRole != null}">
+                                                <div th:utext="${#strings.replace(data.SellStateRole.description, '\n', '&#10;')}"></div>
+                                            </div>
+                                            <div th:unless="${data.SellStateRole != null}"></div>
+                                        </td>
+
+                                        <td class="product-name" th:if="${data.reDate != null}">
+                                            <h5>등록일</h5>
+                                            <span th:text="${#dates.format(data.reDate, 'yyyy-MM-dd')}"></span>
+                                        </td>
+
+                                        <td class="product-name" th:if="${data.modDate != null}">
+                                            <h5>수정일</h5>
+                                            <span th:text="${#dates.format(data.modDate, 'yyyy-MM-dd')}"></span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="pagination-style text-center mt-30"> <!-- 페이지 번호 추가 -->
+                                    <ul>
+                                        <!-- 이전 페이지 -->
+                                        <li th:unless="${currentPage==1}">
+                                            <a th:href="@{/admin_productlist(type=${type}, keyword=${keyword}, page=1)}">처음</a>
+                                        </li>
+                                        <li th:unless="${currentPage==1}">
+                                            <a th:href="@{/admin_productlist(type=${type}, keyword=${keyword}, page=${prevPage})}"> < </a>
+                                        </li>
+                                        <!-- 페이지 번호 -->
+                                        <span th:each="page:${#numbers.sequence(startPage, endPage)}">
+                                            <li th:unless="${currentPage==page}"> <!-- 다른 페이지 -->
+                                                <a th:href="@{/admin_productlist(type=${type}, keyword=${keyword}, page=${page})}" th:text="${page}"></a>
+                                            </li>
+                                            <li th:if="${currentPage==page}"> <!-- 활성화(현재 위치) -->
+                                                <span th:text="${page}"></span>
+                                            </li>
+                                        </span>
+                                        <!-- 다음 페이지 -->
+                                        <li th:unless="${currentPage==lastPage}">
+                                            <a th:href="@{/admin_productlist(type=${type}, keyword=${keyword}, page=${nextPage})}"> > </a>
+                                        </li>
+                                        <li th:unless="${endPage==lastPage}">
+                                            <a th:href="@{/admin_productlist(type=${type}, keyword=${keyword}, page=${lastPage})}">끝</a>
+                                        </li>
+                                    </ul>
+                                </div><!-- 페이지 번호 추가 끝-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

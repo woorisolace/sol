@@ -1,0 +1,174 @@
+/*-------- 24. Login register style ---------*/
+
+.coming-soon-area {
+	height: 1200px;
+	display: flex;
+	align-items: center;
+    @media #{$xx-layout} {
+        height: 1100px;
+    }
+    @media #{$xl-layout} {
+        height: 1100px;
+    }
+    @media #{$lg-layout} {
+        height: 960px;
+    }
+    @media #{$md-layout} {
+        height: 100vh;
+    }
+    @media #{$xs-layout} {
+        height: 100vh;
+    }
+    .coming-soon-content {
+        margin: 345px 0 0;
+        @media #{$xx-layout} {
+            margin: 245px 0 0;
+        }
+        @media #{$xl-layout} {
+            margin: 245px 0 0;
+        }
+        @media #{$lg-layout} {
+            margin: 180px 0 0;
+        }
+        @media #{$md-layout} {
+            margin: 50px 0 0;
+        }
+        @media #{$xs-layout} {
+            margin: 50px 0 0;
+        }
+        h1 {
+            font-size: 100px;
+            color: $white;
+            @media #{$xx-layout} {
+                font-size: 90px;
+            }
+            @media #{$xl-layout} {
+                font-size: 90px;
+            }
+            @media #{$lg-layout} {
+                font-size: 80px;
+            }
+            @media #{$md-layout} {
+                font-size: 65px;
+            }
+            @media #{$xs-layout} {
+                font-size: 33px;
+            }
+            @media #{$sm-layout} {
+                font-size: 45px;
+            }
+        }
+        .timer-style-1 {
+            margin: 41px 0 96px;
+            @media #{$md-layout} {
+                margin: 40px 0 50px;
+            }
+            @media #{$xs-layout} {
+                margin: 40px 0 10px;
+            }
+            > div {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                > .cdown {
+                    margin: 0 53px;
+                    @media #{$md-layout} {
+                        margin: 0 40px;
+                    }
+                    @media #{$xs-layout} {
+                        margin: 0 30px 30px;
+                    }
+                    > span {
+                        font-size: 49px;
+                        color: $white;
+                        display: block;
+                        line-height: 33px;
+                        margin: 0 0 6px;
+                    }
+                    > p {
+                        font-size: 18px;
+                        color: $white;
+                        display: block;
+                        margin: 0;
+                        font-family: inherit;
+                    }
+                }
+            }
+        }
+        .coming-soon-btn {
+            button {
+                font-size: 24px;
+                color: $white;
+                border: 2px solid #E8CCB4;
+                font-family: $proximanova;
+                background-color: transparent;
+                padding: 32px 117px;
+                transition: all .3s ease 0s;
+                @media #{$lg-layout} {
+                    padding: 25px 90px;
+                }
+                @media #{$md-layout} {
+                    padding: 20px 80px;
+                }
+                @media #{$xs-layout} {
+                    font-size: 22px;
+                    padding: 11px 50px;
+                }
+                &:hover {
+                    background-color: $white;
+                    color: $black;
+                }
+            }
+        }
+    }
+}
+
+.coming-soon-social {
+	display: flex;
+	justify-content: center;
+	margin: 234px 0 0;
+    @media #{$xx-layout} {
+        margin: 134px 0 0;
+    }
+    @media #{$xl-layout} {
+        margin: 134px 0 0;
+    }
+    @media #{$lg-layout} {
+        margin: 120px 0 0;
+    }
+    @media #{$md-layout} {
+        margin: 80px 0 0;
+    }
+    @media #{$xs-layout} {
+        margin: 50px 0 0;
+    }
+    a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 36px;
+        border: 1px solid $white;
+        border-radius: 100%;
+        text-align: center;
+        margin: 0 11px;
+        svg {
+            path {
+                fill: $white;
+                transition: all .3s ease 0s;
+            }
+        }
+        &:hover {
+            background-color: $white;
+            svg {
+                path {
+                    fill: $black;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+

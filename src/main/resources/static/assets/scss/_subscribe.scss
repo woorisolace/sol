@@ -1,0 +1,55 @@
+/*-------- 24. Login register style ---------*/
+
+.subscribe-form {
+    form {
+        .mc-form {
+            margin: 0 200px;
+            position: relative;
+            @media #{$lg-layout} {
+                margin: 0 100px;
+            }
+            @media #{$md-layout} {
+                margin: 0 0px;
+            }
+            @media #{$xs-layout} {
+                margin: 0 0px;
+            }
+            input {
+                font-family: $proximanova;
+                font-size: 16px;
+                color: $white;
+                background-color: transparent;
+                border: none;
+                width: 100%;
+                height: 30px;
+                padding: 0px 100px 0 0;
+                border-bottom: 1px solid $white;
+                &::-moz-input-placeholder {
+                    opacity: 1;
+                    color: $white;
+                }
+                &::-webkit-input-placeholder {
+                    opacity: 1;
+                    color: $white;
+                }
+            }
+            .mc-news {
+                display: none;
+            }
+            .clear {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                input {
+                    width: auto;
+                    border-bottom: none;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}
+
+
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notice</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Notice</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--슬로우랩 복사해서 수정 - 우선순위로 수정중-->
+        <div class="notice-area bg-white pb-130"><!--wishlist-area-->
+            <div class="container">
+                <div class="notice-info-wrap">
+                        <table class="table notice-table">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="notice-padding">제목</th>
+                                <td th:text="${noticeDTO.admintitle}"></td>
+                                <input type="hidden" name="adminnoticeid" th:value="${noticeDTO.adminnoticeid}">
+                                <input type="hidden" name="reDate" th:value="${noticeDTO.reDate}">
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">작성자</th>
+                                <td class="notice-info">
+                                    <input type="text" name="adminwriter" th:value="${noticeDTO.adminwriter}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">공지</th>
+                                <td class="notice-info">
+                                    <input type="text" name="userid" value="이벤트" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">공지</th>
+                                <td class="notice-info">
+                                    <textarea rows="15" readonly>
+                                        공지내용
+                                    </textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-3">
+                                <div class="notice-button-container">
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" href="/notice_list">목록</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">이전</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">다음</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

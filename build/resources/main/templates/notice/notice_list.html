@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notice</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title" data-aos="fade-up" data-aos-delay="200">
+                        <h2>Notice</h2>
+                    </div>
+                    <ul data-aos="fade-up" data-aos-delay="300">
+                        <li>
+                            <a href="/noticelist">Notice</a>
+                        </li>
+                        <li>
+                            <a href="/qnalist">Q&A </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="wishlist-area bg-white pb-130">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 ">
+                        <div class="sidebar-widget update">
+                            <div class="sidebar-archive-wrap">
+                                <select>
+                                    <option>-- 카테고리 선택 --</option>
+                                    <option>공지종류</option>
+                                    <option>제목</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sidebar-widget">
+                            <div class="sidebar-search update">
+                                <form class="sidebar-search-form" action="#">
+                                    <input type="text" placeholder="Search">
+                                    <button>
+                                        <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-4"></div>
+                </div>
+            </div>
+
+            <div class="row mb-20"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <form action="#">
+                            <div class="wishlist-table-content">
+                                <div class="table-content">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="width-price">번호</th>
+                                            <th class="width-price">유형</th>     <!-- 신상품공지, 젇책공지, 이벤트공지 -->
+                                            <th class="width-price"> 제목 </th>
+                                            <th class="width-price"> 작성자 </th>
+                                            <th class="width-price"> 작성날짜 </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="data:${noticeDTOS}">
+                                            <td class="product-name">
+                                                <h5 th:text="${data.adminnoticeid}">
+                                                    1
+                                                </h5>
+                                            </td>
+                                            <td th:text="${data.admincategory}">
+                                                        <span th:if="${data.admincategory=='배송공지'}">
+                                                                배송공지
+                                                        </span>
+                                                        <span th:if="${data.admincategory=='상품공지'}">
+                                                                상품공지
+                                                        </span>
+                                                        <span th:if="${data.admincategory=='이벤트'}">
+                                                                이벤트
+                                                        </span>
+                                                        <span th:if="${data.admincategory=='기타'}">
+                                                                기타
+                                                        </span>
+                                            </td>
+                                            <td>
+                                                <a th:href="@{/notice_detail(adminnoticeid=${data.adminnoticeid})}" th:text="${data.admintitle}">
+                                                이용약관 개정안내
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                    <h5 th:text="${data.adminwriter}" >
+                                                        관리자
+                                                    </h5>
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                    <h5 th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}">
+                                                        23-11-15
+                                                    </h5>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                                        <ul class="pagination">
+                                            <!--startPage가 1번 페이지가 아니면 나타낸다.-->
+                                            <li class="page-item" th:unless="${startPage==1}"> <!--첫페이지 이동-->
+                                                <a class="page-link" th:href="@{/notice_list(page=1)}">처음</a>
+                                            </li>
+
+                                            <span class="page-item" th:unless="${currentPage==1}"> <!--이전페이지 이동-->
+                                                <a class="page-link" th:href="@{/notice_list(page=${prevPage})}"><</a>
+                                            </span>
+
+                                            <span th:each="page:${#numbers.sequence(startPage, endPage)}"> <!--화면에 해당 페이지번호-->
+                                                <li class="page-item" th:unless="${page==currentPage}"><!--현재페이지가 아니면-->
+                                                    <a class="page-link" th:href="@{/notice_list(page=${page})}">
+                                                        [[${page}]]
+                                                    </a>
+                                                </li>
+
+                                                <li class="page-item active" th:if="${page==currentPage}"><!--현재페이지 이면-->
+                                                    <a class="page-link" href="#">
+                                                        [[${page}]]
+                                                    </a>
+                                                </li>
+                                            </span>
+
+                                            <span class="page-item" th:unless="${currentPage==lastPage}"> <!--다음페이지 이동-->
+                                                <a class="page-link" th:href="@{/notice_list(page=${nextPage})}">></a>
+                                            </span>
+
+                                            <li class="page-item" th:unless="${endPage==lastPage}"> <!--끝페이지 이동-->
+                                                <a class="page-link" th:href="@{/notice_list(page=${lastPage})}">끝</a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- 페이지 번호 추가 끝-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

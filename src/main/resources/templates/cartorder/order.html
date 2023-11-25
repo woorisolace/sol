@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+
+
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Order</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-main-area pb-130">
+            <div class="container">
+                <div class="checkout-wrap pt-30">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="billing-info-wrap mr-50">
+                                <h3><b>주문 정보</b></h3>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="billing-info mb-20">
+                                            <label>주문자 <abbr class="required" title="required">*</abbr></label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="billing-info mb-20">
+                                            <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="billing-info mb-20">
+                                            <label>버튼 <abbr class="required" title="required">*</abbr></label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="billing-info mb-20">
+                                            <label>주소 <abbr class="required" title="required">*</abbr></label>
+                                            <input class="billing-address" placeholder="주소" type="text">
+                                            <input placeholder="상세주소" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="billing-info mb-20">
+                                            <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="billing-info mb-20">
+                                            <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="checkout-account mt-25">
+                                    <input class="checkout-toggle" type="checkbox">
+                                    <span>다른 배송지로 주문</span>
+                                </div>
+
+                                <div class="different-address open-toggle mt-30">
+                                    <div class="row">
+
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>수령인</label>
+                                                <input type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="billing-info mb-20">
+                                                <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                                                <input type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="billing-info mb-20">
+                                                <label>버튼 <abbr class="required" title="required">*</abbr></label>
+                                                <input type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>주소 <abbr class="required" title="required">*</abbr></label>
+                                                <input class="billing-address" placeholder="주소" type="text">
+                                                <input placeholder="상세주소" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>전화번호</label>
+                                                <input type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="additional-info-wrap">
+                                    <label>배송 요청 사항</label>
+                                    <textarea placeholder="문 앞에 놓아주세요." name="message"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="your-order-area">
+                                <h3><b>주문 정보</b></h3>
+                                <div class="your-order-wrap gray-bg-4">
+                                    <div class="your-order-info-wrap">
+                                        <div class="your-order-info">
+                                            <ul>
+                                                <li>상품 <span>금액</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="your-order-middle">
+                                            <ul>
+                                                <li>제품명 X 1 <span>32,900 </span></li>
+                                                <li>제품명 X 1 <span>12,900 </span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="your-order-info order-subtotal">
+                                            <ul>
+                                                <li>금액 <span>45,800원 </span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="your-order-info order-subtotal">
+                                            <ul>
+                                                <li>배송비 <span>3,000원 </span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="your-order-info order-total">
+                                            <ul>
+                                                <li><b>총 금액 </b><span><b>48,800원 </b></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <div class="pay-top sin-payment">
+                                            <input id="payment_method_1" class="input-radio" type="radio" value="cheque" checked="checked" name="payment_method">
+                                            <label for="payment_method_1"> 무통장입금 </label>
+                                            <div class="payment-box payment_method_bacs">
+                                                <p>국민은행 000000-00-000000 | 농협 000000-00-000000 | 신한은행 000000-00-000000 | 기업은행 000000-00-000000 </p>
+                                            </div>
+                                        </div>
+                                        <div class="pay-top sin-payment">
+                                            <input id="payment-method-2" class="input-radio" type="radio" value="cheque" name="payment_method">
+                                            <label for="payment-method-2"> 휴대폰 결제 </label>
+                                            <div class="payment-box payment_method_bacs">
+                                                <p>휴대폰 번호 인증하기</p>
+                                            </div>
+                                        </div>
+                                        <div class="pay-top sin-payment sin-payment-3">
+                                            <input id="payment-method-4" class="input-radio" type="radio" value="cheque" name="payment_method">
+                                            <label for="payment-method-4"> 카드결제 <img alt="" src="assets/images/icon-img/payment.png"><a href="#">What is PayPal?</a></label>
+                                            <div class="payment-box payment_method_bacs">
+                                                <p>kb국민은행 | 신한카드 | 카드 | 카드 | 카드 | 카드 </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Place-order">
+                                    <a href="/orderdetail">주문하기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 테이블 끝 부분 -->
+    </div>
+</div>
+</body>
+</html>

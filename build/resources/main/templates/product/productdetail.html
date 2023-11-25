@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-7">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title breadcrumb-title-responsive">
+                        <h2 data-aos="fade-up" data-aos-delay="200">Clean Product</h2>
+                    </div>
+                    <ul data-aos="fade-up" data-aos-delay="300">
+                        <li>
+                            <a href="index.html">All</a>
+                        </li>
+                        <li>
+                            <a href="index.html">Living</a>
+                        </li>
+                        <li>
+                            <a href="shop.html">Kitchen</a>
+                        </li>
+                        <li>
+                            <a href="shop.html">Restroom</a>
+                        </li>
+                        <li>
+                            <a href="shop.html">sale</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product-details-area section-padding-lr-2 pb-115">
+            <div class="container-fluid">
+                <div class="back-to-shop" data-aos="fade-up" data-aos-delay="200">
+                    <a href="/productlist"><img class="injectable" src="assets/images/icon-img/arrow-left-6.svg" alt=""> Back to Shop</a>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="product-details-tab" data-aos="fade-up" data-aos-delay="300">
+                            <div class="pro-dec-big-img-slider">
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="assets/images/product-details/b-large-1.png">
+                                            <img src="assets/images/product-details/large-1.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="assets/images/product-details/b-large-2.png">
+                                            <img src="assets/images/product-details/large-2.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="assets/images/product-details/b-large-3.png">
+                                            <img src="assets/images/product-details/large-3.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="assets/images/product-details/b-large-4.png">
+                                            <img src="assets/images/product-details/large-4.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="assets/images/product-details/b-large-2.png">
+                                            <img src="assets/images/product-details/large-2.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-dec-slider-small product-dec-small-style1">
+                                <div class="product-dec-small active">
+                                    <img src="assets/images/product-details/small-1.png" alt="">
+                                </div>
+                                <div class="product-dec-small">
+                                    <img src="assets/images/product-details/small-2.png" alt="">
+                                </div>
+                                <div class="product-dec-small">
+                                    <img src="assets/images/product-details/small-3.png" alt="">
+                                </div>
+                                <div class="product-dec-small">
+                                    <img src="assets/images/product-details/small-4.png" alt="">
+                                </div>
+                                <div class="product-dec-small">
+                                    <img src="assets/images/product-details/small-2.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--상품설명-->
+                    <div class="col-lg-5">
+                        <div class="product-details-content product-details-mrg-left">
+                            <h2 data-aos="fade-up" data-aos-delay="300">[[${productName}]]</h2>
+                            <p data-aos="fade-up" data-aos-delay="500">In elit risus, volutpat sed vestibulum sit amet, bibendum in lorem. Etiam aliquet convallis nibh at tempus. Proin gravida tincidunt egestas. Curabitur porta nibh ac enim semper, vitae pretium ante sollicitudin.</p>
+                            <hr><!--수평선-->
+                            <!--data-aos="fade-up" 스크롤될 때 화면에서 아래로 나타남, data-aos-delay="400" 요소가 나타나기 전에 0.4초 동안 대기-->
+                            <div class="product-details-price" data-aos="fade-up" data-aos-delay="400">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                    <tr class="product-consumer-price">
+                                        <th scope="row">소비자가</th>
+                                        <td>35,000원</td>
+                                    </tr>
+                                    <tr class="product-price">
+                                        <th scope="row">판매가</th>
+                                        <td>18,900원</td>
+                                    </tr>
+                                    <tr class="product-delivery-fee">
+                                        <th scope="row">배송비</th>
+                                        <td>3,000원 (50,000원 이상 구매 시 무료)</td>
+                                    </tr>
+                                    <tr class="horizontal-line">
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">옵션선택</th>
+                                        <td>
+                                            <div class="product-details-size clearfix">
+                                                <select class="nice-select nice-select-style-1">
+                                                    <option>Select Option</option>
+                                                    <option>X</option>
+                                                    <option>M</option>
+                                                    <option>S</option>
+                                                    <option>XL</option>
+                                                    <option>XXL</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="product-details-quality-cart" data-aos="fade-up" data-aos-delay="200">
+                                <div class="product-quality">
+                                    <input class="cart-plus-minus-box input-text qty text" name="qtybutton" value="1">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="product-details-purchase" data-aos="fade-up" data-aos-delay="200">
+                                        <div class="product-details-purchase-btn">
+                                            <a href="#">장바구니</a>
+                                        </div>
+                                        <div class="product-details-purchase-btn">
+                                            <a href="#">구매하기</a>
+                                        </div>
+                                        <div class="product-details-purchase-btn">
+                                            <a href="#">카카오 구매</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-details-wishlist-compare" data-aos="fade-up" data-aos-delay="300">
+                            <div class="product-details-wishlist">
+                                <a href="#">
+                                    <img class="injectable" src="assets/images/icon-img/heart-2.svg" alt="">
+                                    Add to wishlist
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 본문 시작 -->
+    <div class="description-review-area pb-180 border-bottom-1 ">
+        <div class="container">
+            <div class="description-review-wrapper">
+                <div class="tab-style-2 nav mb-70" data-aos="fade-up" data-aos-delay="200">
+                    <a class="active" href="#des-details1" data-bs-toggle="tab">상품 상세 정보</a>
+                    <a href="#des-details2" data-bs-toggle="tab" class="">상품구매안내</a>
+                    <a href="#des-details3" data-bs-toggle="tab" class="">상품사용후기</a>        <!-- 배지로 수량 표시 -->
+                    <a href="#des-details4" data-bs-toggle="tab">상품 Q&A</a>        <!-- 배지로 수량 표시 -->
+                </div>
+
+                <div class="tab-content">
+                    <div id="des-details1" class="tab-pane active">     <!-- 상품 상세 정보 -->
+                        <div class="product-description-wrapper">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="pro-description-banner" data-aos="fade-up" data-aos-delay="300">
+                                        <img src="assets/images/product-details/pro-details-banner.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="pro-description-content" data-aos="fade-up" data-aos-delay="400">
+                                        <h2>We work with passion</h2>
+                                        <p>Duis efficitur gravida tincidunt. Nam sodales vel odio at sollicitudin. Vestibulum sed rutrum nisl. Nulla diam arcu, facilisis nec blandit non, interdum et orci.</p>
+                                        <p>Duis efficitur gravida tincidunt. Nam sodales vel odio at sollicitudin. Vestibulum sed rutrum nisl. Nulla diam arcu, facilisis nec blandit non, interdum et orci. Nam aliquam lorem vitae risus molestie convallis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="des-details2" class="tab-pane">        <!-- 상품 구매 안내 -->
+                        <div class="specification-wrap table-responsive">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="width1">Brands</td>
+                                    <td>Airi, Brand, Draven, Skudmart, Yena</td>
+                                </tr>
+                                <tr>
+                                    <td class="width1">Color</td>
+                                    <td>Blue, Gray, Pink</td>
+                                </tr>
+                                <tr>
+                                    <td class="width1">Size</td>
+                                    <td>L, M, S, XL, XXL</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="des-details3" class="tab-pane">        <!-- 상품 사용 후기 -->
+                        <div class="review-wrapper">
+                            <h3>1 review for Sleeve Button Cowl Neck</h3>
+                            <div class="single-review">
+                                <div class="review-img">
+                                    <img src="assets/images/product-details/review-1.jpg" alt="">
+                                </div>
+                                <div class="review-content">
+                                    <div class="review-rating">
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-half.svg" alt=""></a>
+                                        <a class="gray" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                    </div>
+                                    <h5><span>HasTech</span> - April 29, 2020</h5>
+                                    <p>Donec accumsan auctor iaculis. Sed suscipit arcu ligula, at egestas magna molestie a. Proin ac ex maximus, ultrices justo eget, sodales orci. Aliquam egestas libero ac turpis pharetra, in vehicula lacus scelerisque</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="des-details4" class="tab-pane">        <!-- 상품 Q&A -->
+                        <div class="vendor-info-content">
+                            <h3>Vendor Information</h3>
+                            <ul>
+                                <li><b>Store Name:</b>HasTech Fashion </li>
+                                <li> <b>Vendor:</b> HasTech Fashion</li>
+                                <li><b>Address:</b> PO Box 16122 Collins Street West <br>Melbourne Victoria </li>
+                                <li class="rating"><span><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></span>5.00 rating from 1 review</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 연관상품 -->
+    <div class="related-product section-padding-lr-1 pb-100">
+        <div class="container-fluid">
+            <div class="section-title-4 mb-100 text-center">
+                <h2>Related Products</h2>
+            </div>
+            <div class="related-product-active">
+                <div class="product-plr-1" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-4">
+                            <a href="product-details.html">
+                                <img class="default-img" src="assets/images/product/product-5.png" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3><a href="product-details.html">VERTICAL QUILTED OVERSHIRT</a></h3>
+                            <div class="product-price">
+                                <span>$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-plr-1" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-4">
+                            <a href="product-details.html">
+                                <img class="default-img" src="assets/images/product/product-6.png" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3><a href="product-details.html">KNIT TECHNICAL FABRIC SNEAKERS</a></h3>
+                            <div class="product-price">
+                                <span>$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-plr-1" data-aos="fade-up" data-aos-delay="400">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-4">
+                            <a href="product-details.html">
+                                <img class="default-img" src="assets/images/product/product-7.png" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3><a href="product-details.html">BOILED WOOL SWEATER</a></h3>
+                            <div class="product-price">
+                                <span>$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="product-plr-1" data-aos="fade-up" data-aos-delay="500">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-4">
+                            <a href="product-details.html">
+                                <img class="default-img" src="assets/images/product/product-8.png" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3><a href="product-details.html">PLUSH BALLOON SLEEVE DRESS</a></h3>
+                            <div class="product-price">
+                                <span>$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-plr-1">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-4">
+                            <a href="product-details.html">
+                                <img class="default-img" src="assets/images/product/product-4.png" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3><a href="product-details.html">OVERSIZED HOODED SWEATSHIRT</a></h3>
+                            <div class="product-price">
+                                <span>$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="23px" height="9px" viewBox="0 0 23 9" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="compare" transform="translate(0.5 0.5)">
+    <path d="M0 0.5L9 0.5" transform="translate(0 3.5)" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" />
+    <path d="M0 8L4 4L0 0" transform="translate(5 0)" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" stroke-linecap="square" />
+    <path d="M9 0.5L0 0.5" transform="translate(13 3.5)" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" />
+    <path d="M4 8L0 4L4 0" transform="translate(13 0)" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" stroke-linecap="square" />
+  </g>
+</svg>

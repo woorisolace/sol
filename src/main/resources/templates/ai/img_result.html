@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Img Result</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Img Result</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-register-area pb-130">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 offset-lg-2">
+                        <div class="login-register-wrapper">
+                            <div class="tab-content">
+                                <div id="lg1" class="tab-pane active">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form action="#" method="post">
+                                                <input type="image" name="ai_image_result" placeholder="ai_image_result">
+                                                <input type="text" name="tip" placeholder="청소꿀팁">
+                                                <div class="button-box text-center">
+                                                    <button type="button" href="/ai_img_search">다시</button>&nbsp;&nbsp;
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="lg2" class="tab-pane">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form action="#" method="post">
+                                                <input type="text" name="user-name" placeholder="Username">
+                                                <input type="password" name="user-password" placeholder="Password">
+                                                <input name="user-email" placeholder="Email" type="email">
+                                                <div class="button-box">
+                                                    <button type="submit">Register</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 연관상품 -->
+        <div class="related-product section-padding-lr-1 pb-100">
+            <div class="container-fluid">
+                <div class="section-title-4 mb-100 text-center">
+                    <h2>Related Products</h2>
+                </div>
+                <div class="related-product-active">
+                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="200">
+                        <div class="product-wrap">
+                            <div class="product-img img-zoom mb-4">
+                                <a href="product-details.html">
+                                    <img class="default-img" src="assets/images/product/product-5.png" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                    <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                    <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3><a href="product-details.html">VERTICAL QUILTED OVERSHIRT</a></h3>
+                                <div class="product-price">
+                                    <span>$39.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="300">
+                        <div class="product-wrap">
+                            <div class="product-img img-zoom mb-4">
+                                <a href="product-details.html">
+                                    <img class="default-img" src="assets/images/product/product-6.png" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                    <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                    <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3><a href="product-details.html">KNIT TECHNICAL FABRIC SNEAKERS</a></h3>
+                                <div class="product-price">
+                                    <span>$39.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="400">
+                        <div class="product-wrap">
+                            <div class="product-img img-zoom mb-4">
+                                <a href="product-details.html">
+                                    <img class="default-img" src="assets/images/product/product-7.png" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                    <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                    <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3><a href="product-details.html">BOILED WOOL SWEATER</a></h3>
+                                <div class="product-price">
+                                    <span>$39.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="500">
+                        <div class="product-wrap">
+                            <div class="product-img img-zoom mb-4">
+                                <a href="product-details.html">
+                                    <img class="default-img" src="assets/images/product/product-8.png" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                    <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                    <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3><a href="product-details.html">PLUSH BALLOON SLEEVE DRESS</a></h3>
+                                <div class="product-price">
+                                    <span>$39.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-plr-1">
+                        <div class="product-wrap">
+                            <div class="product-img img-zoom mb-4">
+                                <a href="product-details.html">
+                                    <img class="default-img" src="assets/images/product/product-4.png" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="injectable" src="assets/images/icon-img/eye.svg" alt=""></button>
+                                    <button title="Add To Cart"><img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""></button>
+                                    <button title="Wishlist"><img class="injectable" src="assets/images/icon-img/heart.svg" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3><a href="product-details.html">OVERSIZED HOODED SWEATSHIRT</a></h3>
+                                <div class="product-price">
+                                    <span>$39.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

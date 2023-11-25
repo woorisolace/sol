@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Member List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>MEMBER</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/admin_memberlist">회원목록</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a href="/admin_memberorderlist">주문내역</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a href="#">교환/환불</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">   <!-- 나중에 위아래 여백 넓히고, 칸 사이 간격 좁히기 -->
+        <div class="row justify-content-center">
+          <div class="col-lg-7"></div>
+          <div class="col-lg-3">
+            <div class="sidebar-widget update">
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>제품명</option>
+                  <option>아이디</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="sidebar-widget">
+              <div class="sidebar-search update">
+                <form class="sidebar-search-form" action="#">
+                  <input type="text" placeholder="Search">
+                  <button>
+                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-price">회원아이디</th>
+                      <th class="width-price">제품명</th>
+                      <th class="width-price">결제금액</th>
+                      <th class="width-price">주문날짜</th>
+                      <th class="width-price">진행상황</th>   <!-- 주문완료, 결제완료, 배송중, 배송완료, 구매확정, 취소(환불), 교환 -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="product-name">
+                        <h5>1</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>아이디</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>세탁조 클리너</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>19,900</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>23-11-15</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>결제완료</h5>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                    <ul>
+                      <li><a href="#"><</a></li>
+                      <li><a class="active" href="#">01</a></li>
+                      <li><a href="#">02</a></li>
+                      <li><a href="#">03</a></li>
+                      <li><a href="#">04</a></li>
+                      <li><a href="#">05</a></li>
+                      <li><a href="#">></a></li>
+                    </ul>
+                  </div><!-- 페이지 번호 추가 끝-->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

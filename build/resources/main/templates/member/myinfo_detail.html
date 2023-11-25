@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MyInfo Detail</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-6">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>My Page</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/mypage">My</a>
+            </li>
+            <li>
+              <a href="/myinfo_detail">나의 정보</a>
+            </li>
+            <li>
+              <a href="/member_oderlist">구매 내역</a>
+            </li>
+            <li>
+              <a href="/myreviewlist">리뷰 내역</a>
+            </li>
+            <li>
+              <a href="/mylikelist">관심 상품</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-area bg-white pb-130">
+      <div class="container">
+        <div class="notice-info-wrap">
+          <form action="#">
+            <h3 class="special-h3">내 정보</h3>
+            <table class="table notice-table">
+              <tbody>
+              <tr>
+                <th scope="row" class="notice-padding">아이디</th>
+                <td class="notice-info">
+                  <input type="text" name="qna_title" readonly>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">닉네임</th>
+                <td class="notice-info">
+                  <input type="text" name="userid" readonly>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">이름</th>
+                <td class="notice-info">
+                  <input type="text" name="userid">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">주소</th>
+                <td class="notice-info">
+                  <!-- 하단 주소 및 상세 주소 입력 칸 -->
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <input type="text" name="address" placeholder="우편번호">
+                    </div>
+                    <div class="col-sm-9"></div>
+                  </div>
+                  <!-- 하단 주소 및 상세 주소 입력 칸 -->
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <input type="text" name="address" placeholder="주소">
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" name="detail-address" placeholder="상세 주소">
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">휴대전화</th>
+                <td class="notice-info">
+                  <input type="text" name="userid">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">이메일</th>
+                <td class="notice-info">
+                  <input type="text" name="userid">
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <div class="notice-button-container justify-content-center">
+                  <div class="notice-content">
+                    <div class="notice-btn-date-wrap list-btn">
+                      <div class="notice-btn">
+                        <a class="btn btn-outline-primary" href="/myinfo_update">수정</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-outline-primary" href="/mypage">목록</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>
