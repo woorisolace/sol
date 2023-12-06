@@ -53,7 +53,7 @@ public class OrderController {
     model.addAttribute("productDTO", productDTO);
     log.info("Controller_상품 번호 확인완료: {}", productDTO.getProductId());
 
-
+    //구매 수량
     model.addAttribute("productNum",productNum);
 
 
@@ -124,6 +124,7 @@ public class OrderController {
     redirectAttributes.addFlashAttribute("orderInfoId", resultOrderInfoDTO.getOrderId());
     redirectAttributes.addFlashAttribute("userId", memberDTO.getEmail());
     redirectAttributes.addFlashAttribute("productId", productId);
+    redirectAttributes.addFlashAttribute("productDTO",productDTO);
 
     return "redirect:/orderSuccess";
   }
@@ -134,6 +135,7 @@ public class OrderController {
   @GetMapping("/orderSuccess")
   public String getOrderSuccess(Authentication auth,
                                 Model model,
+                                ProductDTO productDTO,
                                 HttpSession session) throws Exception {
 
 
@@ -145,7 +147,7 @@ public class OrderController {
 
     // 구매 정보를 페이지에 전달
     model.addAttribute("orderDTO", orderInfoDTO);
-
+    model.addAttribute("productDTO",productDTO);
     return "cartorder/orderSuccess";
   }
 

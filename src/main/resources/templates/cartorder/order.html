@@ -149,7 +149,7 @@
                                                 <ul>
                                                     <li>
                                                         <span class="product-left" th:text="${product.productName}"></span>
-                                                        X<span class="product-right" th:text="${productNum}"></span>
+                                                        X<span class="product-right" th:text="${productNum}" th:value="${productNum}"></span>
                                                         <span class="product-right" th:text="${product.productPrice}"></span>
 <!--                                                        <span class="product-right" th:text="${product.productPrice * product.productNum}"></span>-->
                                                     </li>
