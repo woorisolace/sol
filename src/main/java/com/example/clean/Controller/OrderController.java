@@ -80,6 +80,7 @@ public class OrderController {
 
     model.addAttribute("productId", productId);
     model.addAttribute("orderDTO", orderDTO);
+
     log.info("주문 양식 조회 완료");
 
     System.out.println("이메일"+orderDTO.getUserEntity().getEmail());
