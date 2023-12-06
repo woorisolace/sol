@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Review List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-6">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>My Page</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/mypage">My</a>
+            </li>
+            <li>
+              <a href="/myinfo_detail">나의 정보</a>
+            </li>
+            <li>
+              <a href="/member_oderlist">구매 내역</a>
+            </li>
+            <li>
+              <a href="/myreviewlist">리뷰 내역</a>
+            </li>
+            <li>
+              <a href="/mylikelist">관심 상품</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="blog-wrap">
+              <div class="blog-content">
+                <div class="blog-btn-date-wrap right-btn">
+                  <div class="blog-btn">    <!-- 버튼 선택 했을 때 색상 변경 효과 넣으면 좋을 듯 -->
+                    <a class="btn btn-outline-primary" href="blog-details.html">1개월</a>&nbsp;&nbsp;
+                    <a class="btn btn-outline-primary" href="blog-details.html">3개월</a>&nbsp;&nbsp;
+                    <a class="btn btn-outline-primary" href="blog-details.html">6개월</a>&nbsp;&nbsp;
+                    <a class="btn btn-outline-primary" href="blog-details.html">1년</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-outline-primary" href="blog-details.html">날짜입력버튼</a>&nbsp;&nbsp;-
+                    <a class="btn btn-outline-primary" href="blog-details.html">날짜입력버튼</a>&nbsp;&nbsp;
+                    <a class="btn btn-dark" href="blog-details.html">조회하기</a>&nbsp;&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2"></div>
+        </div>
+      </div>
+      <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-thumbnail"></th>
+                      <th class="width-price"> 상품정보 </th>
+                      <th class="width-price"> 주문일자 </th>
+                      <th class="width-price"> 주문금액(수량) </th>
+                      <th class="width-price"> 리뷰작성 </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="product-name">
+                        <h5><a href="product-details.html">1</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="product-details.html">제품썸네일</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="product-details.html">상품정보</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="product-details.html">주문일자</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="product-details.html">주문금액(수량)</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="/reviewinsert">리뷰작성 버튼</a></h5>   <!-- 작성 완료하면 작성 완료 표시로 변경 -->
+                      </td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                  <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                    <ul>
+                      <li><a href="#"><</a></li>
+                      <li><a class="active" href="#">01</a></li>
+                      <li><a href="#">02</a></li>
+                      <li><a href="#">03</a></li>
+                      <li><a href="#">04</a></li>
+                      <li><a href="#">05</a></li>
+                      <li><a href="#">></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

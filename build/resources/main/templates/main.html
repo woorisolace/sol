@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="slider-area">
+            <div class="slider-active-1 nav-style-1">
+                <div
+                    class="single-slider-wrap slider-height-1 custom-d-flex custom-align-item-center single-animation-wrap">
+                    <div class="slider-img">
+                        <img src="assets/images/slider/main_01.png" alt="">
+                    </div>
+                    <div class="slider-content slider-animated-1">
+                        <h3 class="animated">BEST PRODUCT</h3>
+                        <h1 class="animated">Popular <br> Item</h1>
+                        <div class="btn-style">
+                            <a class="btn btn-outline-primary slider-btn animated" th:href="@{/productlist}">Shop
+                                now</a>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div
+                    class="single-slider-wrap slider-height-1 custom-d-flex custom-align-item-center single-animation-wrap">
+                    <div class="slider-img">
+                        <img src="assets/images/slider/main_02.png" alt="">
+                    </div>
+                    <div class="slider-content slider-animated-1">
+                        <h3 class="animated">Space Cleaning</h3>
+                        <h1 class="animated">Cleaning <br> Supplies</h1>
+                        <div class="btn-style">
+                            <a class="btn btn-outline-primary slider-btn animated" href="product-details.html">Shop
+                                now</a>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <div
+                    class="single-slider-wrap slider-height-1 custom-d-flex custom-align-item-center single-animation-wrap">
+                    <div class="slider-img">
+                        <img src="assets/images/slider/main_03.png" alt="">
+                    </div>
+                    <div class="slider-content slider-animated-1">
+                        <h3 class="animated">By space</h3>
+                        <h1 class="animated">Cleaning <br> Tip</h1>
+                        <div class="btn-style">
+                            <a class="btn btn-outline-primary slider-btn animated" th:href="@{/ai_img_search}">
+                                Check </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-area section-padding-1">
+            <div class="section-title st-mb-145 text-center">
+                <h2 data-aos="fade-up" data-aos-delay="200">Introduc Brand</h2>
+            </div>
+            <div class="trend-product-wrap">
+                <div class="container-fluid p-0">
+                    <div class="product-img-position">
+                        <img src="assets/images/product/solace-brand.png" alt="">
+                    </div>
+                    <div class="row gx-0">
+                        <div class="offset-lg-6 col-lg-6">
+                            <div class="trend-product-content">
+                                <h2 data-aos="fade-up" data-aos-delay="200">Solace</h2>
+                                <p data-aos="fade-up" data-aos-delay="300">
+                                    We think for your happiness, for your comfort. We are different. We provide you with informative information and something special. We will continue to think and work hard so that we can help you and be happy.
+                                </p>
+                                <!-- 브랜드 소개 버튼
+                                <div class="btn-style" data-aos="fade-up" data-aos-delay="400">
+                                    <a class="btn btn-outline-primary animated" href="product-details.html">More</a>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        &lt;!&ndash; Best Product &ndash;&gt;-->
+<!--        <div class="padding-54-row-col">-->
+<!--            <div class="row">-->
+<!--                &lt;!&ndash; 반복문을 통해 bestProducts를 순회하며 상품 정보를 표시하는 부분 &ndash;&gt;-->
+<!--                <h2>Best Product</h2>-->
+<!--                &lt;!&ndash; 상품 목록 순회 &ndash;&gt;-->
+<!--                <div th:each="bestProduct:${bestProducts}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75">-->
+<!--                    <div class="product-wrap" data-aos="fade-up">-->
+<!--                        <div class="product-img img-zoom mb-4">-->
+<!--                            <a th:href="@{/product/{productId}(productId=${bestProduct.productId})}">-->
+<!--                                &lt;!&ndash; 대표 이미지를 표시하도록 수정 &ndash;&gt;-->
+<!--                            <img class="default-img" th:src="|/images/item/@{${bestProduct.imageDTOs?.isEmpty() ? 'default-image.jpg' : bestProduct.imageDTOs[0]?.imageFile}}|" width="600" height="300">-->
+<!--                            </a>-->
+<!--                            <div class="product-action-wrap">-->
+<!--                                <button title="Add To Cart">-->
+<!--                                    <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />-->
+<!--                                </button>-->
+<!--                                <button title="Wishlist">-->
+<!--                                    <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="product-content text-center">-->
+<!--                            <h3>-->
+<!--                                &lt;!&ndash; 상품 이름 표시 &ndash;&gt;-->
+<!--                                <a th:href="@{/product/{productId}(productId=${bestProduct.productId})}" th:text="${bestProduct.productName}" />-->
+<!--                            </h3>-->
+<!--                            <div class="product-price">-->
+<!--                                &lt;!&ndash; 가격을 적절한 방식으로 표시 &ndash;&gt;-->
+<!--                                <span th:text="${bestProduct.productPrice}" />-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+    </div>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

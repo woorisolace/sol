@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!-- header 영역 -->
+<div th:fragment="header">
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark"> <!-- 최상단 카테고리 -->
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/admin_memberlist' ? 'active' : ''}" href="/admin_memberlist">회원관리</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/admin_productlist' ? 'active' : ''}" href="/admin_productlist">상품관리</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/admin_noticelist' ? 'active' : ''}" href="/admin_noticelist">공지사항</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '#' ? 'active' : ''}" href="#">리뷰관리</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '#' ? 'active' : ''}" href="#">문의사항</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- header 영역 끝 -->
+</body>
+
+</html>

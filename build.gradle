@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '2.7.17'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //보안인증
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //타임리프에 보안인증
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    //타임리프
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //검증
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //웹개발
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //룸북
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //유틸리티
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //데이터베이스
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    //서버
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    //테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //===== 사용자 추가 =====
+    //테스트에서 룸북 사용 가능
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    //java8time 타임리프 추가 (메이븐에서 참고)
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
+
+    //Thymeleaf - layout
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    //mapper 생성 (맵핑. DTO- Entity 사이의 변환 작업)
+    implementation "org.modelmapper:modelmapper:3.1.1"
+
+    //사용자 추가 썸네일
+    //OAuth2 인증
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //AI
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+}
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

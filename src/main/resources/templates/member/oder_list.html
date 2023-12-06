@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Member Order List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="breadcrumb-area breadcrumb-padding-6">
+    <div class="container">
+      <div class="breadcrumb-content text-center">
+        <div class="breadcrumb-title">
+          <h2>My Page</h2>
+        </div>
+        <ul>
+          <li>
+            <a href="/mypage">My</a>
+          </li>
+          <li>
+            <a href="/myinfo_detail">나의 정보</a>
+          </li>
+          <li>
+            <a href="/member_oderlist">구매 내역</a>
+          </li>
+          <li>
+            <a href="/myreviewlist">리뷰 내역</a>
+          </li>
+          <li>
+            <a href="/mylikelist">관심 상품</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="wishlist-area bg-white pb-130">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="blog-wrap">
+            <div class="blog-content">
+              <div class="blog-btn-date-wrap right-btn">
+                <div class="blog-btn">    <!-- 버튼 선택 했을 때 색상 변경 효과 넣으면 좋을 듯 -->
+                  <a class="btn btn-outline-primary" href="blog-details.html">1개월</a>&nbsp;&nbsp;
+                  <a class="btn btn-outline-primary" href="blog-details.html">3개월</a>&nbsp;&nbsp;
+                  <a class="btn btn-outline-primary" href="blog-details.html">6개월</a>&nbsp;&nbsp;
+                  <a class="btn btn-outline-primary" href="blog-details.html">1년</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="btn btn-outline-primary" href="blog-details.html">날짜입력버튼</a>&nbsp;&nbsp;-
+                  <a class="btn btn-outline-primary" href="blog-details.html">날짜입력버튼</a>&nbsp;&nbsp;
+                  <a class="btn btn-dark" href="blog-details.html">조회하기</a>&nbsp;&nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+
+    <div class="row mb-20"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <form action="#">
+            <div class="wishlist-table-content">
+              <div class="table-content">
+                <table>
+                  <thead>
+                  <tr onclick="location.href='//member_oderdetail'">    <!-- 행 전체 클릭시 주문내역 상세 -->
+                    <th class="width-price">번호</th>
+                    <th class="width-thumbnail"></th>
+                    <th class="width-thumbnail">상품정보</th>
+                    <th class="width-thumbnail">주문일자</th>
+                    <th class="width-price">주문번호</th>
+                    <th class="width-price">주문금액(수량)</th>
+                    <th class="width-price">주문상태</th>   <!-- 구매완료, 구매확정 -->
+                    <th class="width-price">배송조회</th>   <!-- 배송준비중, 배송중, 배송완료 -->
+                    <th class="width-price">리뷰작성</th>   <!-- 리뷰작성, 리뷰작성 완료 -->
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="product-name">
+                      <h5>1</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>제품썸네일</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>상품명+옵션 내용</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>주문일자</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5><a href="/orderdetail">주문번호</a></h5>    <!-- 클릭하면 결제 내역으로 이동 -->
+                    </td>
+                    <td class="product-name">
+                      <h5>주문금액(수량)</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>주문상태</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>배송조회</h5>
+                    </td>
+                    <td class="product-name">
+                      <h5>리뷰작성</h5>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+                <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                  <ul>
+                    <li><a href="#"><</a></li>
+                    <li><a class="active" href="#">01</a></li>
+                    <li><a href="#">02</a></li>
+                    <li><a href="#">03</a></li>
+                    <li><a href="#">04</a></li>
+                    <li><a href="#">05</a></li>
+                    <li><a href="#">></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

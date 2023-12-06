@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>ADMIN - Product Detail</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-8">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>product Detail</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice-area bg-white pb-130">
+            <div class="container">
+                <div class="notice-info-wrap">
+                    <table class="table notice-table" th:object="${productDTO}">
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="notice-padding" id="productName">상품명</th>
+                            <td class="notice-info">
+                                <input type="text" name="productName" th:field="*{productName}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="notice-padding" id="productName">상품설명</th>
+                            <td class="notice-info">
+                                <input type="text" name="productContent" th:field="*{productContent}" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding" id="CategoryTypeRole">카테고리</th>
+                            <td class="notice-info">
+                                <div class="sidebar-widget update">
+                                    <div class="sidebar-archive-wrap">
+                                        <!-- null 체크 추가 -->
+                                        <input type="text" th:if="${productDTO.categoryTypeRole != null}" th:value="${productDTO.categoryTypeRole.getDescription()}" readonly>
+                                        <input type="text" th:if="${productDTO.categoryTypeRole == null}" value="카테고리 없음" readonly>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding">소비자가</th>
+                            <td class="notice-info">
+                                <input type="text" name="productCost" th:field="*{productCost}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="notice-padding" id="productPrice">판매가</th>
+                            <td class="notice-info">
+                                <input type="text" name="productPrice" th:field="*{productPrice}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="notice-padding" id="productCnt">재고수</th>
+                            <td class="notice-info">
+                                <input type="number" name="productCnt" th:field="*{productCnt}" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding" id="SellStateRole">판매상태</th>
+                            <td class="notice-info">
+                                <div class="sidebar-widget update">
+                                    <div class="sidebar-archive-wrap">
+                                        <!-- null 체크 추가 -->
+                                        <input type="text" th:if="${productDTO.sellStateRole != null}" th:value="${productDTO.sellStateRole.getDescription()}" readonly>
+                                        <input type="text" th:if="${productDTO.sellStateRole == null}" value="판매상태 없음" readonly>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding">등록일</th>
+                            <td class="notice-info">
+                                <input type="text" name="reDate" th:value="${#temporals.format(productDTO.reDate, 'yyyy-MM-dd')}" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding">수정일</th>
+                            <td class="notice-info">
+                                <input type="text" name="modDate" th:value="${#temporals.format(productDTO.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="notice-padding" id="productDetail">상품정보</th>
+                            <td class="notice-info">
+                                <textarea rows="7" name="productDetail" th:field="*{productDetail}" readonly></textarea>
+                            </td>
+                        </tr>
+
+                        <!-- 대표 이미지 -->
+                        <tr th:if="${#lists.size(productDTO.imageDTOs) > 0}">
+                            <th scope="row" class="notice-padding" id="imageDTOs[0]">대표이미지</th>
+                            <td class="notice-info">
+                                <!-- 이미지가 있는 경우에만 표시 -->
+                                <img th:if="${productDTO.imageDTOs[0] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[0].imageFile}}|"
+                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="300" height="300">
+                            </td>
+                        </tr>
+
+
+                        <!-- 서브 이미지 -->
+                        <tr th:if="${#lists.size(productDTO.imageDTOs) > 1}">
+                            <th scope="row" class="notice-padding" id="imageDTOs[1]">서브이미지</th>
+                            <td class="notice-info">
+                                <!-- 이미지가 있는 경우에만 표시 -->
+                                <img th:if="${productDTO.imageDTOs[1] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[1].imageFile}}|"
+                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';"  width="300" height="300">
+                            </td>
+                        </tr>
+
+                        <!-- 상세 이미지 -->
+                        <tr th:if="${#lists.size(productDTO.imageDTOs) > 2}">
+                            <th scope="row" class="notice-padding" id="imageDTOs[2]">상세이미지</th>
+                            <td class="notice-info">
+                                <img th:if="${productDTO.imageDTOs[2] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[2].imageFile}}|"
+                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';"  width="300" height="300">
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <div class="notice-button-container">
+                                <div class="notice-content">
+                                    <div class="notice-btn-date-wrap list-btn">
+                                        <div class="notice-btn">
+                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_productlist}'|">목록</button>
+                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_product_update(productId=${productDTO.productId})}'|">수정</button>
+                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_product_delete(productId=${productDTO.productId})}'|">삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- content 끝-->
+</body>
+</html>

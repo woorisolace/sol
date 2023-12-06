@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+<script th:inline="javascript">
+    var message = [[${message}]];
+    var error = [[${error}]];
+    console.log("Message:", message);
+    console.log("Error:", error);
+    if (confirm(message)) {
+        console.log("Confirmed");
+        location.replace([[${searchUrl}]]);
+    }
+</script>
+
+</body>
+</html>

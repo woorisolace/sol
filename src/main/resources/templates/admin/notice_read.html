@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Notice</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>Notice</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-area bg-white pb-130">
+      <div class="container">
+        <div class="notice-info-wrap">
+          <table class="table notice-table">
+            <tbody>
+            <tr>
+              <input type="hidden" name="adminnoticeid" th:value="${noticeDTO.adminnoticeid}">
+              <input type="hidden" name="reDate" th:value="${noticeDTO.reDate}">
+
+              <th scope="row" class="notice-padding">제목</th>
+              <td th:text="${noticeDTO.admintitle}" readonly></td>
+            </tr>
+            <tr>
+              <th scope="row" class="notice-padding">작성자</th>
+              <td th:text="${noticeDTO.adminwriter}" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="notice-padding">공지</th>
+              <td th:text="${noticeDTO.admincategory}" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="notice-padding">공지</th>
+              <td class="notice-info">
+                  <textarea rows="15" th:text="${noticeDTO.admincontent}" name="admincontent" readonly>
+                    공지내용
+                  </textarea>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+              <div class="notice-button-container">
+                <div class="notice-content">
+                  <div class="notice-btn-date-wrap list-btn">
+                    <div class="notice-btn">
+                      <button type="button" class="btn btn-lg"
+                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=(${noticeDTO.adminnoticeid}-1))}'|">이전</button>
+                      <button type="button" class="btn btn-lg"
+                              th:onclick="|location.href='@{/admin_noticedetail(adminnoticeid=${noticeDTO.adminnoticeid})}'|">수정</button>
+                      <button type="button" class="btn btn-lg"
+                              th:onclick="|location.href='@{/admin_noticelist}'|">목록</button>
+                      <button type="button" class="btn btn-lg"
+                              th:onclick="|location.href='@{/admin_noticeremove(adminnoticeid=${noticeDTO.adminnoticeid})}'|">삭제</button>
+                      <button type="button" class="btn btn-lg"
+                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=(${noticeDTO.adminnoticeid}+1))}'|">다음</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

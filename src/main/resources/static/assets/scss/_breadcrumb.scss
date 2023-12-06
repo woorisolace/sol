@@ -1,0 +1,181 @@
+/*-------- 24. Login register style ---------*/
+
+.breadcrumb-padding {
+    padding: 295px 0 144px;
+    @media #{$xl-layout} {
+        padding: 250px 0 90px;
+    }
+    @media #{$lg-layout} {
+        padding: 250px 0 90px;
+    }
+    @media #{$md-layout} {
+        padding: 174px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+
+.breadcrumb-padding-2 {
+    padding: 295px 0 95px;
+    @media #{$xl-layout} {
+        padding: 250px 0 90px;
+    }
+    @media #{$lg-layout} {
+        padding: 250px 0 90px;
+    }
+    @media #{$md-layout} {
+        padding: 174px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+.breadcrumb-padding-3 {
+    padding: 295px 0 60px;
+    @media #{$xl-layout} {
+        padding: 250px 0 60px;
+    }
+    @media #{$lg-layout} {
+        padding: 250px 0 60px;
+    }
+    @media #{$md-layout} {
+        padding: 174px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+.breadcrumb-padding-4 {
+    padding: 295px 0 135px;
+    @media #{$xx-layout} {
+        padding: 230px 0 65px;
+    }
+    @media #{$xl-layout} {
+        padding: 230px 0 65px;
+    }
+    @media #{$lg-layout} {
+        padding: 230px 0 65px;
+    }
+    @media #{$md-layout} {
+        padding: 174px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+
+.breadcrumb-padding-5 {
+    padding: 295px 0 158px;
+    @media #{$xx-layout} {
+        padding: 230px 0 71px;
+    }
+    @media #{$xl-layout} {
+        padding: 230px 0 71px;
+    }
+    @media #{$lg-layout} {
+        padding: 218px 0 65px;
+    }
+    @media #{$md-layout} {
+        padding: 174px 0 33px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 48px;
+    }
+}
+
+.breadcrumb-padding-6 {
+    padding: 295px 0 128px;
+    @media #{$xl-layout} {
+        padding: 220px 0 60px;
+    }
+    @media #{$lg-layout} {
+        padding: 220px 0 60px;
+    }
+    @media #{$md-layout} {
+        padding: 170px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+
+.breadcrumb-padding-7 {
+    padding: 295px 0 63px;
+    @media #{$xl-layout} {
+        padding: 220px 0 60px;
+    }
+    @media #{$lg-layout} {
+        padding: 220px 0 60px;
+    }
+    @media #{$md-layout} {
+        padding: 170px 0 60px;
+    }
+    @media #{$xs-layout} {
+        padding: 137px 0 50px;
+    }
+}
+
+
+.breadcrumb-content {
+    .breadcrumb-title {
+        h2 {
+            font-size: 56px;
+            margin: 0 0 20px;
+            @media #{$lg-layout} {
+                font-size: 50px;
+            }
+            @media #{$md-layout} {
+                font-size: 50px;
+                &.breadcrumb-title-responsive {
+                    font-size: 40px;
+                }
+            }
+            @media #{$xs-layout} {
+                font-size: 32px;
+                margin: 0 0 15px;
+            }
+        }
+        @media #{$md-layout} {
+            h2 {
+                font-size: 40px;
+            }
+        }
+        @media #{$xs-layout} {
+            h2 {
+                font-size: 22px;
+            }
+        }
+    }
+    ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        li {
+            color: #8E8E8E;
+            display: inline-block;
+            font-family: $proximanova;
+            margin-right: 20px;
+            line-height: 1;
+            @media #{$xs-layout} {
+                margin-right: 14px;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+            a {
+                color: #8E8E8E;
+                display: inline-block;
+                font-family: $proximanova;
+                line-height: 1;
+                &:hover {
+                    color: $theme-color;
+                }
+            }
+        }
+    }
+}
+
+
+
+

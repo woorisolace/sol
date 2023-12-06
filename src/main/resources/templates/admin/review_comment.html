@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Review Comment</title>
+</head>
+
+<body>
+<div layout:fragment="content"><!-- content 시작-->
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>Review</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-area bg-white pb-130">
+      <div class="container">
+        <div class="notice-info-wrap">
+          <form action="#">
+            <table class="table notice-table">
+              <tbody>
+              <tr>
+                <th scope="row" class="notice-padding">제목</th>
+                <td class="notice-info">
+                  <input type="text" name="qna_title">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">작성자</th>
+                <td class="notice-info">
+                  <input type="text" name="userid">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">만족도</th>
+                <td class="notice-info">
+                  <input type="text" name="userid">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">후기</th>
+                <td class="notice-info">
+                  <textarea rows="15"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">이미지</th>
+                <td class="notice-info">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="qna_img1">
+                      <img src="assets/images/instagram/instagram-1.png" alt="이미지1" style="width: 200px; height: 200px; cursor: pointer;">
+                      <input type="file" name="qna_img[]" id="qna_img1" style="display: none;">
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">답변</th>
+                <td class="notice-info">
+                  <div style="display: flex; align-items: baseline;">
+                    <textarea rows="3" style="flex: 1;"></textarea>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="notice-button-container">
+              <div class="notice-content">
+                <div class="notice-btn-date-wrap list-btn">
+                  <div class="notice-btn">
+                    <a class="btn btn-outline-primary" href="/noticelist">목록</a>&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-outline-primary" href="#">답변 등록</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

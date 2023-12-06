@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mypage</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+
+    <div class="breadcrumb-area breadcrumb-padding-6">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>My Page</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/mypage">My</a>
+            </li>
+            <li>
+              <a href="/myinfo_detail">나의 정보</a>
+            </li>
+            <li>
+              <a href="/member_oderlist">구매 내역</a>
+            </li>
+            <li>
+              <a href="/myreviewlist">리뷰 내역</a>
+            </li>
+            <li>
+              <a href="/mylikelist">관심 상품</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-details-area pb-150">
+      <div class="container">
+        <div class="row flex-row-reverse">
+          <ul class="list-group"><!--list-group 묶음-->
+            <li class="list-group-item" style="padding: 20px;"> <!--여백 조절-->
+              <div style="max-width: 1200px; margin: 0 auto;">
+                <form th:object="${memberDTO}">
+                  <input type="hidden" th:value="${memberDTO.id}">
+                  <strong style="font-size: 24px;"><a th:text="${memberDTO.name}"></a></strong> 님 안녕하세요!<br>
+                  <br>
+                  <span style="font-size: 16px; color: #666; margin-top: 10px;">
+                    이메일 주소 : <a th:text="${memberDTO.email}"></a><br>
+                    가입일 : <a th:text="${#temporals.format(memberDTO.createDate, 'yyyy-MM-dd')}"></a><br>
+                            등급 : <a>일반</a><br>
+                            적립금 : <a>1000</a>원
+                </span>
+                </form>
+              </div>
+              <div class="text-center mt-3">
+                <a href="/member_oderlist"><img src="assets/images/myinfo/my_order.png" alt="주문 내역" width="80" height="80"></a>&nbsp;&nbsp;
+                <a href="/myreviewlist"><img src="assets/images/myinfo/my_review.png" alt="리뷰 조회" width="80" height="80"></a>&nbsp;&nbsp;
+                <a href="#"><img src="assets/images/myinfo/my_point.png" alt="포인트 조회" width="80" height="80"></a>&nbsp;&nbsp;
+                <a href="#"><img src="assets/images/myinfo/my_coupon.png" alt="쿠폰 조회" width="80" height="80"></a>&nbsp;&nbsp;
+                <a href="/mylikelist"><img src="assets/images/myinfo/my_like.png" alt="좋아요 조회" width="80" height="80"></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

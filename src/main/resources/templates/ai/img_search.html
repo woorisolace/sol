@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Img Search</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Img Search</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-register-area pb-130">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 offset-lg-2">
+                        <div class="login-register-wrapper">
+                            <div class="tab-content">
+                                <div id="lg1" class="tab-pane active">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <!-- 폼 제출 시 JavaScript 함수 호출 -->
+                                            <form onsubmit="return validateForm()" action="/ai_img_result" method="post" enctype="multipart/form-data">
+                                                <input type="file" name="file" placeholder="이미지를 넣어주세요.">
+                                                <div class="button-box text-center">
+                                                    <button type="submit">꿀팁확인</button>&nbsp;&nbsp;
+                                                </div>
+                                            </form>
+                                            <!-- 오류 메시지 표시용 div -->
+                                            <div id="errorMessage" style="color: red;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+        <!-- 폼 제출 시 JavaScript 시작 -->
+        <script>
+            function validateForm() {
+                // 파일 input 엘리먼트를 가져옴
+                var fileInput = document.querySelector('input[type="file"]');
+
+                // 파일이 선택되었는지 확인
+                if (fileInput.files.length === 0 || !fileInput.files[0].name) {
+                    // 파일이 선택되지 않았을 때 오류 메시지 표시
+                    alert('사진을 선택해주세요.'); // 이 부분이 오류 메시지를 알림 창으로 표시하는 부분입니다.
+                    return false; // 폼 제출 중지
+                }
+                // 파일이 선택되었을 때 오류 메시지 감춤
+                document.getElementById('errorMessage').innerHTML = '';
+                return true; // 폼 제출 진행
+            }
+        </script>
+        <!-- 폼 제출 시 JavaScript 끝 -->
+    </div>
+</div>
+</body>
+</html>

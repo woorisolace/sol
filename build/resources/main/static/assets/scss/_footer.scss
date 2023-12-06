@@ -1,0 +1,112 @@
+/*-------- 24. Login register style ---------*/
+
+.footer-logo {
+    a {
+        display: block;
+        img {
+            max-width: 100%;
+            @media #{$xs-layout} {
+                max-width: 120px;
+            }
+        }
+    }
+}
+
+.footer-list {
+    ul {
+        li {
+            display: block;
+            margin: 0 0 25px;
+            @media #{$md-layout} {
+                margin: 0 0 15px;
+            }
+            @media #{$xs-layout} {
+                margin: 0 0 10px;
+            }
+            &:last-child {
+                margin: 0 0 0;
+            }
+            a {
+                font-size: 20px;
+                display: block;
+                font-family: $proximanova600;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                @media #{$xx-layout} {
+                    font-size: 18px;
+                }
+                @media #{$xl-layout} {
+                    font-size: 16px;
+                }
+                @media #{$lg-layout} {
+                    font-size: 16px;
+                }
+                @media #{$md-layout} {
+                    font-size: 18px;
+                }
+                @media #{$xs-layout} {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+.copyright {
+    padding: 23px 0 26px;
+    p {
+        margin: 0;
+        color: #282828;
+        font-size: 14px;
+        letter-spacing: 1px;
+        font-family: $proximanova;
+        svg {
+            margin: 0 3px;
+        }
+        a {
+            color: $theme-color;
+            display: inline-block;
+            margin: 0 0 0 4px;
+        }
+    }
+}
+
+.social-icon {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 31px 0 0;
+    a {
+        margin-right: 35px;
+        &:last-child {
+            margin-right: 0;
+        }
+        svg {
+            path {
+                fill: #1E1E1E;
+                transition: all .3s ease 0s;
+            }
+            g {
+                path {
+                    fill: #1E1E1E;
+                    transition: all .3s ease 0s;
+                }
+            }
+        }
+        &:hover {
+            svg {
+                path {
+                    fill: $theme-color;
+                }
+                g {
+                    path {
+                        fill: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+

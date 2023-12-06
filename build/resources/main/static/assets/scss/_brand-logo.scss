@@ -1,0 +1,47 @@
+/*-------- 24. Login register style ---------*/
+
+.brand-logo-active {
+    .slick-list {
+        margin: 0 -15px;
+        .brand-logo-plr-1 {
+            padding: 0 15px;
+        }
+    }
+}
+.brand-logo-active {
+	margin: 0 120px;
+    @media #{$xx-layout} {
+        margin: 0 60px;
+    }
+    @media #{$xl-layout} {
+        margin: 0 0px;
+    }
+    @media #{$lg-layout} {
+        margin: 0 0px;
+    }
+    @media #{$md-layout} {
+        margin: 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0px;
+    }
+}
+.single-brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    img {
+        max-width: 100%;
+        filter: grayscale(100%);
+        transition: all .3s ease 0s;
+        &:hover {
+            filter: grayscale(0%);
+        }
+    }
+}
+
+
+
+
+
