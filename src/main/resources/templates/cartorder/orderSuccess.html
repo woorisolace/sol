@@ -120,7 +120,7 @@
                             <div class="your-order-area">
                                 <h3><b>주문 정보</b></h3>
                                 <div class="your-order-wrap gray-bg-4">
-                                    <div class="your-order-info-wrap">
+                                    <div class="your-order-info-wrap" th:each="product:${productDTO}">
                                         <div class="your-order-info">
                                             <ul>
                                                 <li><b>상품 </b><span><b>금액</b></span></li>
@@ -141,9 +141,10 @@
                                         <!-- 주문 정보 추가 -->
                                         <div class="your-order-middle">
                                             <ul>
-                                                <li th:each="orderDTO : ${orderDTOs}">
-                                                    <b th:text="${orderDTO.productName}"></b>
-                                                    <span th:text="${orderDTO.productPrice}"></span>
+                                                <li>
+                                                    <span class="product-left" th:text="${product.productName}"></span>
+                                                    X<span class="product-left" th:text="${productNum}"></span>
+                                                    <span class="product-right" th:text="${product.productPrice}"></span>
                                                 </li>
                                             </ul>
                                         </div>

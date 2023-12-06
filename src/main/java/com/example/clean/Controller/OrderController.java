@@ -38,6 +38,7 @@ public class OrderController {
   //선택한 제품 정보 + 구매자 정보 전달
   @GetMapping("/order")
   public String orderForm(@RequestParam("productId") Integer productId,   //특정 상품을 식별하는 데 사용
+                          @RequestParam("productNum") Integer productNum,
                           Authentication auth,                            //현재 로그인한 사용자의 정보를 가져오기 위해 사용
                           RedirectAttributes redirectAttributes,          //리다이렉트 시에 데이터를 전달하기 위해 사용 (주문 정보 등을 다음 페이지로 전달)
                           Model model) throws Exception {
@@ -51,6 +52,9 @@ public class OrderController {
     }
     model.addAttribute("productDTO", productDTO);
     log.info("Controller_상품 번호 확인완료: {}", productDTO.getProductId());
+
+
+    model.addAttribute("productNum",productNum);
 
 
     // 로그인한 사용자의 정보를 가져옴
