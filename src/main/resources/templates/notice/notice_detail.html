@@ -63,28 +63,20 @@
                                 <div class="notice-content">
                                     <div class="notice-btn-date-wrap list-btn">
                                         <div class="notice-btn">
-                                            <a class="btn btn-outline-primary" href="/notice_list">목록</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="notice-content">
-                                    <div class="notice-btn-date-wrap list-btn">
-                                        <div class="notice-btn">
-                                            <a class="btn btn-outline-primary" type="reset">이전</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="notice-content">
-                                    <div class="notice-btn-date-wrap list-btn">
-                                        <div class="notice-btn">
-                                            <a class="btn btn-outline-primary" type="reset">다음</a>
+                                            <button type="button" class="btn btn-lg btn-outline-primary" style="margin-right: 5px;"
+                                                    th:if="${prevNoticeId != null}"
+                                                    th:onclick="|location.href='@{/notice_detail(adminnoticeid=${prevNoticeId})}'|">이전</button>
+                                            <button type="button" class="btn btn-lg btn-outline-primary"
+                                                    th:onclick="|location.href='@{/notice_list}'|">목록</button>
+                                            <button type="button" class="btn btn-lg btn-outline-primary" style="margin-left: 5px;"
+                                                    th:if="${nextNoticeId != null && nextNoticeId != -1}"
+                                                    th:onclick="|location.href='@{/notice_detail(adminnoticeid=${nextNoticeId})}'|">다음</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

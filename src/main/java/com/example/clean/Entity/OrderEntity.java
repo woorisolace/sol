@@ -47,4 +47,6 @@ public class OrderEntity extends BaseEntity {
   //결제방법
   private String payment_method;
 
+  private Integer product_num;
+
 }

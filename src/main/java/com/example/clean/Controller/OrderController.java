@@ -2,11 +2,9 @@ package com.example.clean.Controller;
 
 import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.OrderDTO;
-import com.example.clean.DTO.OrderInfoDTO;
 import com.example.clean.DTO.ProductDTO;
 
 import com.example.clean.Entity.ProductEntity;
-import com.example.clean.Entity.UserEntity;
 import com.example.clean.Service.MemberService;
 import com.example.clean.Service.OrderService;
 import com.example.clean.Service.ProductService;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -53,9 +49,6 @@ public class OrderController {
     model.addAttribute("productDTO", productDTO);
     log.info("Controller_상품 번호 확인완료: {}", productDTO.getProductId());
 
-    //구매 수량
-    model.addAttribute("productNum",productNum);
-
 
     // 로그인한 사용자의 정보를 가져옴
     MemberDTO memberDTO = null;
@@ -80,26 +73,8 @@ public class OrderController {
     }
 
 
-
-
-    //상품 금액
-    int productPrice = productDTO.getProductPrice();
-    //상품 총 금액
-    int totalAmount = productPrice * productNum;
-    //배송비
-    int productdelivery = (totalAmount >= 50000) ? 0:3000;
-    model.addAttribute("productdelivery",productdelivery);
-
-    //총 금액
-    int producTotal = totalAmount + productdelivery;
-    model.addAttribute("producTotal",producTotal);
-    System.out.println("getProductPrice의 값 : "+ productDTO.getProductPrice());
-    System.out.println("productNum 값 : " + productNum);
-    System.out.println("productTotal 값 : " + producTotal);
-
-
     // 주문 양식 조회
-    OrderDTO orderDTO = orderService.orderForm(memberDTO.getEmail(), productDTO.getProductId());
+    OrderDTO orderDTO = orderService.orderForm(memberDTO.getEmail(), productDTO.getProductId(), productNum);
 
     model.addAttribute("productId", productId);
     model.addAttribute("orderDTO", orderDTO);
@@ -107,6 +82,37 @@ public class OrderController {
     log.info("주문 양식 조회 완료");
 
     System.out.println("이메일"+orderDTO.getUserEntity().getEmail());
+
+
+
+    //상품 금액
+    int productPrice = productDTO.getProductPrice();
+    orderDTO.getProductEntity().setProductPrice(productPrice);
+
+    //상품 총 금액
+    int totalAmount = productPrice * productNum;
+
+
+
+    //배송비
+    int productdelivery = (totalAmount >= 50000) ? 0:3000;
+    model.addAttribute("productdelivery",productdelivery);
+
+    //총 금액(상품+배송비)
+    int producTotal = totalAmount + productdelivery;
+    orderDTO.setTotalPrice(producTotal);
+    model.addAttribute("producTotal",orderDTO.getTotalPrice());
+
+    System.out.println("getTotalPrice 값 : "+ orderDTO.getTotalPrice());
+    System.out.println("productNum 값 : " + productNum);
+    System.out.println("productTotal 값 : " + producTotal);
+
+
+    //구매 수량
+    orderDTO.setProduct_num(productNum);
+    System.out.println("getProductNum의 값 : " + orderDTO.getProduct_num());
+    System.out.println("getProductEntity의 값 : " + orderDTO.getProductEntity());
+    model.addAttribute("productNum",orderDTO.getProduct_num());
 
     return "cartorder/order";
   }
@@ -139,19 +145,34 @@ public class OrderController {
 
 
     // 주문 정보 저장
-    OrderDTO resultOrderInfoDTO = orderService.orderInfo(memberDTO.getEmail(), productDTO.getProductId());
+    OrderDTO resultOrderInfoDTO = orderService.orderInfo(memberDTO.getEmail(), productDTO.getProductId(),orderDTO.getProduct_num());
     session.setAttribute("orderInfoDTO", resultOrderInfoDTO);
     log.info("Controller_주문 정보 저장여부: {}", resultOrderInfoDTO);
+
+
+    orderDTO.getProduct_num();
+    System.out.println("넣기 전 productNum 값 : " + productNum);
+    System.out.println("넣은 후 productNum 값 : " + productNum);
+    orderDTO.setProduct_num(productNum);
+
+    System.out.println();
 
     // RedirectAttributes를 이용하여 주문 정보 전달
     redirectAttributes.addFlashAttribute("orderInfoId", resultOrderInfoDTO.getOrderId());
     redirectAttributes.addFlashAttribute("userId", memberDTO.getEmail());
     redirectAttributes.addFlashAttribute("productId", productId);
     redirectAttributes.addFlashAttribute("productDTO",productDTO);
-    redirectAttributes.addFlashAttribute("productNum",productNum);
+    redirectAttributes.addFlashAttribute("productNum",orderDTO.getProduct_num());
     redirectAttributes.addFlashAttribute("producTotal",producTotal);
     redirectAttributes.addFlashAttribute("productdelivery",productdelivery);
-    redirectAttributes.addFlashAttribute("payment_method",paymentMethod);
+    redirectAttributes.addFlashAttribute("payment_method",orderDTO.getPayment_method());
+
+    orderDTO.getProduct_num();
+    System.out.println("넣기 전 productNum 값 : " + productNum);
+    System.out.println("넣은 후 productNum 값 : " + productNum);
+    orderDTO.setProduct_num(productNum);
+
+
     return "redirect:/orderSuccess";
   }
 
@@ -162,7 +183,9 @@ public class OrderController {
   public String getOrderSuccess(Authentication auth,
                                 Model model,
                                 ProductDTO productDTO,
-                                HttpSession session) throws Exception {
+                                OrderDTO orderDTO,
+                                HttpSession session,
+                                @ModelAttribute("productNum") Integer productNum) throws Exception {
 
 
     // HttpSession에서 구매 정보를 가져옴 (회원정보, 제품정보 + 배송/결제 정보 등)
@@ -174,6 +197,7 @@ public class OrderController {
     // 구매 정보를 페이지에 전달
     model.addAttribute("orderDTO", orderInfoDTO);
     model.addAttribute("productDTO",productDTO);
+
     return "cartorder/orderSuccess";
   }
 

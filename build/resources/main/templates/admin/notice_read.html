@@ -61,7 +61,8 @@
                   <div class="notice-btn-date-wrap list-btn">
                     <div class="notice-btn">
                       <button type="button" class="btn btn-lg"
-                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=(${noticeDTO.adminnoticeid}-1))}'|">이전</button>
+                              th:if="${prevNoticeId != null}"
+                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=${prevNoticeId})}'|">이전</button>
                       <button type="button" class="btn btn-lg"
                               th:onclick="|location.href='@{/admin_noticedetail(adminnoticeid=${noticeDTO.adminnoticeid})}'|">수정</button>
                       <button type="button" class="btn btn-lg"
@@ -69,7 +70,8 @@
                       <button type="button" class="btn btn-lg"
                               th:onclick="|location.href='@{/admin_noticeremove(adminnoticeid=${noticeDTO.adminnoticeid})}'|">삭제</button>
                       <button type="button" class="btn btn-lg"
-                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=(${noticeDTO.adminnoticeid}+1))}'|">다음</button>
+                              th:if="${nextNoticeId != null && nextNoticeId != -1}"
+                              th:onclick="|location.href='@{/admin_noticeread(adminnoticeid=${nextNoticeId})}'|">다음</button>
                     </div>
                   </div>
                 </div>

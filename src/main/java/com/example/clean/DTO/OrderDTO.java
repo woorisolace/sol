@@ -29,6 +29,8 @@ public class OrderDTO {
 
   private String payment_method;          //결제방법
 
+  private Integer product_num;
+
 
 }
 

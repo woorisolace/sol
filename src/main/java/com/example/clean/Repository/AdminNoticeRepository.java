@@ -41,4 +41,10 @@ public interface AdminNoticeRepository extends JpaRepository<AdminNoticeEntity, 
         @Param("adminnotice") String adminnotice,
         Pageable pageable
     );
+
+    @Query("SELECT MAX(a.adminnoticeid) FROM AdminNoticeEntity a WHERE a.adminnoticeid < :currentNoticeId")
+    Integer findPreviousNoticeId(@Param("currentNoticeId") Integer currentNoticeId);
+
+    @Query("SELECT COALESCE(MIN(a.adminnoticeid), -1) FROM AdminNoticeEntity a WHERE a.adminnoticeid > :currentNoticeId")
+    Integer findNextNoticeId(@Param("currentNoticeId") Integer currentNoticeId);
 }

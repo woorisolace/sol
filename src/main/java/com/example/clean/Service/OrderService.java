@@ -13,17 +13,8 @@ import com.example.clean.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -39,7 +30,7 @@ public class OrderService {
   //구매폼 조회
   //userId와 productId를 받아 사용자와 제품 정보 받아오기
   //
-  public OrderDTO orderForm(String userId, Integer productId) throws Exception {
+  public OrderDTO orderForm(String userId, Integer productId, Integer productNum) throws Exception {
 
     //로그인한 회원의 이메일로 회원 정보 가져오기
     UserEntity userEntity = memberRepository.findByEmail(userId);
@@ -75,9 +66,9 @@ public class OrderService {
 
   // 주문(구매)생성 -> 완료 버튼 누르기
   // OrderInfoDTO: 회원정보, 상품정보, 결제정보 등을 담아서 반환
-  public OrderDTO orderInfo(String userId, Integer productId) throws Exception {
+  public OrderDTO orderInfo(String userId, Integer productId, Integer product_num) throws Exception {
 
-    OrderDTO orderDTO = orderForm(userId, productId);
+    OrderDTO orderDTO = orderForm(userId, productId,product_num);
 
     if (orderDTO == null || orderDTO.getUserEntity() == null || orderDTO.getProductEntity() == null) {
       throw new IllegalArgumentException("주문 정보가 올바르게 구성되지 않았습니다.");
@@ -87,11 +78,13 @@ public class OrderService {
     OrderEntity orderEntity = new OrderEntity();
     orderEntity.setUserEntity(orderDTO.getUserEntity());
     orderEntity.setProductEntity(orderDTO.getProductEntity());
+    orderEntity.setProduct_num(orderDTO.getProduct_num());
+
 
     // 주문 정보 저장
     OrderEntity savedOrderEntity = ordertRepository.save(orderEntity);
 
-    OrderDTO orderDTO1=modelMapper.map(savedOrderEntity, OrderDTO.class);
+    OrderDTO orderDTO1 = modelMapper.map(savedOrderEntity, OrderDTO.class);
     return orderDTO1;
 
 /*
@@ -127,6 +120,7 @@ public class OrderService {
     // OrderInfoDTO가져와서 구매정보 출력
    OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
    orderInfoDTO.setOrderInfoId(orderEntity.getOrderId());
+   orderInfoDTO.setOrderInfoId(orderEntity.getProduct_num());
    orderInfoDTO.setMemberDTO(modelMapper.map(orderEntity.getUserEntity(), MemberDTO.class));
    orderInfoDTO.setProductDTO(modelMapper.map(orderEntity.getProductEntity(), ProductDTO.class));
 

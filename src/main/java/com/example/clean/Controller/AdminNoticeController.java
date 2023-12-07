@@ -182,8 +182,13 @@ public class AdminNoticeController {
       return "error";
     }
     AdminNoticeDTO noticeDTO = adminNoticeService.detail(adminnoticeid);
+    Integer prevNoticeId = adminNoticeService.findPreviousNoticeId(adminnoticeid);
+    Integer nextNoticeId = adminNoticeService.findNextNoticeId(adminnoticeid);
 
     model.addAttribute("noticeDTO",noticeDTO);
+    model.addAttribute("prevNoticeId",prevNoticeId);
+    model.addAttribute("nextNoticeId",nextNoticeId);
+
     return "admin/notice_read";
   }
 

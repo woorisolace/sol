@@ -149,9 +149,9 @@
                                                 <ul>
                                                     <li>
                                                         <span class="product-left" th:text="${product.productName}"></span>
-                                                        <span class="product-right" th:text="'x'+${productNum}"></span>
+                                                        <span class="product-right" th:text="'x'+${orderDTO.product_num}"></span>
                                                         <span class="product-right" th:text="${product.productPrice} + '원'"></span>
-                                                        <input type="hidden" name="productNum" th:value="${productNum}"> <!-- 수량결과값 -->
+                                                        <input type="hidden" name="productNum" th:value="${orderDTO.product_num}"> <!-- 수량결과값 -->
 <!--                                                        <span class="product-right" th:text="${product.productPrice * product.productNum}"></span>-->
                                                     </li>
                                                 </ul>
@@ -172,8 +172,8 @@
                                             <div class="your-order-info order-total">
                                                 <ul>
                                                     <li>
-                                                        <b>총 금액</b><span class="product-right" th:text="${producTotal} + '원'"></span>
-                                                        <input type="hidden" name="producTotal" th:value="${producTotal}"> <!-- 수량결과값 -->
+                                                        <b>총 금액</b><span class="product-right" th:text="${orderDTO.totalPrice} + '원'"></span>
+                                                        <input type="hidden" name="producTotal" th:value="${orderDTO.totalPrice}"> <!-- 수량결과값 -->
                                                     </li>
                                                 </ul>
                                             </div>

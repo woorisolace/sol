@@ -69,6 +69,9 @@ public class ProductEntity extends BaseEntity {
   @Column(name ="productPrice", nullable = false)
   private Integer productPrice;
 
+  @Column(name="productNum")
+  private Integer productNum;
+
   //할인율
   @Column(name ="productDis")
   private Integer productDis;
