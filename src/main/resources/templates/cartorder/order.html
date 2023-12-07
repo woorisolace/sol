@@ -149,8 +149,8 @@
                                                 <ul>
                                                     <li>
                                                         <span class="product-left" th:text="${product.productName}"></span>
-                                                        X<span class="product-right" th:text="${productNum}"></span>
-                                                        <span class="product-right" th:text="${product.productPrice}"></span>
+                                                        <span class="product-right" th:text="'x'+${productNum}"></span>
+                                                        <span class="product-right" th:text="${product.productPrice} + '원'"></span>
                                                         <input type="hidden" name="productNum" th:value="${productNum}"> <!-- 수량결과값 -->
 <!--                                                        <span class="product-right" th:text="${product.productPrice * product.productNum}"></span>-->
                                                     </li>
@@ -158,15 +158,21 @@
                                             </div>
                                             <div class="your-order-info order-subtotal">
                                                 <ul>
-                                                    <li>배송비<span name="productdelivery" th:text="${productdelivery}"></span></li>
-                                                    <input type="hidden" name="productdelivery" th:value="${productdelivery}">
+                                                    <li>
+                                                        배송비
+                                                        <span class="product-right" name="productdelivery" th:text="${productdelivery }+ '원'"></span>
+                                                        <input type="hidden" name="productdelivery" th:value="${productdelivery}">
+                                                        <li>
+                                                            <span th:text="'50,000원 이상 구매 시 배송비 무료'"></span>
+                                                        </li>
+                                                    </li>
                                                 </ul>
                                             </div>
 
                                             <div class="your-order-info order-total">
                                                 <ul>
                                                     <li>
-                                                        <b>총 금액</b><span class="product-right" th:text="${producTotal}"></span>
+                                                        <b>총 금액</b><span class="product-right" th:text="${producTotal} + '원'"></span>
                                                         <input type="hidden" name="producTotal" th:value="${producTotal}"> <!-- 수량결과값 -->
                                                     </li>
                                                 </ul>
