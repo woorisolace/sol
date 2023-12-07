@@ -163,28 +163,29 @@
                                             </ul>
                                         </div>
                                         <!-- 주문 정보 총 합계 -->
-                                        <div class="your-order-info order-subtotal">
-                                            <ul>
-<!--                                                <li>-->
-<!--                                                    <b>금액</b>-->
-<!--                                                    <span th:text="${orderDTOs.![productPrice].sum()} + '원'"></span>-->
-<!--                                                </li>-->
-                                            </ul>
-                                        </div>
 
                                         <div class="your-order-info order-subtotal">
                                             <ul>
-                                                <li>배송비 <span>3,000원 </span></li>
+                                                <li>배송비<span th:text="${productdelivery}"></span></li>
                                             </ul>
                                         </div>
                                         <div class="your-order-info order-total">
                                             <ul>
-                                                <li><b>총 금액 </b><span><b>48,800원 </b></span></li>
+                                                <li>
+                                                    <b>총 금액</b><span class="product-right" th:text="${producTotal}"></span>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="your-order-info order-subtotal">
                                             <ul>
-                                                <li>결제방법 <span>무통장 입금 </span></li>
+                                                <li>
+                                                    결제방법
+                                                    <span th:switch="${payment_method}">
+                                                        <span th:case="'cheque'">무통장 입금</span>
+                                                        <span th:case="'phone'">휴대폰 결제</span>
+                                                        <span th:case="'card'">카드 결제</span>
+                                                    </span>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="your-order-info order-subtotal">

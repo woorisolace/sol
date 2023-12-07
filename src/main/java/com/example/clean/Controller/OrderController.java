@@ -79,6 +79,25 @@ public class OrderController {
       return "message";
     }
 
+
+
+
+    //상품 금액
+    int productPrice = productDTO.getProductPrice();
+    //상품 총 금액
+    int totalAmount = productPrice * productNum;
+    //배송비
+    int productdelivery = (totalAmount >= 50000) ? 0:3000;
+    model.addAttribute("productdelivery",productdelivery);
+
+    //총 금액
+    int producTotal = totalAmount + productdelivery;
+    model.addAttribute("producTotal",producTotal);
+    System.out.println("getProductPrice의 값 : "+ productDTO.getProductPrice());
+    System.out.println("productNum 값 : " + productNum);
+    System.out.println("productTotal 값 : " + producTotal);
+
+
     // 주문 양식 조회
     OrderDTO orderDTO = orderService.orderForm(memberDTO.getEmail(), productDTO.getProductId());
 
@@ -98,6 +117,10 @@ public class OrderController {
   @PostMapping("/order")
   public String orderInfo(Authentication auth,
                           @RequestParam("productId") Integer productId,
+                          @RequestParam("productNum") Integer productNum,
+                          @RequestParam("producTotal") Integer producTotal,
+                          @RequestParam("productdelivery") Integer productdelivery,
+                          @RequestParam("payment_method") String paymentMethod,
                           @ModelAttribute OrderDTO orderDTO,  // 구매 페이지에서 입력한 회원의 배송지 정보와 결제 정보를 구매 완료 페이지로 전달
                           RedirectAttributes redirectAttributes,
                           HttpSession session,
@@ -125,7 +148,10 @@ public class OrderController {
     redirectAttributes.addFlashAttribute("userId", memberDTO.getEmail());
     redirectAttributes.addFlashAttribute("productId", productId);
     redirectAttributes.addFlashAttribute("productDTO",productDTO);
-
+    redirectAttributes.addFlashAttribute("productNum",productNum);
+    redirectAttributes.addFlashAttribute("producTotal",producTotal);
+    redirectAttributes.addFlashAttribute("productdelivery",productdelivery);
+    redirectAttributes.addFlashAttribute("payment_method",paymentMethod);
     return "redirect:/orderSuccess";
   }
 

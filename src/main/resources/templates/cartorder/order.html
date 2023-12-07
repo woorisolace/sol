@@ -149,23 +149,25 @@
                                                 <ul>
                                                     <li>
                                                         <span class="product-left" th:text="${product.productName}"></span>
-                                                        X<span class="product-right" th:text="${productNum}" th:value="${productNum}"></span>
+                                                        X<span class="product-right" th:text="${productNum}"></span>
                                                         <span class="product-right" th:text="${product.productPrice}"></span>
+                                                        <input type="hidden" name="productNum" th:value="${productNum}"> <!-- 수량결과값 -->
 <!--                                                        <span class="product-right" th:text="${product.productPrice * product.productNum}"></span>-->
                                                     </li>
                                                 </ul>
                                             </div>
                                             <div class="your-order-info order-subtotal">
                                                 <ul>
-                                                    <li>배송비<span th:text="${(product.productPrice * productNum) >= 50000 ? '0원' : '3,000원'}"></span></li>
+                                                    <li>배송비<span name="productdelivery" th:text="${productdelivery}"></span></li>
+                                                    <input type="hidden" name="productdelivery" th:value="${productdelivery}">
                                                 </ul>
                                             </div>
 
                                             <div class="your-order-info order-total">
                                                 <ul>
                                                     <li>
-                                                        <b>총 금액</b><span class="product-right" th:text="${(product.productPrice * productNum) >= 50000 ? product.productPrice * productNum : (product.productPrice * productNum + 3000)}"></span>
-
+                                                        <b>총 금액</b><span class="product-right" th:text="${producTotal}"></span>
+                                                        <input type="hidden" name="producTotal" th:value="${producTotal}"> <!-- 수량결과값 -->
                                                     </li>
                                                 </ul>
                                             </div>
@@ -184,15 +186,15 @@
                                                 </div>
                                             </div>
                                             <div class="pay-top sin-payment">
-                                                <input id="payment-method-2" class="input-radio" type="radio" value="cheque" name="payment_method">
+                                                <input id="payment-method-2" class="input-radio" type="radio" value="phone" name="payment_method">
                                                 <label for="payment-method-2"> 휴대폰 결제 </label>
                                                 <div class="payment-box payment_method_bacs">
                                                     <p>휴대폰 번호 인증하기</p>
                                                 </div>
                                             </div>
                                             <div class="pay-top sin-payment sin-payment-3">
-                                                <input id="payment-method-4" class="input-radio" type="radio" value="cheque" name="payment_method">
-                                                <label for="payment-method-4"> 카드결제 <img alt="" src="assets/images/icon-img/payment.png"><a href="#">What is PayPal?</a></label>
+                                                <input id="payment-method-3" class="input-radio" type="radio" value="card" name="payment_method">
+                                                <label for="payment-method-3"> 카드결제 <img alt="" src="assets/images/icon-img/payment.png"><a href="#">What is PayPal?</a></label>
                                                 <div class="payment-box payment_method_bacs"></div>
                                             </div>
                                         </div>
