@@ -157,8 +157,8 @@
                                             <ul>
                                                 <li>
                                                     <span class="product-left" th:text="${product.productName}"></span>
-                                                    X<span class="product-left" th:text="${productNum}"></span>
-                                                    <span class="product-right" th:text="${product.productPrice}"></span>
+                                                    <span class="product-left" th:text="'x'+${productNum}"></span>
+                                                    <span class="product-right" th:text="${product.productPrice} + '원'"></span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -166,7 +166,7 @@
 
                                         <div class="your-order-info order-subtotal">
                                             <ul>
-                                                <li>배송비<span th:text="${productdelivery}"></span></li>
+                                                <li>배송비<span class="product-right" th:text="${productdelivery}"></span></li>
                                             </ul>
                                         </div>
                                         <div class="your-order-info order-total">
