@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Img Result</title>
+    <!-- 이미지 분석 실패 시 에러메시지창으로 표시 "이미지 분류에 실패했습니다. 다른 사진을 첨부해주세요." -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <th:block layout:fragment="script">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var errorMessage = "[[${errorMessage}]]"; // 서버로부터 메세지 받기
+
+                if (errorMessage != null && errorMessage.length > 0) { // 오류 메세지를 받았으면
+                    alert(errorMessage); // 메세지를 대화상자(메시지 창)로 출력
+                    window.location.href = '/ai_img_search'; // 이동하고 싶은 페이지로 이동
+                }
+            });
+        </script>
+    </th:block>
+</head>
+
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Img Result</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-register-area pb-130">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 offset-lg-2">
+                        <div class="login-register-wrapper">
+                            <div class="tab-content">
+                                <div id="lg1" class="tab-pane active">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form text-center">
+                                            <form action="/ai_img_search" method="post">
+                                                <div><h1><span th:text="${roomType}" /></h1></div>
+                                                <br>
+                                                <br>
+                                                    <!--toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
+                                                    <img class="center" src="/images/result.jpg">
+                                                <!-- <input type="text" name="tip" placeholder="청소꿀팁" readonly> -->
+                                                <div class="button-box text-center">
+                                                    <br>
+                                                    <br>
+                                                    <button type="submit">다시</button>&nbsp;&nbsp;
+                                                    <br>
+                                                    <br>
+                                                </div>
+                                            </form>
+
+                                            <!-- 오류 메시지 표시용 div -->
+                                            <div id="errorMessage" style="color: red;"></div>
+                                            <div class="wishlist-table-content">
+
+                                                <div class="table-content">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="width-price">번호</th>
+                                                            <th class="width-price">유형</th>     <!-- 신상품공지, 젇책공지, 이벤트공지 -->
+                                                            <th class="width-price"> 제목 </th>
+                                                            <th class="width-price"> 작성자 </th>
+                                                            <th class="width-price"> 작성날짜 </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="data:${noticeDTOn}" th:if="${data.admincategory=='청소꿀팁'}">
+                                                            <td class="product-name">
+                                                                <h5 th:text="${data.adminnoticeid}">
+                                                                    1
+                                                                </h5>
+                                                            </td>
+                                                            <td th:text="${data.admincategory}">
+                                                        <span th:if="${data.admincategory=='배송공지'}">
+                                                                배송공지
+                                                        </span>
+                                                                <span th:if="${data.admincategory=='상품공지'}">
+                                                                상품공지
+                                                        </span>
+                                                                <span th:if="${data.admincategory=='청소꿀팁'}">
+                                                                청소꿀팁
+                                                        </span>
+                                                                <span th:if="${data.admincategory=='이벤트'}">
+                                                                이벤트
+                                                        </span>
+                                                                <span th:if="${data.admincategory=='기타'}">
+                                                                기타
+                                                        </span>
+                                                            </td>
+                                                            <td>
+                                                                <a th:href="@{/notice_detail(adminnoticeid=${data.adminnoticeid})}" th:text="${data.admintitle}">
+                                                                    이용약관 개정안내
+                                                                </a>
+                                                            </td>
+                                                            <td class="product-name">
+                                                                <h5 th:text="${data.adminwriter}" >
+                                                                    관리자
+                                                                </h5>
+                                                                </a>
+                                                            </td>
+                                                            <td class="product-name">
+                                                                <h5 th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}">
+                                                                    23-11-15
+                                                                </h5>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 연관상품 -->
+        <div class="related-product section-padding-lr-1 pb-100">
+            <div class="container-fluid">
+                <div class="section-title-4 mb-100 text-center">
+                    <h2>Member Sale</h2>
+                </div>
+                <div class="related-product-active">
+                    <!-- 반복문을 통해 상품 목록 생성 -->
+                    <div th:each="product:${productDTOS}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75"
+                         th:if="${product.categoryTypeRole eq T(com.example.clean.Constant.CategoryTypeRole).MEMBERSALE}">
+                        <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
+                            <div class="product-img img-zoom mb-4">
+                                <a th:href="@{/product/{productId}(productId=${product.productId})}">
+                                    <!-- 대표 이미지를 표시하도록 수정 -->
+                                    <img class="default-img" th:src="|/images/item/@{${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}}|" width="600" height="300">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Add To Cart">
+                                        <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />
+                                    </button>
+                                    <button title="Wishlist">
+                                        <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3>
+                                    <!-- 상품 이름 표시 -->
+                                    <a th:href="@{/product/{productId}(productId=${product.productId})}" th:text="${product.productName}" />
+                                </h3>
+                                <div class="product-price">
+                                    <!-- 가격을 적절한 방식으로 표시 -->
+                                    <span th:text="${product.productPrice}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 반복문 끝 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

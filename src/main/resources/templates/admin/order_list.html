@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Member List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>MEMBER</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/admin_memberlist">회원목록</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a href="/admin_memberorderlist">주문내역</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a href="#">교환/환불</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">   <!-- 나중에 위아래 여백 넓히고, 칸 사이 간격 좁히기 -->
+        <div class="row justify-content-center">
+          <div class="col-lg-7"></div>
+          <div class="col-lg-3">
+            <div class="sidebar-widget update">
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>제품명</option>
+                  <option>아이디</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="sidebar-widget">
+              <div class="sidebar-search update">
+                <form class="sidebar-search-form" action="#">
+                  <input type="text" placeholder="Search">
+                  <button>
+                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">주문번호</th>
+                      <th class="width-price">회원이메일</th>
+                      <th class="width-price"></th>
+                      <th class="width-price">제품명</th>
+                      <th class="width-price">결제금액</th>
+                      <th class="width-price">주문날짜</th>
+                      <th class="width-price">진행상황</th>   <!-- 주문완료, 결제완료, 배송중, 배송완료, 구매확정, 취소(환불), 교환 -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${allOrders}">
+                      <td class="product-name">
+                        <h5><a th:text="${data.orderId}">1</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.userEntity.email}">email</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <th:block th:if="${data.imageDTOs != null and data.imageDTOs.size() > 0 and data.imageDTOs[0].imageFile != null}">
+                          <img th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">
+                        </th:block>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.productEntity.productName}">상품명</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.totalPrice}">구매금액</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}">23-12-07</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>결제완료</h5>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <!-- 페이지 번호 추가 -->
+                  <div class="pagination-style text-center mt-30">
+                    <ul>
+                      <li th:unless="${startPage == 1}">
+                        <a th:href="@{/admin_memberorderlist(page=1)}">처음</a>
+                      </li>
+                      <li th:unless="${currentPage == 1}">
+                        <a th:href="@{/admin_memberorderlist(page=${prevPage})}">&lt;</a>
+                      </li>
+
+                      <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                        <li th:unless="${currentPage == page}">
+                            <a th:href="@{/admin_memberorderlist(page=${page})}">[[${page}]]</a>
+                        </li>
+                        <li th:if="${currentPage == page}">
+                            <a href="#">[[${page}]]</a>
+                        </li>
+                      </span>
+
+                      <li th:unless="${currentPage == lastPage}">
+                        <a th:href="@{/admin_memberorderlist(page=${nextPage})}">&gt;</a>
+                      </li>
+                      <li th:unless="${endPage == lastPage}">
+                        <a th:href="@{/admin_memberorderlist(page=${lastPage})}">끝</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- 페이지 번호 추가 끝 -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

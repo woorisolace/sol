@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sidebar</title>
+</head>
+
+
+<body>
+<!-- sidebar 영역 -->
+<div th:fragment="sidebar">
+  <!-- Menu start -->
+  <div class="off-canvas-active">
+    <a class="off-canvas-close"><i class="las la-times"></i></a>
+    <div class="off-canvas-wrap">
+      <div class="menu-wrap">
+        <div id="menu" class="slinky-mobile-menu text-left">
+          <ul>
+            <li>
+              <a href="/">HOME</a>
+            </li>
+            <li>
+              <a href="#">PRODUCT</a>
+              <ul>
+                <li><a href="/productlist">All</a></li>
+                <li><a href="/livinglist">Living</a></li>
+                <li><a href="/kitchenlist">Kitchen</a></li>
+                <li><a href="/restroomlist">Restroom</a></li>
+                <li><a href="/salelist">Sale</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">Notice</a>
+              <ul>
+                <li><a href="/noticelist">Notice</a></li>
+                <li><a href="/qnalist">Q&A</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/reviewlist">Review</a>
+            </li>
+            <!--인증처리된 사용자만 접근가능-->
+            <li sec:authorize="isAuthenticated()">
+              <a href="#">MyPage</a>
+              <ul>
+                <li><a href="/mypage">MyPage</a></li>
+                <li><a href="/myinfo_detail">My Info</a></li>
+                <li><a href="/member_oderlist">My Order</a></li>
+                <li><a href="/myreviewlist">My Review</a></li>
+                <li><a href="/mylikelist">My Like</a></li>
+              </ul>
+            </li>
+            <!--인증안된 사용자가 접근가능-->
+            <li sec:authorize="isAnonymous()">
+              <a href="/login">Login</a>
+            </li>
+            <!--인증처리된 사용자만 접근가능-->
+            <li sec:authorize="isAuthenticated()">
+              <a href="/logout">Logout</a>
+            </li>
+            <li>
+              <a href="/admin">ADMIN</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sidebar 영역 끝 -->
+</body>
+</html>

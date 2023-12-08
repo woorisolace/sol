@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="gift-exchange" transform="translate(0.5 0.5)">
+    <path d="M0.5 0L0.5 14" transform="translate(19.5 16)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M0.5 0L0.5 16" transform="translate(27.5 16)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M0 4C0 1.8 1.8 0 4 0C10 0 12 8 12 8C12 8 6.2 8 4 8C1.8 8 0 6.2 0 4Z" transform="translate(12 0)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M12 4C12 1.8 10.2 0 8 0C2 0 0 8 0 8C0 8 5.8 8 8 8C10.2 8 12 6.2 12 4Z" transform="translate(24 0)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M6 0L6 16L0 16" transform="translate(34 16)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M0.5 10L0.5 0" transform="translate(7.5 16)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M0 0L40 0L40 8L0 8L0 0Z" transform="translate(4 8)" id="Rectangle" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M26.2 6L36 6C40.8 6 42 10 42 10L20.8 17.6C19.2 18 17.4 18 15.8 17.4L0 10.8125L0 0L8 0C11.2 0 14.2 1.4 16 4L22 4C25 4 28 7 28 10L14 10" transform="translate(0 26)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+  </g>
+</svg>

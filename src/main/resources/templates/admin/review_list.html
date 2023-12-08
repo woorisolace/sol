@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Review List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>Review</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 ">
+            <div class="sidebar-widget update">
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>상품명</option>
+                  <option>작성자</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="sidebar-widget">
+                <div class="sidebar-search update">
+                    <form class="sidebar-search-form" action="#">
+                        <input type="text" placeholder="Search">
+                        <button>
+                            <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                        </button>
+                    </form>
+                </div>
+            </div>
+          </div>
+          <div class="col-lg-2"></div>
+          <div class="col-lg-4"></div>
+        </div>
+      </div>
+
+    <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-price"></th>
+                      <th class="width-price">작성자</th>
+                      <th class="width-price">상품명</th>    <!-- 클릭 했을 때 답글 후기 댓글 다는 창으로 이동 -->
+                      <th class="width-price">만족도</th>    <!-- 별 1, 2, 3, 4, 5 -->
+                      <th class="width-price">후기</th>      <!-- 10~20글자 정도만 보이게 -->
+                      <th class="width-price">추천수</th>    <!-- 생략 가능 -->
+                      <th class="width-price">댓글 작성일</th>
+                      <th class="width-price">답변 여부</th>    <!-- 답변작성, 답변완료 -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td class="product-name">
+                        <h5>1</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>상품이지미</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>작성자</h5>   <!-- 또는 카카오 가입 -->
+                      </td>
+                      <td class="product-name">
+                        <h5>상품명</h5>   <!-- 또는 카카오 가입 -->
+                      </td>
+                      <td class="product-name">
+                        <h5>★★★★★</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>후기</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>추천수</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5>23-11-15</h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a href="/admin_reviewcomment">답변작성</a></h5>   <!-- 버튼 형태로 -->
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                    <ul>
+                      <li><a href="#"><</a></li>
+                      <li><a class="active" href="#">01</a></li>
+                      <li><a href="#">02</a></li>
+                      <li><a href="#">03</a></li>
+                      <li><a href="#">04</a></li>
+                      <li><a href="#">05</a></li>
+                      <li><a href="#">></a></li>
+                    </ul>
+                  </div><!-- 페이지 번호 추가 끝-->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+
+</body>
+</html>

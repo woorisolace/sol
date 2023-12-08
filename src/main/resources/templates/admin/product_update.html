@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Product Update</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>product Update</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-area bg-white pb-130">
+      <div class="container">
+        <div class="notice-info-wrap">
+          <form th:action="@{'/admin_product_update'}" method="post" enctype="multipart/form-data" th:object="${productDTO}">
+
+            <input type="hidden" name="productId" th:field="*{productId}">
+            <input type="hidden" th:field="*{modDate}" name="modDate">
+            <table class="table notice-table">
+
+              <tbody>
+              <tr>
+                <th scope="row" class="notice-padding" id="productName">상품명</th>
+                <td class="notice-info">
+                  <input type="text" name="productName" th:field="*{productName}">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding" id="productName">상품설명</th>
+                <td class="notice-info">
+                  <input type="text" name="productContent" th:field="*{productContent}">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding" id="CategoryTypeRole">카테고리</th>
+                <td class="notice-info">
+                  <div class="sidebar-widget update">
+                    <div class="sidebar-archive-wrap">
+                      <!--수정-->
+                      <select name="categoryTypeRole" >
+                        <option th:each="state:${categoryType}"
+                                th:value="${state.name()}"
+                                th:text="${state.getDescription()}"
+                                th:selected="${state == categoryTypeRole}">
+                        </option>
+                      </select>
+                      <!--수정 끝-->
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">소비자가</th>
+                <td class="notice-info">
+                  <input type="text" name="productCost" th:field="*{productCost}">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding" id="productPrice">판매가</th>
+                <td class="notice-info">
+                  <input type="text" name="productPrice" th:field="*{productPrice}">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding" id="productCnt">재고수</th>
+                <td class="notice-info">
+                  <input type="number" name="productCnt" th:field="*{productCnt}">
+                </td>
+              </tr>
+
+              <!-- 판매상태 -->
+              <tr>
+                <th scope="row" class="notice-padding" id="SellStateRole">판매상태</th>
+                <td class="notice-info">
+                  <div class="sidebar-widget update">
+                    <div class="sidebar-archive-wrap">
+                      <!---수정-->
+                      <select id="sellState" name="sellStateRole"> <!--th:field=*{sellStateRole}>-->
+                        <!-- 열거형 값들을 반복하며 옵션을 생성 -->
+                        <option th:each="state : ${sellState}"
+                                th:value="${state.name()}"
+                                th:text="${state.getDescription()}"
+                                th:selected="${state == sellStateRole}"></option>
+                      </select>
+                      <!--수정끝-->
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="notice-padding" id="productDetail">상품정보</th>
+                <td class="notice-info">
+                  <textarea rows="7" name="productDetail" th:field="*{productDetail}"></textarea>
+                </td>
+              </tr>
+
+              <!-- 대표 이미지 -->
+              <tr>
+                <th scope="row" class="notice-padding" id="imageDTOs[0]">대표이미지</th>
+                <td class="notice-info">
+                  <input type="hidden" name="imageDTOs[0].imageId" th:value="*{imageDTOs[0].imageId}">
+                  <input type="hidden" name="imageDTOs[0].imageType" value="0">
+                  <input type="file" name="images" onchange="previewImage(this, 'previewImg0')">
+                  <img id="previewImg0" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" th:if="${imageDTOs[0].imageFile != null}" th:src="|/images/item/${imageDTOs[0].imageFile}|">
+                </td>
+              </tr>
+
+              <!-- 서브 이미지 -->
+              <tr>
+                <th scope="row" class="notice-padding" id="imageDTOs[0]">서브이미지</th>
+                <td class="notice-info">
+                  <input type="hidden" name="imageDTOs[1].imageId" th:value="*{imageDTOs[1].imageId}">
+                  <input type="hidden" name="imageDTOs[1].imageType" value="1">
+                  <input type="file" name="images" onchange="previewImage(this, 'previewImg1')">
+                  <img id="previewImg1" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" th:if="${imageDTOs[1].imageFile != null}" th:src="|/images/item/${imageDTOs[1].imageFile}|">
+                </td>
+              </tr>
+
+              <!-- 상세 이미지 -->
+              <tr>
+                <th scope="row" class="notice-padding" id="imageDTOs[2]">상세이미지</th>
+                <td class="notice-info">
+                  <input type="hidden" name="imageDTOs[2].imageId" th:value="*{imageDTOs[2].imageId}">
+                  <input type="hidden" name="imageDTOs[2].imageType" value="2">
+                  <input type="file" name="images" onchange="previewImage(this, 'previewImg2')">
+                  <img id="previewImg2" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" th:if="${imageDTOs[2].imageFile != null}" th:src="|/images/item/${imageDTOs[2].imageFile}|">
+                </td>
+              </tr>
+
+              <script>
+                  // 미리보기 이미지 업데이트 함수
+                  function previewImage(input, imgId) {
+                      var preview = document.getElementById(imgId);
+                      var file = input.files[0];
+                      var reader = new FileReader();
+
+                      reader.onloadend = function () {
+                          preview.src = reader.result;
+                      };
+
+                      if (file) {
+                          reader.readAsDataURL(file);
+                      } else {
+                          preview.src = "";
+                      }
+                  }
+              </script>
+
+              </tbody>
+            </table>
+
+            <div class="row">
+              <div class="col d-flex justify-content-center">
+                <div class="notice-button-container">
+                  <div class="notice-content">
+                    <div class="notice-btn-date-wrap list-btn">
+                      <div class="notice-btn">
+                        <button type="submit" class="btn btn-lg">수정</button>
+                        <button type="reset" class="btn btn-lg">다시</button>
+                        <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_productlist}'|">목록</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- content 끝-->
+</body>
+</html>

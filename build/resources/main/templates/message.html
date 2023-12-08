@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+<script th:inline="javascript">
+    var message = [[${message}]];
+    var error = [[${error}]];
+    var success = [[${success}]];
+
+    console.log("Message:", message);
+    console.log("Error:", error);
+    console.log("Success", success);
+
+    var confirmationMessage = message || error || success;
+
+    if (confirmationMessage && confirm(confirmationMessage)) {
+        console.log("Confirmed");
+        location.replace([[${searchUrl}]]);
+    }else{
+        console.log("취소되었습니다.");
+        location.replace(history.go(-1));
+    }
+</script>
+
+</body>
+</html>
+
+
+
+<!--
+confirm 함수 :  사용자에게 확인 대화 상자를 표시하고 "확인 또는 취소" 버튼을 클릭하게 함 -> true 또는 false를 반환
+               문자열을 받아들이지만, null 또는 undefined를 포함한 값은 false로 간주
+
+
+location.replace : 새로운 URL로 전환하는데 사용 (여러 번 호출될 필요 없이 한 번만 호출)
+-->

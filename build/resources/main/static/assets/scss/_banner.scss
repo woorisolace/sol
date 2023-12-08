@@ -1,0 +1,186 @@
+/*-------- 24. Login register style ---------*/
+
+.banner-wrap {
+    position: relative;
+    overflow: hidden;
+    > a {
+        display: block;
+        img {
+            width: 100%;
+            transition: all .5s ease 0s;
+        }
+    }
+    @media #{$md-layout} {
+        &.blog-banner-img {
+            > a {
+                img {
+                    max-width: 100%;
+                    width: inherit;
+                }
+            }
+        }
+    }
+    .banner-content-1 {
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+        h4 {
+            color: $white;
+            font-size: 20px;
+            letter-spacing: 4px;
+            display: inline-block;
+            font-family: $proximanova;
+            font-weight: bold;
+            padding: 26px 273px 25px 40px;
+            margin: 0;
+            background: linear-gradient(270deg, rgba(#BB9B1F, 0), #BB9B1F);
+            @media #{$lg-layout} {
+                padding: 26px 173px 25px 40px;
+            }
+            @media #{$xs-layout} {
+                padding: 26px 70px 25px 40px;
+            }
+            @media #{$sm-layout} {
+                padding: 26px 120px 25px 40px;
+            }
+        }
+        h2 {
+            font-size: 106px;
+            color: $white;
+            line-height: 1;
+            margin: -19px 0 0 38px;
+            @media #{$lg-layout} {
+                font-size: 80px;
+            }
+            @media #{$md-layout} {
+                font-size: 90px;
+            }
+            @media #{$xs-layout} {
+                font-size: 60px;
+            }
+        }
+    }
+    .banner-content-2 {
+        position: absolute;
+        left: 72px;
+        bottom: 68px;
+        @media #{$xl-layout} {
+            left: 30px;
+            bottom: 30px;
+        }
+        @media #{$lg-layout} {
+            left: 30px;
+            bottom: 30px;
+        }
+        @media #{$xs-layout} {
+            left: 20px;
+            bottom: auto;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        h3 {
+            font-size: 28px;
+            margin: 0;
+            font-family: $proximanova;
+            @media #{$lg-layout} {
+                font-size: 25px;
+            }
+            @media #{$xs-layout} {
+                font-size: 20px;
+            }
+        }
+        h2 {
+            font-size: 66px;
+            line-height: 1;
+            margin: 4px 0 29px;
+            @media #{$lg-layout} {
+                font-size: 50px;
+                margin: 4px 0 22px;
+            }
+            @media #{$xs-layout} {
+                font-size: 38px;
+                margin: 4px 0 15px;
+            }
+        }
+    }
+    .banner-content-3 {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 52px;
+        text-align: center;
+        @media #{$lg-layout} {
+            bottom: 30px;
+        }
+        h4 {
+            font-size: 22px;
+            letter-spacing: 2px;
+            font-family: $proximanova600;
+            margin: 0;
+            @media #{$lg-layout} {
+                font-size: 20px;
+            }
+        }
+        h2 {
+            color: #F46C7D;
+            font-size: 83px;
+            margin: 0px 0 18px;
+            line-height: 1;
+            @media #{$lg-layout} {
+                font-size: 45px;
+            }
+            @media #{$xs-layout} {
+                font-size: 75px;
+            }
+        }
+    }
+    .banner-content-4 {
+        position: absolute;
+        left: 30px;
+        bottom: 52px;
+        @media #{$lg-layout} {
+            left: 10px;
+            bottom: 30px;
+        }
+        h2 {
+            font-size: 32px;
+            color: $white;
+            margin: 0 0 3px;
+        }
+        h3 {
+            margin: 0;
+            font-size: 16px;
+            color: $white;
+        }
+    }
+    &:hover {
+        a {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.banner-btn-style {
+    a {
+        &.btn {
+            display: inline-block;
+            line-height: 1;
+            color: $white;
+            font-size: 16px;
+            font-family: $proximanova;
+            background-color: #D95252;
+            padding: 10px 44px;
+            @media #{$lg-layout} {
+                padding: 10px 30px;
+            }
+        }
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,231 @@
+/*-------- 24. Login register style ---------*/
+
+.map {
+    iframe {
+        height: 410px;
+        width: 100%;
+        @media #{$lg-layout} {
+            height: 400px;
+        }
+        @media #{$md-layout} {
+            height: 350px;
+        }
+        @media #{$xs-layout} {
+            height: 300px;
+        }
+    }
+}
+
+.contact-form-wrap {
+    .contact-form-title {
+        margin: 0 0 27px;
+        h1 {
+            font-size: 46px;
+            line-height: 1;
+            margin: 0 0 6px;
+            @media #{$xs-layout} {
+                font-size: 35px;
+            }
+        }
+        p {
+            color: #181818;
+            margin: 0;
+            font-family: $proximanova;
+        }
+    }
+    .contact-form-style {
+        margin-right: 30px;
+        @media #{$md-layout} {
+            margin-right: 0px;
+        }
+        @media #{$xs-layout} {
+            margin-right: 0px;
+        }
+        input , textarea {
+            height: 82px;
+            width: 100%;
+            color: #181818;
+            font-family: $proximanova;
+            border: 1px solid #D4D4D4;
+            padding: 2px 24px;
+            margin: 0 0 20px;
+            @media #{$xs-layout} {
+                height: 65px;
+            }
+            &::-moz-input-placeholder {
+                opacity: 1;
+                color: #181818;
+            }
+            &::-webkit-input-placeholder {
+                opacity: 1;
+                color: #181818;
+            }
+        }
+        textarea {
+            height: 205px;
+            padding: 35px 24px 2px 24px;
+            @media #{$xs-layout} {
+                height: 150px;
+                padding: 25px 24px 2px 24px;
+            }
+        }
+        button {
+            &.submit {
+                color: $white;
+                background-color: #2F2F2F;
+                padding: 24px 10px;
+                text-align: center;
+                width: 100%;
+                font-family: $proximanova;
+                border: none;
+                &:hover {
+                    background-color: $theme-color;
+                }
+            }
+        }
+    }
+}
+
+.contact-info-area {
+    margin: 0 0 0 50px;
+    @media #{$lg-layout} {
+        margin: 0 0 0 20px;
+    }
+    @media #{$md-layout} {
+        margin: 50px 0 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 40px 0 0 0px;
+    }
+    ul {
+        li {
+            display: flex;
+            align-items: center;
+            margin: 0 0 47px;
+            @media #{$md-layout} {
+                margin: 0 0 35px;
+            }
+            @media #{$xs-layout} {
+                margin: 0 0 30px;
+            }
+            &:last-child {
+                margin: 0 0 0px;
+            }
+            svg {
+                &.icon-width-1 {
+                    width: 28px;
+                }
+                &.icon-width-2 {
+                    width: 30px;
+                }
+                &.icon-width-4 {
+                    width: 32px;
+                }
+                path {
+                    stroke: #D98719;
+                }
+            }
+            a {
+                svg {
+                    &.icon-width-3 {
+                        width: 27px;
+                    }
+                }
+            }
+            span {
+                font-family: $proximanova;
+                display: inline-block;
+                margin-left: 29px;
+                line-height: 19px;
+            }
+        }
+    }
+}
+
+.contact-info-social {
+    margin: 48px 0 0;
+    @media #{$xs-layout} {
+        margin: 30px 0 0;
+    }
+    a {
+        margin-right: 30px;
+        &:last-child {
+            margin-right: 0;
+        }
+        svg {
+            g {
+                path {
+                    fill: #181818;
+                    transition: all .3s ease 0s;
+                }
+            }
+        }
+        &:hover {
+            svg {
+                g {
+                    path {
+                        fill: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.contact-us-wrap {
+	margin: 120px 26px 0;
+    @media #{$lg-layout} {
+        margin: 120px 0px 0;
+    }
+    @media #{$md-layout} {
+        margin: 100px 0px 0;
+    }
+    @media #{$xs-layout} {
+        margin: 40px 0px 0;
+    }
+    p {
+        &.form-messege {
+            margin: 10px 0 0;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

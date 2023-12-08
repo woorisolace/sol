@@ -1,0 +1,206 @@
+/*-------- 24. Login register style ---------*/
+
+.instagram-paragraph {
+    p {
+        color: #6D6D6D;
+        font-size: 18px;
+        line-height: 36px;
+        font-family: $proximanova;
+        margin: 0 auto 95px;
+        width: 51%;
+        text-align: center;
+        @media #{$xx-layout} {
+            width: 57%;
+        }
+        @media #{$xl-layout} {
+            width: 57%;
+        }
+        @media #{$lg-layout} {
+            width: 68%;
+        }
+        @media #{$md-layout} {
+            width: 85%;
+            margin: 0 auto 60px;
+        }
+        @media #{$xs-layout} {
+            width: 100%;
+            margin: 0 auto 50px;
+        }
+    }
+}
+
+.instagram-img-wrap {
+	margin: 0 6px 0 0;
+    @media #{$xl-layout} {
+        margin: 0 0px 0 0;
+    }
+    @media #{$lg-layout} {
+        margin: 0 0px 0 0;
+    }
+    @media #{$md-layout} {
+        margin: 0 0px 0 0;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0px 0 0;
+    }
+}
+
+.instagram-img {
+    overflow: hidden;
+    a {
+        display: block;
+        img {
+            width: 100%;
+            transition: all .5s ease 0s;
+        }
+    }
+    &:hover {
+        a {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.instagram-title {
+    margin: 0 0 0 145px;
+    @media #{$xx-layout} {
+        margin: 0 0 0 115px;
+    }
+    @media #{$xl-layout} {
+        margin: 0 0 0 0px;
+    }
+    @media #{$lg-layout} {
+        margin: 0 0 0 0px;
+    }
+    @media #{$md-layout} {
+        margin: 30px 0 0 0px;
+    }
+    @media #{$xs-layout} {
+        margin: 30px 0 0 0px;
+    }
+    h2 {
+        font-size: 36px;
+        margin: 0 0 50px;
+        line-height: 1;
+        padding: 58px 0 60px;
+        border-bottom: 1px solid #7D7D7D;
+        border-top: 1px solid #7D7D7D;
+        @media #{$md-layout} {
+            padding: 28px 0 30px;
+            margin: 0 0 30px;
+            font-size: 30px;
+        }
+        @media #{$xs-layout} {
+            padding: 28px 0 30px;
+            margin: 0 0 30px;
+            font-size: 30px;
+        }
+        @media #{$xs-layout} {
+            padding: 20px 0 22px;
+            margin: 0 0 25px;
+        }
+    }
+    p {
+        font-size: 20px;
+        color: #4D4D4D;
+        margin: 0 0 0px;
+        @media #{$lg-layout} {
+            font-size: 18px;
+        }
+        @media #{$xs-layout} {
+            font-size: 18px;
+        }
+    }
+}
+
+.instagram-title-2 {
+    margin: 0 57px 75px;
+    @media #{$xx-layout} {
+        margin: 0 0px 75px;
+    }
+    @media #{$xl-layout} {
+        margin: 0 0px 75px;
+    }
+    @media #{$xs-layout} {
+        margin: 0 0px 30px;
+    }
+    h2 {
+        font-size: 36px;
+        padding: 0 0 19px;
+        margin: 0 0 17px;
+        border-bottom: 1px solid #7D7D7D;
+        @media #{$xs-layout} {
+            font-size: 32px;
+            padding: 0 0 14px;
+            margin: 0 0 12px;
+        }
+    }
+    p {
+        font-size: 20px;
+        line-height: 32px;
+        color: #4D4D4D;
+        margin: 0 auto;
+        @media #{$xs-layout} {
+            font-size: 18px;
+            line-height: 30px;
+        }
+    }
+}
+
+.instagram-slider-active {
+    .slick-list {
+        margin: 0 -15px;
+        .instagram-plr-1 {
+            padding: 0 15px;
+        }
+    }
+}
+
+.padding-46-row-col {
+    .row {
+        margin-right: -23px;
+        margin-left: -23px;
+        @media #{$xl-layout} {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        @media #{$xs-layout} {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        div[class^="col-"] {
+            padding-left: 23px;
+            padding-right: 23px;
+            @media #{$xl-layout} {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            @media #{$xs-layout} {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+    }
+}
+
+.view-more {
+    a {
+        color: #1D1D1D;
+        font-size: 16px;
+        display: inline-block;
+    }
+    @media #{$xs-layout} {
+        &.mt-25 {
+            margin-top: 0px;
+        }
+    }
+}
+
+.toggle-item-active {
+	display: none;
+}
+
+
+

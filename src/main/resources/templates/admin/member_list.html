@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Member List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>MEMBER</h2>
+          </div>
+          <ul>
+            <li>
+              <a th:classappend="${#httpServletRequest.requestURI == '/admin_memberlist' ? 'active' : ''}" href="/admin_memberlist">회원목록</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a th:classappend="${#httpServletRequest.requestURI == '#' ? 'active' : ''}" href="/admin_memberorderlist">주문내역</a>
+            </li>
+            <li>
+              |
+            </li>
+            <li>
+              <a th:classappend="${#httpServletRequest.requestURI == '#' ? 'active' : ''}" href="#">교환/환불</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">   <!-- 나중에 위아래 여백 넓히고, 칸 사이 간격 좁히기 -->
+        <div class="row justify-content-center">
+          <div class="col-lg-7"></div>
+          <div class="col-lg-3">
+            <div class="sidebar-widget update">
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>가입유형</option>
+                  <option>등급</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="sidebar-widget">
+              <div class="sidebar-search update">
+                <form class="sidebar-search-form" action="#">
+                  <input type="text" placeholder="Search">
+                  <button>
+                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-price">가입유형</th>
+                      <th class="width-price">회원이메일</th>
+                      <th class="width-price">회원이름</th>
+                      <th class="width-price">등급</th>
+                      <th class="width-price">가입날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${memberDTOS}">
+                      <td class="product-name">
+                        <h5><a th:text="${data.id}">1</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.oauthType}">홈페이지가입 유형</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.email}">회원이메일</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${data.name}">회원이름</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a>일반 회원</a></h5>
+                      </td>
+                      <td class="product-name">
+                        <h5><a th:text="${#temporals.format(data.createDate, 'yyyy-MM-dd')}">가입날짜</a></h5>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <!-- 페이지 번호 추가 -->
+                  <div class="pagination-style text-center mt-30">
+                    <ul>
+                      <li th:unless="${startPage == 1}">
+                        <a th:href="@{/admin_memberlist(page=1)}">처음</a>
+                      </li>
+                      <li th:unless="${currentPage == 1}">
+                        <a th:href="@{/admin_memberlist(page=${prevPage})}">&lt;</a>
+                      </li>
+
+                      <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                        <li th:unless="${currentPage == page}">
+                            <a th:href="@{/admin_memberlist(page=${page})}">[[${page}]]</a>
+                        </li>
+                        <li th:if="${currentPage == page}">
+                            <a href="#">[[${page}]]</a>
+                        </li>
+                      </span>
+
+                      <li th:unless="${currentPage == lastPage}">
+                        <a th:href="@{/admin_memberlist(page=${nextPage})}">&gt;</a>
+                      </li>
+                      <li th:unless="${endPage == lastPage}">
+                        <a th:href="@{/admin_memberlist(page=${lastPage})}">끝</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- 페이지 번호 추가 끝 -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

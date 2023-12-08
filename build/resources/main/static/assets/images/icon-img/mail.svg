@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="mail" transform="translate(0.5 0.5)">
+    <path d="M14 13L1 13C0.448 13 0 12.552 0 12L0 1C0 0.448 0.448 0 1 0L14 0C14.552 0 15 0.448 15 1L15 12C15 12.552 14.552 13 14 13Z" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M0 0L5.5 4.5L11 0" transform="translate(2 3)" id="Path" fill="none" stroke="#2F2F2F" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

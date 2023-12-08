@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Review List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="breadcrumb-area breadcrumb-padding-6">
+        <div class="container">
+            <div class="breadcrumb-content text-center">
+                <div class="breadcrumb-title">
+                    <h2>Review</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 ">
+                    <div class="sidebar-widget update">
+                        <div class="sidebar-archive-wrap">
+                            <select>
+                                <option>-- 카테고리 선택 --</option>
+                                <option>일반후기</option>
+                                <option>포토후기</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <!--
+                    <div class="sidebar-widget">
+                        <div class="sidebar-search update">
+                            <form class="sidebar-search-form" action="#">
+                                <input type="text" placeholder="Search">
+                                <button>
+                                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    -->     <!-- 앞에 select랑 묶음 불가능하면 검색창은 없애죠... -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-wrap">
+                        <div class="blog-content">
+                            <div class="blog-btn-date-wrap right-btn">
+                                <div class="blog-btn">
+                                    <a class="btn btn-outline-primary" href="/reviewinsert">글쓰기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-20"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="wishlist-table-content">
+                            <div class="table-content">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th class="width-price">번호</th>
+                                        <th class="width-thumbnail">제품</th>
+                                        <th class="width-thumbnail">후기</th>
+                                        <th class="width-price"> 내용 </th>
+                                        <th class="width-price"> 만족도 </th>
+                                        <th class="width-price"> 추천수 </th>
+                                        <th class="width-price"> 등록일 </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="product-name">
+                                            <h5>1</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <!--<h5>제품썸네일</h5>-->
+                                        </td>
+                                        <td class="product-name">
+                                            <!--<h5>후기이미지</h5>-->
+                                        </td>
+                                        <td class="product-name">
+                                            <h5><a href="/reviewdetail">처음 구매해보았는데 너무 좋아요!....</a></h5>      <!-- 10글자 정도만 보이도록 설정 -->
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>★★★★★</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>30</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>2023-11-12</h5>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                                    <ul>
+                                        <li><a href="#"><</a></li>
+                                        <li><a class="active" href="#">01</a></li>
+                                        <li><a href="#">02</a></li>
+                                        <li><a href="#">03</a></li>
+                                        <li><a href="#">04</a></li>
+                                        <li><a href="#">05</a></li>
+                                        <li><a href="#">></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

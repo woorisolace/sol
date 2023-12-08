@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product list</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title" data-aos="fade-up" data-aos-delay="200">
+                        <h2>Clean Product</h2>
+                    </div>
+                    <ul data-aos="fade-up" data-aos-delay="300">
+                        <li>
+                            <a href="/productlist">All</a>
+                        </li>
+                        <li>
+                            <a href="/livinglist">Living</a>
+                        </li>
+                        <li>
+                            <a href="/kitchenlist">Kitchen</a>
+                        </li>
+                        <li>
+                            <a href="/restroomlist">Restroom</a>
+                        </li>
+                        <li>
+                            <a href="/salelist">sale</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form th:action="@{/order}" method="get">
+            <input type="hidden" id="productId" name="productId" th:value="${productId}">   <!-- 상품 번호 전달 -->
+            <div class="product-details-area section-padding-lr-2 pb-115">
+                <div class="container-fluid">
+                    <div class="back-to-shop" data-aos="fade-up" data-aos-delay="200">
+                        <a href="/productlist"><img class="injectable" src="assets/images/icon-img/arrow-left-6.svg" alt=""> Back to Shop</a>
+                    </div>
+                    <div class="row">
+
+                        <!-- 대표 이미지 섹션 수정 -->
+                        <div class="col-lg-7">
+                            <div class="product-details-tab" data-aos="fade-up" data-aos-delay="300">
+                                <div class="pro-dec-big-img-slider">
+                                    <div th:each="image, iterStat : ${productDTO.imageDTOs}">
+                                        <div class="easyzoom-style" style="max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center;"> <!-- 수평 가운데 정렬 스타일 추가 -->
+                                            <div class="easyzoom easyzoom--overlay" style=" max-width: 100%; max-height: 100%; display: grid; place-items: center;"> <!-- 이거 삭제하면 상품정보 줄 바꿈 되니까 삭제 금지 -->
+                                                <a th:href="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}">
+                                                    <img th:src="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}"
+                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';"
+                                                         style="width: 80%; height: auto; max-width: 1000px; max-height: 1000px; display: grid; place-items: center;">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-dec-slider-small product-dec-small-style1"> <!-- 서브 이미지 -->
+                                    <div th:each="image, iterStat : ${productDTO.imageDTOs}"
+                                         th:if="${iterStat.index != 2}"
+                                         class="product-dec-small" th:classappend="${iterStat.index == 0} ? 'active'"> <!--productDTO 이미지의 2번째까지만 노출-->
+                                        <img th:src="@{/images/item/{filename}(filename=${image.imageFile})}"
+                                             onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="150" height="150">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--상품설명-->
+                        <div class="col-lg-5">
+                            <div class="product-details-content product-details-mrg-left">
+                                <b><h2 data-aos="fade-up" data-aos-delay="300" th:text="${productDTO.productName}"></h2></b>
+                                <p data-aos="fade-up" data-aos-delay="500" th:text="${productDTO.productContent}"></p>
+                                <hr>
+                                <div class="product-details-price" data-aos="fade-up" data-aos-delay="400">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                        <tr class="product-consumer-price">
+                                            <th scope="row">소비자가</th>
+                                            <td id="productCost" th:text="${productDTO.productCost}"></td>
+                                        </tr>
+
+                                        <tr class="product-price">
+                                            <th scope="row">판매가</th>
+                                            <td id="productPrice" th:text="${productDTO.productPrice}"></td>
+                                        </tr>
+
+                                        <tr class="product-price">
+                                            <th scope="row">할인율</th>
+                                            <td id="productDis" th:text="${productDTO.productDis}"></td>
+                                        </tr>
+
+                                        <script>
+                                            // 서버에서 전달된 소비자가와 판매가를 가져오기
+                                            var productCostElement = document.getElementById('productCost');
+                                            var productPriceElement = document.getElementById('productPrice');
+                                            var productDisElement = document.getElementById('productDis');
+
+                                            var productCost = parseFloat(productCostElement.innerText.replace(/[^0-9.-]+/g, ''));   <!-- 숫자 이외의 문자를 제거 -->
+                                            var productPrice = parseFloat(productPriceElement.innerText.replace(/[^0-9.-]+/g, ''));
+
+                                            // 소비자가와 판매가가 유효한 숫자인지 확인합니다.
+                                            if (!isNaN(productCost) && !isNaN(productPrice) && productCost > 0) {
+                                                // 할인율 계산
+                                                var discountRate = ((productCost - productPrice) / productCost) * 100;
+
+                                                // 계산된 할인율의 정수 부분을 할인율 표시 부분에 업데이트합니다.
+                                                productDisElement.innerText = Math.floor(discountRate) + '%';
+                                            } else {
+                                                // 유효한 값이 아닌 경우에 대한 처리 (예: 에러 메시지 출력 등)
+                                                console.error("소비자가나 판매가가 유효하지 않습니다.");
+                                            }
+                                        </script>
+
+                                        <tr>
+                                            <th scope="row">구매 수량</th>      <!--고객이 구매하는 수량-->
+                                            <td>
+                                                <div class="product-quality" id="productQualityContainer">
+                                                    <input id="productNum" name="productNum" class="cart-plus-minus-box input-text qty text" value="1">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="product-delivery-fee">
+                                            <th scope="row">배송비</th>
+                                            <td>3,000원 (50,000원 이상 구매 시 무료)</td>
+                                        </tr>
+                                        <tr class="horizontal-line"></tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td style="text-align: right;">     <!--구매 총 수량 및 총 금액-->
+                                                총 상품금액 (수량) : 총 <span id="producTotal" style="white-space: nowrap;"></span>&nbsp;
+                                                (<span id="displayedProductNum">1</span> 개)
+                                            </td>
+                                        </tr>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                var productNum = document.getElementById("productNum");
+                                                var productQualityContainer = document.getElementById("productQualityContainer");
+
+                                                productQualityContainer.addEventListener('click', function (event) {
+                                                    var target = event.target;
+                                                    if (target.classList.contains('dec')) {
+                                                        decreaseQuantity();
+                                                    } else if (target.classList.contains('inc')) {
+                                                        increaseQuantity();
+                                                    }
+                                                });
+
+                                                var i = parseInt(productNum.value);
+                                                var productPrice = parseFloat(document.getElementById("productPrice").textContent.replace("원", "").replace(",", ""));
+
+                                                // 초기화 코드 추가
+                                                updateQuantityAndTotal();
+
+                                                function increaseQuantity() {
+                                                    i++;
+                                                    updateQuantityAndTotal();
+                                                }
+
+                                                function decreaseQuantity() {
+                                                    if (i > 1) {
+                                                        i--;
+                                                        updateQuantityAndTotal();
+                                                    }
+                                                }
+
+                                                function updateQuantityAndTotal() {
+                                                    productNum.value = i;
+                                                    var producTotalNum = i * productPrice;
+                                                    document.querySelector("#producTotal").textContent = producTotalNum.toLocaleString() + "원";
+
+                                                    var totalAmountValue = i * productPrice;
+                                                    document.querySelector("#displayedProductNum").textContent = i;
+                                                }
+                                            });
+                                        </script>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="product-details-purchase" data-aos="fade-up" data-aos-delay="200">
+
+                                            <div class="btn-product-purchase">
+                                                <button type="submit" class="btn btn-primary product-purchase">구매하기</button>
+                                            </div>
+
+                                            <div class="btn-product-purchase">
+                                                <button type="button" class="btn btn-primary product-purchase" href="#">장바구니</button>
+                                            </div>
+
+                                            <div class="btn-product-purchase">
+                                                <button type="submit" class="btn btn-primary product-purchase">카카오구매</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 관심상품
+                            <div class="product-details-wishlist-compare" data-aos="fade-up" data-aos-delay="300">
+                                <div class="product-details-wishlist">
+                                    <a href="#">
+                                        <img class="injectable" src="assets/images/icon-img/heart-2.svg" alt="">
+                                        Add to wishlist
+                                    </a>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 본문 시작 -->
+    <div class="description-review-area pb-180 border-bottom-1 ">
+        <div class="container">
+            <div class="description-review-wrapper">
+                <div class="tab-style-2 nav mb-70" data-aos="fade-up" data-aos-delay="200">
+                    <a class="active" href="#des-details1" data-bs-toggle="tab">상품 상세 정보</a>
+                    <a href="#des-details2" data-bs-toggle="tab" class="">배송안내</a>
+                    <a href="#" data-bs-toggle="tab" class="">상품사용후기</a>        <!-- 배지로 수량 표시 -->
+                    <a href="#" data-bs-toggle="tab">상품 Q&A</a>        <!-- 배지로 수량 표시 -->
+                </div>
+
+                <div class="tab-content">
+                    <div id="des-details1" class="tab-pane active">     <!-- 상품 상세 정보 -->
+                        <div class="product-description-wrapper">
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <div class="pro-description-banner" data-aos="fade-up" data-aos-delay="300">
+                                        <img src="assets/images/product-details/pro-details-banner.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="pro-description-content text-center" data-aos="fade-up" data-aos-delay="400">
+                                        <!-- 이미지가 있는 경우에만 표시 -->
+                                        <img th:if="${productDTO.imageDTOs[2] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[2].imageFile}}|"
+                                             onerror="this.onerror=null; this.src='../assets/images/product/null.png';">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="pro-description-banner" data-aos="fade-up" data-aos-delay="300">
+                                        <img src="assets/images/product-details/pro-details-banner.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="des-details2" class="tab-pane">        <!-- 배송 안내 -->
+                        <div class="specification-wrap table-responsive">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="width1">상품결제정보</td>
+                                    <td>
+                                        고액결제의 경우 안전을 위해 카드사에서 확인전화를 드릴 수도 있습니다. 확인과정에서 도난 카드의 사용이나 타인 명의의 주문등
+                                        정상적인 주문이 아니라고 판단될 경우 임의로 주문을 보류 또는 취소할 수 있습니다. &nbsp; <br>
+                                        <br>
+                                        무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다. &nbsp;<br>
+                                        주문시 입력한&nbsp;입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, 7일 이내로 입금을 하셔야 하며&nbsp;입금되지
+                                        않은 주문은 자동취소 됩니다. <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="width1">배송정보</td>
+                                    <td>
+                                        배송 방법 : 택배<br>
+                                        배송 지역 : 전국지역<br>
+                                        배송 비용 : 3,000원<br>
+                                        배송 기간 : 2일 ~ 7일<br>
+                                        배송 안내 :<br>
+                                        배송 방법 : 택배<br>
+                                        배송 지역 : 전국지역<br>
+                                        배송 비용 : 조건부 무료 : 주문 금액 50,000원 미만일 때 배송비 3,000원을 추가합니다.<br>
+                                        배송 기간 : 2일 ~ 7일 (생산,제조일정에 따라 달라질 수 있습니다)<br>
+                                        배송 안내 : 산간벽지나 도서지방은 별도의 추가금액을 지불하셔야 합니다.<br>
+                                        <br>
+                                        ※고객님께서 주문하신 상품은 입금 확인후 배송해 드립니다. 다만, 상품종류에 따라서 상품의 배송이 다소 지연될 수 있습니다.<br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="width1">교환 및 반품정보</td>
+                                    <td>
+                                        교환 및 반품이 가능한 경우 <br>
+                                        - 상품을 공급 받으신 날로부터 7일이내 단, 가전제품의 경우 포장을 개봉하였거나 포장이 훼손되어 상품가치가 상실된 경우에는 교환/반품이 불가능합니다. <br>
+                                        - 공급받으신 상품 및 용역의 내용이 표시.광고 내용과 다르거나 다르게 이행된 경우에는 공급받은 날로부터 3월이내, 그사실을 알게 된 날로부터 30일이내 <br>
+                                        <br>
+                                        교환 및 반품이 불가능한 경우 <br>
+                                        - 고객님의 책임 있는 사유로 상품등이 멸실 또는 훼손된 경우. 단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한 경우는 제외 <br>
+                                        - 포장을 개봉하였거나 포장이 훼손되어 상품가치가 상실된 경우 <br>
+                                        (예 : 가전제품, 식품, 음반 등, 단 액정화면이 부착된 노트북, LCD모니터, 디지털 카메라 등의 불량화소에 따른 반품/교환은 제조사 기준에 따릅니다.) <br>
+                                        - 고객님의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우 단, 화장품등의 경우 시용제품을  제공한 경우에 한 합니다. <br>
+                                        - 시간의 경과에 의하여 재판매가 곤란할 정도로 상품등의 가치가 현저히 감소한 경우 <br>
+                                        - 복제가 가능한 상품등의 포장을 훼손한 경우 <br>
+                                        (자세한 내용은 고객만족센터 1:1 E-MAIL상담을 이용해 주시기 바랍니다.) <br>
+                                        <br>
+                                        ※ 고객님의 마음이 바뀌어 교환, 반품을 하실 경우 상품반송 비용은 고객님께서 부담하셔야 합니다. <br>
+                                        (색상 교환, 사이즈 교환 등 포함) <br>
+                                        <br>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="des-details3" class="tab-pane">        <!-- 상품 사용 후기 -->
+                        <div class="review-wrapper">
+                            <h3>1 review for Sleeve Button Cowl Neck</h3>
+                            <div class="single-review">
+                                <div class="review-img">
+                                    <img src="assets/images/product-details/review-1.jpg" alt="">
+                                </div>
+                                <div class="review-content">
+                                    <div class="review-rating">
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                        <a class="yellow" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-half.svg" alt=""></a>
+                                        <a class="gray" href="#"><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></a>
+                                    </div>
+                                    <h5><span>HasTech</span> - April 29, 2020</h5>
+                                    <p>Donec accumsan auctor iaculis. Sed suscipit arcu ligula, at egestas magna molestie a. Proin ac ex maximus, ultrices justo eget, sodales orci. Aliquam egestas libero ac turpis pharetra, in vehicula lacus scelerisque</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="des-details4" class="tab-pane">        <!-- 상품 Q&A -->
+                        <div class="vendor-info-content">
+                            <h3>Vendor Information</h3>
+                            <ul>
+                                <li><b>Store Name:</b>HasTech Fashion </li>
+                                <li> <b>Vendor:</b> HasTech Fashion</li>
+                                <li><b>Address:</b> PO Box 16122 Collins Street West <br>Melbourne Victoria </li>
+                                <li class="rating"><span><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""><img class="injectable" src="assets/images/icon-img/star-gray-full.svg" alt=""></span>5.00 rating from 1 review</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 연관상품 시작 -->
+    <div class="related-product section-padding-lr-1 pb-100">
+        <div class="container-fluid">
+            <div class="section-title-4 mb-100 text-center">
+                <h2>Related Products</h2>
+            </div>
+            <div class="related-product-active">
+                <div th:each="relatedProduct : ${relatedProducts}">
+                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="200">
+                        <div class="product-wrap">
+
+                            <div class="product-img img-zoom mb-4">
+                                <a th:href="@{'/product/' + ${relatedProduct.productId}}">
+                                    <img class="default-img" th:src="@{'/path/to/images/' + ${relatedProduct.imageFileName}}" alt="">
+                                </a>
+                                <div class="product-action-wrap">
+                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <img class="injectable" src="assets/images/icon-img/eye.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-content text-center">
+                                <h3>
+                                    <a th:href="@{'/product/' + ${relatedProduct.productId}}" th:text="${relatedProduct.productName}"></a>
+                                </h3>
+                                <div class="product-price">
+                                    <span th:text="${relatedProduct.productPrice}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 연관상품 끝 -->
+</div>
+</div>
+</body>
+</html>

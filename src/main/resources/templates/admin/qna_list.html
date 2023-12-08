@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>ADMIN - QnA List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-8">
+
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>QnA</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wishlist-area bg-white pb-130">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 ">
+                        <div class="sidebar-widget update">
+                            <div class="sidebar-archive-wrap">
+                                <select>
+                                    <option>-- 카테고리 선택 --</option>
+                                    <option>질문유형</option>
+                                    <option>제목+내용</option>
+                                    <option>작성자</option>
+                                    <option>답변형태</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sidebar-widget">
+                            <div class="sidebar-search update">
+                                <form class="sidebar-search-form" action="#">
+                                    <input type="text" placeholder="Search">
+                                    <button>
+                                        <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-4"></div>
+                </div>
+            </div>
+
+        <div class="row mb-20"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="wishlist-table-content">
+                            <div class="table-content">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th class="width-price">번호</th>
+                                        <th class="width-price">질문유형</th>   <!-- 배송문의, 상품문의, 기타 -->
+                                        <th class="width-price">제목</th>
+                                        <th class="width-price">작성자</th>    <!-- 닉네임으로 -->
+                                        <th class="width-price">작성날짜</th>
+                                        <th class="width-price">답변</th>     <!-- 답변대기, 답변완료 / 클릭하면 상세페이지로 -->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="product-name">
+                                            <h5>1</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>배송문의</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>배송 언제 오나요??!!</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>회원이당</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5>23-11-15</h5>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5><a href="/admin_qnacomment">답변대기</a></h5>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                                    <ul>
+                                        <li><a href="#"><</a></li>
+                                        <li><a class="active" href="#">01</a></li>
+                                        <li><a href="#">02</a></li>
+                                        <li><a href="#">03</a></li>
+                                        <li><a href="#">04</a></li>
+                                        <li><a href="#">05</a></li>
+                                        <li><a href="#">></a></li>
+                                    </ul>
+                                </div><!-- 페이지 번호 추가 끝-->
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
+</div>
+
+</body>
+</html>

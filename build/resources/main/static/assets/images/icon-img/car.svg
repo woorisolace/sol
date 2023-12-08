@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="delivery-time" transform="translate(0.5 0.5)">
+    <path d="M0 0L12 0L16 12L16 21L10.9 21" transform="translate(28 17)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M13.123 0.5L0 0.5" transform="translate(15.97705 37.5)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M0 0L8 0L8 20" transform="translate(20 10)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M5 16L0 16L0 0" transform="translate(0 22)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" />
+    <path d="M5.5 11C8.53757 11 11 8.53757 11 5.5C11 2.46243 8.53757 0 5.5 0C2.46243 0 0 2.46243 0 5.5C0 8.53757 2.46243 11 5.5 11Z" transform="translate(5 33)" id="Oval" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M5 10C7.76142 10 10 7.76142 10 5C10 2.23858 7.76142 0 5 0C2.23858 0 0 2.23858 0 5C0 7.76142 2.23858 10 5 10Z" transform="translate(29 34)" id="Oval" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" id="Oval" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+    <path d="M0 0L0 4L4 4" transform="translate(10 6)" id="Path" fill="none" stroke="#1E1E1E" stroke-width="1" stroke-linecap="square" />
+  </g>
+</svg>
