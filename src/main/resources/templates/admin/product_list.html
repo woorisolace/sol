@@ -148,7 +148,8 @@
                                         <td class="product-name">
                                             <!-- 대표이미지 -->
                                             <th:block th:if="${data.imageDTOs != null and data.imageDTOs.size() > 0 and data.imageDTOs[0].imageFile != null}">
-                                            <img th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">
+<!--                                            <img th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">-->
+                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${data.imageDTOs}|"width="100" height="100">
                                             </th:block>
                                         </td>
 

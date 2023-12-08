@@ -7,14 +7,17 @@ import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
+import com.example.clean.Repository.ImageRepository;
 import com.example.clean.Repository.ProductRepository;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,10 +35,15 @@ public class ProductService {
   private final ModelMapper modelMapper = new ModelMapper();
 
   private final ProductRepository productRepository;
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
+  private String imgUploadLocation;
+  //파일저장을 위한 클래스
+  private final S3Uploader s3Uploader;
 
-
+  private final ImageRepository imageRepository;
   //삽입
-  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFiles) throws Exception {
+  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFile) throws Exception {
     List<ImageDTO> dataDTO = productDTO.getImageDTOs();  //이미지테이블정보 분리
     List<MultipartFile> images = productDTO.getImages(); //이미지파일 분리
 
@@ -47,6 +55,13 @@ public class ProductService {
     //신규 상품 등록
     ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
     ProductEntity dataEntity = productRepository.save(data);
+
+    String orignalFileName = imageFile.get(0).getOriginalFilename(); //저장할 파일명
+    String newFileName = ""; //새로 만든 파일명
+
+    if(orignalFileName != null) { //파일이 존재하면
+      newFileName = s3Uploader.upload(imageFile.get(0),imgUploadLocation);
+    }
 
     int index = 0;
     for (MultipartFile file : images) {
@@ -195,7 +210,11 @@ public class ProductService {
   //삭제
   public void delete (Integer productId) throws Exception {
 
+
     ProductEntity productEntity = productRepository.findByProductId(productId); //상품조회
+
+
+    System.out.println("productEntity의 값 : " + productEntity.getProductImages());
 
     if (productEntity == null) {
       return;
@@ -210,7 +229,13 @@ public class ProductService {
     List<ImageEntity> imageEntitys = productEntity.getProductImages();
     for (ImageEntity data : imageEntitys) {
       fileService.deleteFile(data.getImageFile());
+      s3Uploader.deleteFile(data.getImageFile(),imgUploadLocation);
+      s3Uploader.listdeleteFile(productEntity.getProductImages(),imgUploadLocation);
     }
+
+    System.out.println("productEntity의 값 : " + productEntity.getProductImages());
+    s3Uploader.listdeleteFile(productEntity.getProductImages(),imgUploadLocation);
+    s3Uploader.deleteFile(imageEntitys.get(0).getImageFile(),imgUploadLocation);
 
     // 상품 삭제
     productRepository.deleteById(productId);

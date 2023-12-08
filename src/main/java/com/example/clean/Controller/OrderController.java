@@ -148,21 +148,22 @@ public class OrderController {
     OrderDTO resultOrderInfoDTO = orderService.orderInfo(memberDTO.getEmail(), productDTO.getProductId(),orderDTO.getProduct_num());
     session.setAttribute("orderInfoDTO", resultOrderInfoDTO);
     log.info("Controller_주문 정보 저장여부: {}", resultOrderInfoDTO);
-
+    System.out.println("resultOrderInfoDTO의 결과 값 : " + resultOrderInfoDTO);
+    orderDTO.setProduct_num(productNum);
 
     orderDTO.getProduct_num();
-    System.out.println("넣기 전 productNum 값 : " + productNum);
+    System.out.println("넣기 전 productNum 값 : " + orderDTO.getProduct_num());
     System.out.println("넣은 후 productNum 값 : " + productNum);
     orderDTO.setProduct_num(productNum);
 
     System.out.println();
-
+    resultOrderInfoDTO.setProduct_num(productNum);
     // RedirectAttributes를 이용하여 주문 정보 전달
     redirectAttributes.addFlashAttribute("orderInfoId", resultOrderInfoDTO.getOrderId());
     redirectAttributes.addFlashAttribute("userId", memberDTO.getEmail());
     redirectAttributes.addFlashAttribute("productId", productId);
     redirectAttributes.addFlashAttribute("productDTO",productDTO);
-    redirectAttributes.addFlashAttribute("productNum",orderDTO.getProduct_num());
+    redirectAttributes.addFlashAttribute("productNum",resultOrderInfoDTO.getProduct_num());
     redirectAttributes.addFlashAttribute("producTotal",producTotal);
     redirectAttributes.addFlashAttribute("productdelivery",productdelivery);
     redirectAttributes.addFlashAttribute("payment_method",orderDTO.getPayment_method());
@@ -171,6 +172,8 @@ public class OrderController {
     System.out.println("넣기 전 productNum 값 : " + productNum);
     System.out.println("넣은 후 productNum 값 : " + productNum);
     orderDTO.setProduct_num(productNum);
+    resultOrderInfoDTO.getProduct_num();
+    resultOrderInfoDTO.setProduct_num(productNum);
 
 
     return "redirect:/orderSuccess";
@@ -184,8 +187,7 @@ public class OrderController {
                                 Model model,
                                 ProductDTO productDTO,
                                 OrderDTO orderDTO,
-                                HttpSession session,
-                                @ModelAttribute("productNum") Integer productNum) throws Exception {
+                                HttpSession session) throws Exception {
 
 
     // HttpSession에서 구매 정보를 가져옴 (회원정보, 제품정보 + 배송/결제 정보 등)
@@ -197,7 +199,6 @@ public class OrderController {
     // 구매 정보를 페이지에 전달
     model.addAttribute("orderDTO", orderInfoDTO);
     model.addAttribute("productDTO",productDTO);
-
     return "cartorder/orderSuccess";
   }
 

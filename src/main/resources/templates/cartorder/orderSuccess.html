@@ -134,7 +134,7 @@
                             <div class="your-order-area">
                                 <h3><b>주문 정보</b></h3>
                                 <div class="your-order-wrap gray-bg-4">
-                                    <div class="your-order-info-wrap" th:each="product:${productDTO}" th:object="${orderDTO}">
+                                    <div class="your-order-info-wrap" th:each="product:${productDTO}">
                                         <div class="your-order-info">
                                             <ul>
                                                 <li><b>상품 </b><span><b>금액</b></span></li>
@@ -157,7 +157,7 @@
                                             <ul>
                                                 <li>
                                                     <span class="product-left" th:text="${product.productName}"></span>
-                                                    <span class="product-left" th:text="'x'+${orderDTO.product_num}"></span>
+                                                    <span class="product-left" th:text="'x'+${productNum}"></span>
                                                     <span class="product-right" th:text="${product.productPrice} + '원'"></span>
                                                 </li>
                                             </ul>

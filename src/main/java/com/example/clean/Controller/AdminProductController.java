@@ -8,6 +8,7 @@ import com.example.clean.Repository.ProductRepository;
 import com.example.clean.Service.ImageService;
 import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -32,10 +33,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminProductController {
 
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+  @Value("${cloud.aws.region.static}")
+  public String region;
+  @Value("${imgUploadLocation}")
+  public String folder;
+
   private final ProductService productService;
 
   //상품목록
-  @GetMapping("/admin_productlist")
+  @GetMapping("/admin_productlist") //목록 , 뒤에 파일명 +page(form), +proc
   public String listForm(@RequestParam(value = "type", defaultValue = "") String type,
                          @RequestParam(value = "keyword", defaultValue = "") String keyword,
                          @RequestParam(value = "sellState", defaultValue = "") String sellState,
@@ -76,6 +85,10 @@ public class AdminProductController {
     // 모델에 ProductDTO 추가
     model.addAttribute("productDTO", productDTO);
     model.addAttribute("productDTOS", productDTOS);
+
+    model.addAttribute("bucket",bucket);
+    model.addAttribute("region",region);
+    model.addAttribute("folder",folder);
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
