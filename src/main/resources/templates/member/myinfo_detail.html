@@ -89,7 +89,7 @@
                       <div class="notice-content">
                         <div class="notice-btn-date-wrap list-btn">
                           <div class="notice-btn">
-                            <a class="btn btn-outline-primary" th:onclick=#>수정</a>
+                            <a class="btn btn-outline-primary" th:onclick="|location.href='@{/myinfo_update}'|">수정</a>
                             <!--                          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/memberupdate}'|">수정</button>&nbsp;&nbsp;&nbsp;-->
                           </div>
                         </div>
@@ -105,89 +105,6 @@
                     </div>
                   </div>
               </div>
-
-            </div><!DOCTYPE html>
-        <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
-
-        <head>
-          <meta charset="UTF-8">
-          <title>MyInfo Detail</title>
-        </head>
-
-        <body>
-        <div layout:fragment="content">
-          <div class="main-wrapper wrapper-2">
-            <div class="breadcrumb-area breadcrumb-padding-6">
-              <div class="container">
-                <div class="breadcrumb-content text-center">
-                  <div class="breadcrumb-title">
-                    <h2>My Page</h2>
-                  </div>
-                  <ul>
-                    <li><a href="/mypage">My</a></li>
-                    <li><a href="/myinfo_detail">나의 정보</a></li>
-                    <li><a href="/member_oderlist">구매 내역</a></li>
-                    <li><a href="/myreviewlist">리뷰 내역</a></li>
-                    <li><a href="/mylikelist">관심 상품</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="notice-area bg-white pb-130">
-              <div class="container">
-                <div class="notice-info-wrap">
-                  <form th:object="${memberDTO}">
-                    <h3 class="special-h3">내 정보</h3>
-                    <table class="table notice-table">
-                      <tbody>
-                      <tr>
-                        <input type="hidden" th:value="${memberDTO.id}">
-                      </tr>
-                      <tr>
-                        <th scope="row" class="notice-padding">이름</th>
-                        <td class="notice-info">
-                          <input type="text" id="name" name="name" class="form-control" th:value="${memberDTO.name}" readonly>
-                        </td>
-                      </tr>
-                      <!-- Add similar formatting for other rows -->
-                      </tbody>
-                    </table>
-
-                    <div class="row">
-                      <div class="col-lg-9"></div>
-                      <div class="col-lg-3">
-                        <div class="notice-button-container">
-                          <div class="notice-content">
-                            <div class="notice-btn-date-wrap list-btn">
-                              <div class="notice-btn">
-                                <a class="btn btn-outline-primary" href="#">수정</a> &nbsp;
-                                <a class="btn btn-outline-primary" th:onclick="|location.href='@{/mypage}'|">목록</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="notice-content">
-                            <div class="notice-btn-date-wrap list-btn">
-                              <div class="notice-btn">
-<!--                                <a class="btn btn-outline-primary" th:onclick="|location.href='@{/mypage}'|">목록</a>-->
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Main JS -->
-        <script src="assets/js/main.js"></script>
-        </body>
-
-        </html>
-
         </form>
         </div>
       </div>
