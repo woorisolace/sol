@@ -45,8 +45,16 @@
                 <div class="shop-page-wrap margin-none">
                     <div class="shop-top-bar shop-top-bar-responsive">
                         <div class="show-wrap" data-aos="fade-up" data-aos-delay="200">
-                            Total <b><span th:text="${productDTOS.getTotalElements()}"> 00</span></b>       <!-- 총 상품 수 -->
+                            Total <b><span id="currentProductCount">00</span></b> <!-- 현재 페이지에 보여지는 상품 수 -->
                         </div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // 현재 페이지에 렌더링된 상품 수를 가져와서 표시
+                                var currentProductCount = document.querySelectorAll('.product-wrap').length;
+                                document.getElementById('currentProductCount').textContent = currentProductCount;
+                            });
+                        </script>
                         <div class="sorting-filter-wrap">
                             <div class="shop-sorting-area">
                                 <select class="nice-select nice-select-style-2">
@@ -67,7 +75,8 @@
                                 <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
                                     <div class="product-img img-zoom mb-4">
                                         <a th:href="@{/product/{productId}(productId=${product.productId})}">
-                                            <img class="default-img" th:src="|/images/item/@{${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}}|" width="600" height="300">
+                                            <img class="default-img" th:if="${not product.imageDTOs?.isEmpty()}" th:src="@{/images/item/{imageName}(imageName=${product.imageDTOs[0]?.imageFile})}" width="600" height="300">
+                                            <img class="default-img" th:if="${product.imageDTOs?.isEmpty()}" th:src="@{/images/item/default-image.jpg}" width="600" height="300">
                                         </a>
                                         <div class="product-action-wrap">
                                             <button title="Add To Cart">

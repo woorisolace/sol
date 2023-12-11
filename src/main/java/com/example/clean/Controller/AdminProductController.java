@@ -8,7 +8,8 @@ import com.example.clean.Repository.ProductRepository;
 import com.example.clean.Service.ImageService;
 import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -28,28 +29,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class AdminProductController {
 
-  //S3 이미지 정보
-  @Value("${cloud.aws.s3.bucket}")
-  public String bucket;
-  @Value("${cloud.aws.region.static}")
-  public String region;
-  @Value("${imgUploadLocation}")
-  public String folder;
-
   private final ProductService productService;
 
   //상품목록
-  @GetMapping("/admin_productlist") //목록 , 뒤에 파일명 +page(form), +proc
+  @GetMapping("/admin_productlist")
   public String listForm(@RequestParam(value = "type", defaultValue = "") String type,
                          @RequestParam(value = "keyword", defaultValue = "") String keyword,
                          @RequestParam(value = "sellState", defaultValue = "") String sellState,
                          @RequestParam(value = "categoryType", defaultValue = "") String categoryType,
-                         @PageableDefault(page=1) Pageable pageable,
+                         @PageableDefault(page = 1) Pageable pageable,
                          Model model) throws Exception {
 
 
@@ -71,12 +64,12 @@ public class AdminProductController {
     productDTOS.getTotalElements();
 
     int blockLimit = 5;
-    int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
-    int endPage = Math.min(startPage+blockLimit-1, productDTOS.getTotalPages());
+    int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+    int endPage = Math.min(startPage + blockLimit - 1, productDTOS.getTotalPages());
 
     int prevPage = productDTOS.getNumber();
-    int currentPage = productDTOS.getNumber()+1;
-    int nextPage = productDTOS.getNumber()+2;
+    int currentPage = productDTOS.getNumber() + 1;
+    int nextPage = productDTOS.getNumber() + 2;
     int lastPage = productDTOS.getTotalPages();
 
     // reDate 날짜 표시
@@ -85,10 +78,6 @@ public class AdminProductController {
     // 모델에 ProductDTO 추가
     model.addAttribute("productDTO", productDTO);
     model.addAttribute("productDTOS", productDTOS);
-
-    model.addAttribute("bucket",bucket);
-    model.addAttribute("region",region);
-    model.addAttribute("folder",folder);
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -120,27 +109,42 @@ public class AdminProductController {
 
   // 상품 등록 처리 (상품 정보 및 이미지 업로드)
   @PostMapping("/admin_product_insert")
-  public String productInsertProc(@Valid @ModelAttribute("productDTO") ProductDTO productDTO, BindingResult bindingResult,
+  public String productInsertProc(@Valid @ModelAttribute("productDTO") ProductDTO productDTO,
+                                  BindingResult bindingResult,
                                   @RequestParam("images") List<MultipartFile> imageFiles,
-                                  RedirectAttributes redirectAttributes,
                                   Model model) {
 
+    //검증오류
     if (bindingResult.hasErrors()) {
       return "/admin/product_insert";
     }
+
     try {
       productService.insertProduct(productDTO, imageFiles);
-      // 상품 등록 후 어드민 상세페이지로 리다이렉션
       return "redirect:/admin_productlist";
     } catch (Exception e) {
-      // Handle the exception, you might want to log it or provide some user-friendly message
-      model.addAttribute("error", "상품등록 실패하였습니다. 다시 등록해주세요.");
-      return "/admin/product_insert";
+      e.printStackTrace();
+      model.addAttribute("error", "상품 수정에 실패하였습니다.");
+      model.addAttribute("searchUrl", "/admin_product_insert");
+      return "message";
     }
+
+
+    /*
+    try {
+      productService.insertProduct(productDTO, imageFiles);
+      model.addAttribute("success", "상품 등록이 완료되었습니다.");
+      model.addAttribute("searchUrl", "/admin_productlist");
+      return "message";
+    } catch (Exception e) {
+      model.addAttribute("error", "상품 등록 실패! 다시 등록해주세요.");
+      model.addAttribute("searchUrl", "/admin_product_insert");
+      return "message";
+    }
+*/
 
     //return "redirect:/admin_productlist";
   }
-
 
 
   //제품 상세페이지

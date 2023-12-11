@@ -26,7 +26,7 @@
               |
             </li>
             <li>
-              <a th:classappend="${#httpServletRequest.requestURI == '#' ? 'active' : ''}" href="#">주문내역</a>
+              <a th:classappend="${#httpServletRequest.requestURI == '/admin_memberorderlist' ? 'active' : ''}" href="/admin_memberorderlist">주문내역</a>
             </li>
             <li>
               |
@@ -114,23 +114,23 @@
                   <div class="pagination-style text-center mt-30">
                     <ul>
                       <li th:unless="${startPage == 1}">
-                        <a th:href="@{/admin_memberlist(page=1)}">처음</a>
+                        <a th:href="@{/admin_memberlist(page=1)}">처음</a>&nbsp;
                       </li>
                       <li th:unless="${currentPage == 1}">
-                        <a th:href="@{/admin_memberlist(page=${prevPage})}">&lt;</a>
+                        <a th:href="@{/admin_memberlist(page=${prevPage})}">&lt;</a>&nbsp;
                       </li>
 
                       <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
                         <li th:unless="${currentPage == page}">
-                            <a th:href="@{/admin_memberlist(page=${page})}">[[${page}]]</a>
+                            <a th:href="@{/admin_memberlist(page=${page})}">[[${page}]]</a>&nbsp;
                         </li>
                         <li th:if="${currentPage == page}">
-                            <a href="#">[[${page}]]</a>
+                            <a href="#">[[${page}]]</a>&nbsp;
                         </li>
                       </span>
 
                       <li th:unless="${currentPage == lastPage}">
-                        <a th:href="@{/admin_memberlist(page=${nextPage})}">&gt;</a>
+                        <a th:href="@{/admin_memberlist(page=${nextPage})}">&gt;</a>&nbsp;
                       </li>
                       <li th:unless="${endPage == lastPage}">
                         <a th:href="@{/admin_memberlist(page=${lastPage})}">끝</a>

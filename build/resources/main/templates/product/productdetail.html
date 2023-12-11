@@ -30,15 +30,17 @@
                         <li>
                             <a href="/restroomlist">Restroom</a>
                         </li>
+                        <!--
                         <li>
                             <a href="/salelist">sale</a>
                         </li>
+                        -->
                     </ul>
                 </div>
             </div>
         </div>
 
-        <form th:action="@{/order}" method="get">
+        <form th:action="@{/order?productId=${productId}}" method="get">
             <input type="hidden" id="productId" name="productId" th:value="${productId}">   <!-- 상품 번호 전달 -->
             <div class="product-details-area section-padding-lr-2 pb-115">
                 <div class="container-fluid">
@@ -46,17 +48,16 @@
                         <a href="/productlist"><img class="injectable" src="assets/images/icon-img/arrow-left-6.svg" alt=""> Back to Shop</a>
                     </div>
                     <div class="row">
-
                         <!-- 대표 이미지 섹션 수정 -->
                         <div class="col-lg-7">
                             <div class="product-details-tab" data-aos="fade-up" data-aos-delay="300">
                                 <div class="pro-dec-big-img-slider">
                                     <div th:each="image, iterStat : ${productDTO.imageDTOs}">
                                         <div class="easyzoom-style">
-                                            <div class="easyzoom easyzoom--overlay"> <!-- 이거 삭제하면 상품정보 줄 바꿈 되니까 삭제 금지 -->
+                                            <div class="easyzoom easyzoom--overlay">
                                                 <a th:href="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}">
                                                     <img th:src="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}"
-                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="500" height="600">
+                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="500" height="500">
                                                 </a>
                                             </div>
                                         </div>
@@ -83,7 +84,6 @@
                                 <div class="product-details-price" data-aos="fade-up" data-aos-delay="400">
                                     <table class="table table-borderless">
                                         <tbody>
-
                                         <tr class="product-consumer-price">
                                             <th scope="row">소비자가</th>
                                             <td id="productCost" th:text="${productDTO.productCost}"></td>
@@ -201,7 +201,8 @@
                                             </div>
 
                                             <div class="btn-product-purchase">
-                                                <button type="button" class="btn btn-primary product-purchase" th:href="@{/oauth2/authorization/kakao}">카카오 구매</button>
+                                                <button type="submit" class="btn btn-primary product-purchase">카카오 구매</button>
+                                                <!-- <button type="button" class="btn btn-primary product-purchase"  th:onclick="|location.href='@{/oauth2/authorization/kakao}'|">카카오 구매</button> -->
                                             </div>
                                         </div>
                                     </div>

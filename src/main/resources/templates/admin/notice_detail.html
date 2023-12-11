@@ -33,14 +33,14 @@
                                 <th scope="row" class="notice-padding">제목</th>
                                 <td class="notice-info">
                                     <input type="text" id="admintitle" name="admintitle" th:field="*{admintitle}">
-                                    <span class="text-warning" th:if="${#fields.hasErrors('admintitle')}" th:errors="*{admintitle}"></span>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('admintitle')}" th:errors="*{admintitle}"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="notice-padding">작성자</th>
                                 <td class="notice-info">
                                     <input type="text" id="adminwriter" name="adminwriter" th:field="*{adminwriter}" >
-                                    <span class="text-warning" th:if="${#fields.hasErrors('adminwriter')}" th:errors="*{adminwriter}"></span>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('adminwriter')}" th:errors="*{adminwriter}"></span>
                                 </td>
                             </tr>
                             <tr>
@@ -58,7 +58,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <span class="text-warning" th:if="${#fields.hasErrors('admincategory')}" th:errors="*{admincategory}"></span>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('admincategory')}" th:errors="*{admincategory}"></span>
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +67,7 @@
                                     <textarea rows="15" th:field="*{admincontent}" name="admincontent">
                                         공지내용
                                     </textarea>
-                                    <span class="text-warning" th:if="${#fields.hasErrors('admincontent')}" th:errors="*{admincontent}"></span>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('admincontent')}" th:errors="*{admincontent}"></span>
                                 </td>
                             </tr>
                             </tbody>

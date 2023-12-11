@@ -28,17 +28,28 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         HttpSession session = request.getSession();
 
-        if (session != null) { //섹션이 존재하면 로그인한 이메일을 등록
+        //섹션이 존재하면 로그인한 이메일을 등록
+        if (session != null) {
             String email = authentication.getName();
             String oauthType = "";
             //session.setAttribute("user", email);
             userService.userIdToSession(session, email, oauthType);
-
         }
 
-        super.setDefaultTargetUrl("/"); //성공시 이동할 페이지
-        super.onAuthenticationSuccess(request, response, authentication);
+        //성공시 메인 페이지로 이동
+        //super.setDefaultTargetUrl("/");
 
+        // 세션에 저장된 원래 페이지 URL을 가져옴
+        String originalRequestUrl = (String) session.getAttribute("originalRequestUrl");
+
+        // 원래 페이지 URL이 있으면 해당 페이지로 리다이렉트, 없으면 메인 페이지로 이동
+        if (originalRequestUrl != null) {
+            super.setDefaultTargetUrl(originalRequestUrl);
+        } else {
+            super.setDefaultTargetUrl("/");
+        }
+
+        super.onAuthenticationSuccess(request, response, authentication);
 
     }
 }

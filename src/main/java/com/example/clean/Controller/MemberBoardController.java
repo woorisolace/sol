@@ -5,19 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MemberBoardController {
-
-  //공지목록
-  @GetMapping("/noticelist")
-  public String noticelistForm() throws Exception {
-    return "/notice/notice_list";
-  }
-  //공지상세
-  @GetMapping("/noticedetail")
-  public String noticedetailForm() throws Exception {
-    return "/notice/notice_detail";
-  }
-
-
   //질문목록
   @GetMapping("/qnalist")
   public String qnalistForm() throws Exception {

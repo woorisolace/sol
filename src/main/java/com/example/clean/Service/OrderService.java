@@ -1,20 +1,26 @@
 package com.example.clean.Service;
 
-import com.example.clean.DTO.MemberDTO;
-import com.example.clean.DTO.OrderDTO;
-import com.example.clean.DTO.OrderInfoDTO;
-import com.example.clean.DTO.ProductDTO;
+import com.example.clean.DTO.*;
+import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Entity.UserEntity;
 import com.example.clean.Repository.MemberRepository;
-import com.example.clean.Repository.OrdertRepository;
+import com.example.clean.Repository.OrderRepository;
 import com.example.clean.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,109 +28,162 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
-  private final OrdertRepository ordertRepository;
+  private final OrderRepository orderRepository;
   private final MemberRepository memberRepository;
   private final ProductRepository productRepository;
-  private final ModelMapper modelMapper = new ModelMapper();
+  private final ModelMapper modelMapper = new ModelMapper();    //DTO(데이터 전송 객체)와 엔터티 간 변환에 사용
 
-  //구매폼 조회
-  //userId와 productId를 받아 사용자와 제품 정보 받아오기
-  //
+  // 구매 양식 조회
   public OrderDTO orderForm(String userId, Integer productId, Integer productNum) throws Exception {
 
-    //로그인한 회원의 이메일로 회원 정보 가져오기
+    //로그인한 회원의 이메일에 해당하는 사용자 정보를 데이터베이스에서 조회
+    //조회된 사용자 정보는 UserEntity 객체에 저장
     UserEntity userEntity = memberRepository.findByEmail(userId);
-    log.info("Service_아이디 확인완료: {}", userId);
-    if (userEntity == null) {
-      log.info("Service_이메일 없음. 로그인페이지로 이동 필요");
-      return null;
-    }
-    
-    //상품조회
+
+    //상품 아이디(productId)에 해당하는 상품 정보를 데이터베이스에서 조회
+    //조회된 상품 정보는 ProductEntity 객체에 저장
     ProductEntity productEntity = productRepository.findByProductId(productId);
-    log.info("Service_상품번호 확인완료: {}", productId);
 
 
-    /*// 구매 양식 조회
-    OrderEntity orderEntity = ordertRepository.findByUserEntityAndProductEntity(userEntity, productEntity);
-    log.info("Service_구매양식 조회 확인완료 찍혔으나 오류========================================");
-    if (orderEntity == null) {
-      log.info("Service_구매양식이 없습니다.");
-      return null;
-    }*/
+    //주문테이블 조회 후, 주문에 필요한 내용 추가
+    //구매수량, 결제방식은 controller에서 받아와야 함 (controller : 입력 처리 및 유효성 검사는 주로 컨트롤러 레이어의 역할)
+    //OrderEntity orderEntity = new OrderEntity();
+    Integer productPrice = productEntity.getProductPrice();         //제품가격
+    Integer productTotal = productPrice * productNum;               //제품가격 * 구매수량
+    Integer productDelivery = (productTotal >= 50000) ? 0 : 3000;   //배송비 (50,000원 이상 구매시 무료배송)
+    Integer orderPrice = productTotal + productDelivery;            //배송비 + 상품금액 = 최종 결제 금액
+    //String paymentMethod = orderEntity.getPaymentMethod();          //결제방법 종류
 
-    // 구매폼에 회원정보, 상품정보 입력
-   // OrderDTO orderDTO = modelMapper.map(orderEntity, OrderDTO.class);
-    OrderDTO orderDTO=new OrderDTO();
+
+    //OrderDTO에 값 설정
+    //구매 완료 페이지에 필요한 정보만을 담아서 전달하는 데이터 전송 객체(DTO)를 사용
+    OrderDTO orderDTO = new OrderDTO();
     orderDTO.setUserEntity(userEntity);
     orderDTO.setProductEntity(productEntity);
-
+    orderDTO.setUserId(userEntity.getId());
+    orderDTO.setProductId(productEntity.getProductId());
+    orderDTO.setProductNum(productNum);
+    orderDTO.setProductTotal(productTotal);
+    orderDTO.setProductDelivery(productDelivery);
+    orderDTO.setOrderPrice(orderPrice);
+    //orderDTO.setPaymentMethod(paymentMethod);
 
     return orderDTO;
   }
 
 
-  // 주문(구매)생성 -> 완료 버튼 누르기
-  // OrderInfoDTO: 회원정보, 상품정보, 결제정보 등을 담아서 반환
-  public OrderDTO orderInfo(String userId, Integer productId, Integer product_num) throws Exception {
+  //주문(구매)생성 -> 완료 버튼 누르기 (이때 orderId가 생성됨)
+  //회원정보, 상품정보, 결제정보 등을 담아서 반환
+  public OrderDTO orderInfo(String userId, Integer productId, Integer productNum, String paymentMethod) throws Exception {
+    //orderForm을 통해서 주문에 필요한 기본 정보를 가져옴
+    OrderDTO orderDTO = orderForm(userId, productId, productNum);
 
-    OrderDTO orderDTO = orderForm(userId, productId,product_num);
 
+    // 주문 정보가 올바르지 않은 경우
     if (orderDTO == null || orderDTO.getUserEntity() == null || orderDTO.getProductEntity() == null) {
       throw new IllegalArgumentException("주문 정보가 올바르게 구성되지 않았습니다.");
     }
 
-    // OrderEntity에 회원, 제품 + 배송정보, 결제 정보 등 추가
-    OrderEntity orderEntity = new OrderEntity();
-    orderEntity.setUserEntity(orderDTO.getUserEntity());
-    orderEntity.setProductEntity(orderDTO.getProductEntity());
-    orderEntity.setProduct_num(orderDTO.getProduct_num());
+
+    log.info("Controller_paymentMethod_before: {}", paymentMethod);
 
 
-    // 주문 정보 저장
-    OrderEntity savedOrderEntity = ordertRepository.save(orderEntity);
+    //주문 정보를 newOrderEntity 저장 (활용도를 높이기 위해)
+    OrderEntity newOrderEntity = createOrderEntity(orderDTO, paymentMethod);
+    OrderEntity savedOrderEntity = orderRepository.save(newOrderEntity);
 
-    OrderDTO orderDTO1 = modelMapper.map(savedOrderEntity, OrderDTO.class);
-    return orderDTO1;
+    // 저장된 OrderEntity를 OrderDTO로 매핑하여 반환
+    OrderDTO savedOrderDTO = modelMapper.map(savedOrderEntity, OrderDTO.class);
+    savedOrderDTO.setPaymentMethod(paymentMethod); // 결제방법 설정
+    //savedOrderDTO.setOrderId(savedOrderEntity.getOrderId());
 
-/*
-    // OrderInfoDTO 생성 및 설정
-    OrderInfoDTO resultOrderInfoDTO = new OrderInfoDTO();
-    resultOrderInfoDTO.setOrderInfoId(savedOrderEntity.getOrderId());
+    return savedOrderDTO;
+  }
 
-    // 주문 정보 저장
-    resultOrderInfoDTO.setOrderDTOS(Collections.singletonList(orderDTO));
 
-    // 회원 및 상품 정보 저장
-    resultOrderInfoDTO.setMemberDTO(modelMapper.map(orderDTO.getUserEntity(), MemberDTO.class));
-    resultOrderInfoDTO.setProductDTO(modelMapper.map(orderDTO.getProductEntity(), ProductDTO.class));
+  //createOrderEntity를 통해 새로운 주문 엔티티를 생성하고 저장
+  private OrderEntity createOrderEntity(OrderDTO orderDTO, String paymentMethod) throws Exception {
+    OrderEntity newOrderEntity = new OrderEntity();
+    newOrderEntity.setUserEntity(orderDTO.getUserEntity());
+    newOrderEntity.setProductEntity(orderDTO.getProductEntity());
+    newOrderEntity.setProductNum(orderDTO.getProductNum());
+    newOrderEntity.setProductTotal(orderDTO.getProductTotal());
+    newOrderEntity.setProductDelivery(orderDTO.getProductDelivery());
+    newOrderEntity.setOrderPrice(orderDTO.getOrderPrice());
+    newOrderEntity.setPaymentMethod(paymentMethod);                   // 직접 받아온 결제 방식 설정
+    newOrderEntity.setOrderId(orderDTO.getOrderId());                 //주문번호 생성
 
-    return resultOrderInfoDTO;*/
+    return newOrderEntity;
   }
 
 
 
-  // 구매완료 내용 보기
-  //orderInfoId로 주문 정보 가져오기기
- public OrderInfoDTO getOrderSuccess(Integer orderInfoId) throws Exception {
+  //구매완료 내용 보기
+  //orderDTO로 주문 정보 가져오기기 (주문 1회에 여러 상품이 담겨도 되기 때문에 굳이 oderInfoDTO사용 필요 없음)
+  public OrderDTO getOrderSuccess(Integer orderId) throws Exception {
 
     // 주문 정보 조회
-    OrderEntity orderEntity = ordertRepository.findById(orderInfoId).orElse(null);
-    log.info("Service_구매완료: {}", orderEntity);
+    OrderEntity orderEntity = orderRepository.findByOrderId(orderId);
 
     // 주문 정보가 없으면 예외 처리 또는 null 반환
     if (orderEntity == null) {
       throw new IllegalArgumentException("주문 정보가 없습니다.");
     }
 
-    // OrderInfoDTO가져와서 구매정보 출력
-   OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
-   orderInfoDTO.setOrderInfoId(orderEntity.getOrderId());
-   orderInfoDTO.setOrderInfoId(orderEntity.getProduct_num());
-   orderInfoDTO.setMemberDTO(modelMapper.map(orderEntity.getUserEntity(), MemberDTO.class));
-   orderInfoDTO.setProductDTO(modelMapper.map(orderEntity.getProductEntity(), ProductDTO.class));
+    // OrderEntity를 OrderDTO로 매핑하여 반환
+    OrderDTO orderDTO = modelMapper.map(orderEntity, OrderDTO.class);
 
-   return orderInfoDTO;
+    return modelMapper.map(orderEntity, OrderDTO.class);
+
+  }
+
+
+
+  //마이페이지에 구매내역 출력
+  public Page<OrderDTO> myOrderList(String email, Pageable page) throws Exception {
+
+    int currentPage = page.getPageNumber()-1;
+    int orderList = 10;
+    Pageable pageable = PageRequest.of(currentPage, orderList, Sort.by(Sort.Direction.DESC, "orderId"));
+
+    //주문 목록 페이징 처리하여 조회
+    Page<OrderEntity> orderEntityPage = orderRepository.findOrderEntities(email, pageable);
+
+    // OrderDTO 객체들을 담을 리스트
+    List<OrderDTO> orderDTOList = new ArrayList<>();
+
+    // 회원 이메일에 해당하는 주문 목록만 가져오기 (역순으로 정렬)
+    List<OrderEntity> userOrderEntities = orderEntityPage.getContent()
+        .stream()
+        .sorted(Comparator.comparing(OrderEntity::getOrderId).reversed())
+        .collect(Collectors.toList());
+
+    int orderNum = userOrderEntities.size(); // 구매 순서 번호 초기화
+
+
+    for (OrderEntity entity : userOrderEntities) {
+      OrderDTO orderDTO = OrderDTO.builder()
+          .productEntity(entity.getProductEntity())
+          .userEntity(entity.getUserEntity())
+          .orderId(entity.getOrderId())
+          .orderPrice(entity.getOrderPrice())
+          .orderNum(orderNum--)  // 역순으로 구매 순서 번호 감소
+          .imageDTOs(getImagesForOrderEntity(entity))
+          .reDate(entity.getReDate())
+          .build();
+
+      orderDTOList.add(orderDTO);
+    }
+
+    return new PageImpl<>(orderDTOList, pageable, orderEntityPage.getTotalElements());
+  }
+
+  //리스트 출력을 위해 이미지 불러오기
+  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) {
+    return orderEntity.getProductEntity().getProductImages().stream()
+        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+        .collect(Collectors.toList());
   }
 }
+
 

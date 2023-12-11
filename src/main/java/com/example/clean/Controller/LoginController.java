@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -30,23 +31,35 @@ public class LoginController {
     return "/login/login_main";
   }
 
+
+  //로그인 에러
   @GetMapping("/login/login/error")
   public String loginError(@RequestParam(value = "message", required = false) String error,
                            @RequestParam(value = "searchUrl", required = false) String searchUrl,
                            Model model) throws Exception {
-    //System.out.println("일치하는 회원 정보 없음");
+
     model.addAttribute("message", error);
     model.addAttribute("searchUrl", "/login/login/error");
-    //model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
+
     return "/login/login_main";
   }
 
+
   //로그인처리
   @PostMapping("/login")
-  public String loginProc(String email,Model model) throws Exception {
-    model.addAttribute("message", "로그아웃 되었습니다.");
-    return "redirect:/";
+  public String loginProc(String email, Model model,
+                          HttpServletRequest request) throws Exception {
+
+    HttpSession session = request.getSession();
+    String originalRequestUrl = (String) session.getAttribute("originalRequestUrl");
+
+    // 세션에 저장된 원래 페이지 URL이 있으면 해당 페이지로 이동하고, 없으면 기본 페이지로 이동
+    return "redirect:" + (originalRequestUrl != null ? originalRequestUrl : "/");
+
   }
+
+
+
 
   //로그아웃 종류 : 토큰만료 or 로그삭제
   //토큰만료 : 일반적으로 생각하는 로그아웃

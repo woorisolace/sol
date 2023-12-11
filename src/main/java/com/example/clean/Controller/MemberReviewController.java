@@ -11,8 +11,7 @@ public class MemberReviewController {
   public String memberreviewlistForm() throws Exception {
     return "/review/review_list";
   }
-  
-  
+
   //리뷰상세
   @GetMapping("/reviewdetail")
   public String memberreviewdetailForm() throws Exception {

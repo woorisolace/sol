@@ -57,9 +57,18 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         HttpSession session = request.getSession();
 
         if(session != null) {
-
             //session.setAttribute("user", email);
             userService.userIdToSession(session, email, oauthType);
+        }
+
+        // 세션에 저장된 원래 페이지 URL을 가져옴
+        String originalRequestUrl = (String) session.getAttribute("originalRequestUrl");
+
+        // 원래 페이지 URL이 있으면 해당 페이지로 리다이렉트, 없으면 메인 페이지로 이동
+        if (originalRequestUrl != null) {
+            super.setDefaultTargetUrl(originalRequestUrl);
+        } else {
+            super.setDefaultTargetUrl("/");
         }
 
         super.onAuthenticationSuccess(request, response, authentication);

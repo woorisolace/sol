@@ -95,21 +95,3 @@ public class UserService extends DefaultOAuth2UserService {
 
 }
 
-
-/*
-    // 장바구니 위해 추가된 부분: generateUserId 메서드 (비회원 로그인용)
-    public Integer generateUserId(String email) {
-        // 간단한 방식으로 유저 아이디 생성 (원하는 로직으로 변경 가능)
-        return Math.abs(email.hashCode()); // 예시로 email의 해시코드를 사용
-    }
-    public Integer generateUserId() {
-        // 원하는 로직으로 유저 아이디 생성 가능
-        // 현재는 단순히 랜덤 숫자를 반환하는 예시
-        return (int) (Math.random() * 1000000);
-    }
-
-
-    if문에 추가해야 할 부분
-    user.setId(generateUserId(email));  // 장바구니 위해 추가된 부분 : generateUserId에 email 전달
-
- */

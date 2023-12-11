@@ -185,7 +185,6 @@ public class AdminNoticeService {
 //
 //        adminNoticeRepository.save(update);
     }
-
     //이전버튼
     public Integer findPreviousNoticeId(Integer currentNoticeId) {
 
@@ -197,4 +196,6 @@ public class AdminNoticeService {
 
         return adminNoticeRepository.findNextNoticeId(currentNoticeId);
     }
+
+
 }

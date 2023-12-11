@@ -1,15 +1,24 @@
 package com.example.clean.Controller;
 
 import com.example.clean.DTO.MemberDTO;
+import com.example.clean.DTO.OrderDTO;
+import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Repository.MemberRepository;
 import com.example.clean.Service.MemberService;
+import com.example.clean.Service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.criterion.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +26,7 @@ public class MyInfoController {
   private MemberRepository memberRepository;
 
   private final MemberService memberService;
+  private final OrderService orderService;
   private final PasswordEncoder passwordEncoder;
 
   //마이페이지메인
@@ -42,17 +52,46 @@ public class MyInfoController {
   }
 
 
+
   //나의주문내역
   @GetMapping("/member_oderlist")
-  public String myoderlistForm() throws Exception {
+  public String myOrderList(Principal principal,
+                            @PageableDefault(page=1) Pageable pageable,
+                            Model model) throws Exception {
+
+    // 주문 내역을 페이징 정보에 맞게 조회
+    Page<OrderDTO> orderDTOS = orderService.myOrderList(principal.getName(), pageable);
+
+    int blockLimit = 5;
+    int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
+    int endPage = Math.min(startPage+blockLimit-1, orderDTOS.getTotalPages());
+
+    int prevPage = orderDTOS.getNumber();
+    int currentPage = orderDTOS.getNumber()+1;
+    int nextPage = orderDTOS.getNumber()+2;
+    int lastPage = orderDTOS.getTotalPages();
+
+    orderDTOS.getTotalElements();   //총 주문수수
+
+   model.addAttribute("orderDTOS", orderDTOS);
+
+    model.addAttribute("startPage", startPage);
+    model.addAttribute("endPage", endPage);
+    model.addAttribute("prevPage", prevPage);
+    model.addAttribute("currentPage", currentPage);
+    model.addAttribute("nextPage", nextPage);
+    model.addAttribute("lastPage", lastPage);
+
     return "/member/oder_list";
   }
+
+  /*
   //나의주문상세
   @GetMapping("/member_oderdetail")
   public String myoderdetailForm() throws Exception {
     return "/member/oder_detail";
   }
-
+  */
 
   //나의리뷰목록
   @GetMapping("/myreviewlist")

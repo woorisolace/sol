@@ -65,7 +65,7 @@
                                 </select>
 
                                 <!-- 중분류(판매상태) 셀렉트 리스트 -->
-                                <select class="form-select" name="sellStateOptions" id="sellStateOptions" style="display: none;">
+                                <select class="form-select" name="sellState" id="sellStateOptions" style="display: none;">
                                     <option value="" th:selected="${sellsState == ''}">== 선택 ==</option>
                                     <option value="SELL" th:selected="${sellsState == 'SELL'}">판매중</option>
                                     <option value="STOP" th:selected="${sellsState == 'STOP'}">판매중지</option>
@@ -82,39 +82,75 @@
 
                         <!-- JavaScript 코드 -->
                         <script>
+                            document.getElementById('searchType').addEventListener('change', function () {
+                                resetSearchForm();
+                            });
+
                             function resetSearchForm() {
-                                // 모든 입력 필드를 초기화
-                                document.getElementById('keyword').value = '';
-                                document.getElementById('categoryType').value = '';
-                                document.getElementById('sellStateOptions').value = '';
+                                var selectedSearchType = document.getElementById('searchType').value;
+                                var selectedCategoryType = document.getElementById('categoryType').value;
+                                var selectedSellState = document.getElementById('sellStateOptions').value;
 
-                                // 검색 유형이 '카테고리'일 때만 카테고리 셀렉트 리스트를 보이도록 함
-                                var selectedValue = document.getElementById('searchType').value;
-                                if (selectedValue === 'ca') {
-                                    document.getElementById('categoryType').style.display = 'block';
-                                } else {
-                                    document.getElementById('categoryType').style.display = 'none';
-                                }
-
-                                // 검색창, 중분류(판매상태), 카테고리 셀렉트 리스트를 제어
-                                if (selectedValue === 's') {
-                                    document.getElementById('sellStateOptions').style.display = 'block';
-                                    document.getElementById('categoryType').style.display = 'none';
-                                    document.getElementById('keyword').style.display = 'none';
-                                } else if (selectedValue === 'ca') {
-                                    document.getElementById('sellStateOptions').style.display = 'none';
-                                    document.getElementById('categoryType').style.display = 'block';
-                                    document.getElementById('keyword').style.display = 'none';
-                                } else {
-                                    document.getElementById('sellStateOptions').style.display = 'none';
-                                    document.getElementById('categoryType').style.display = 'none';
-                                    document.getElementById('keyword').style.display = 'block';
-                                }
+                                applyStylesAfterSearch(selectedSearchType, selectedCategoryType, selectedSellState);
+                                toggleElementDisplay('keyword', selectedSearchType === 'n' || selectedSearchType === 'nc');
                             }
 
-                            document.getElementById('searchType').addEventListener('change', function () {
-                                resetSearchForm(); // 검색 유형이 변경될 때마다 초기화 함수 호출
-                            });
+                            function applyStylesAfterSearch(searchType, categoryType, sellState) {
+                                toggleElementDisplay('categoryType', searchType === 'ca');
+                                toggleElementDisplay('sellStateOptions', searchType === 's');
+
+                                // 검색 타입이 상품명 또는 상품명+내용일 때 keyword 입력 필드를 보이게 설정
+                                toggleElementDisplay('keyword', searchType === 'n' || searchType === 'nc');
+
+                                if (searchType === 'ca') {
+                                    // 현재 선택된 값이 없을 때만 초기화
+                                    var categoryTypeElement = document.getElementById('categoryType');
+                                    if (categoryTypeElement.value === '') {
+                                        // localStorage에서 이전 선택 값을 가져옴
+                                        categoryTypeElement.value = localStorage.getItem('selectedCategoryType') || categoryType;
+                                    }
+                                }
+
+                                // 판매 상태에 대한 유사한 로직 추가
+                                var sellStateOptionsElement = document.getElementById('sellStateOptions');
+                                if (searchType === 's') {
+                                    // localStorage에서 이전 선택 값을 가져옴
+                                    sellStateOptionsElement.value = localStorage.getItem('selectedSellState') || sellState;
+                                }
+
+                                // ... (다른 엘리먼트에 대한 유사한 로직)
+                            }
+
+                            function toggleElementDisplay(elementId, condition) {
+                                var element = document.getElementById(elementId);
+                                element.style.display = condition ? 'block' : 'none';
+                            }
+
+                            // 페이지 로드 시 초기 스타일 적용
+                            applyStylesAfterSearch(
+                                document.getElementById('searchType').value,
+                                document.getElementById('categoryType').value,
+                                document.getElementById('sellStateOptions').value
+                            );
+
+                            // 초기 검색창 상태 설정
+                            // 검색 이후에는 초기화하지 않도록 수정
+                            // resetSearchForm();
+
+                            // 페이지 로드 시 localStorage에서 이전 선택 값을 가져와 적용
+                            window.onload = function () {
+                                applyStylesAfterSearch(
+                                    document.getElementById('searchType').value,
+                                    document.getElementById('categoryType').value,
+                                    document.getElementById('sellStateOptions').value
+                                );
+                            }
+
+                            // 페이지 언로드 시 localStorage에 현재 선택 값을 저장
+                            window.onbeforeunload = function () {
+                                localStorage.setItem('selectedCategoryType', document.getElementById('categoryType').value);
+                                localStorage.setItem('selectedSellState', document.getElementById('sellStateOptions').value);
+                            }
                         </script>
                     </div>
                 </div>
@@ -148,10 +184,10 @@
                                         <td class="product-name">
                                             <!-- 대표이미지 -->
                                             <th:block th:if="${data.imageDTOs != null and data.imageDTOs.size() > 0 and data.imageDTOs[0].imageFile != null}">
-<!--                                            <img th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">-->
-                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${data.imageDTOs}|"width="100" height="100">
+                                                <img th:src="|/images/item/@{${data.imageDTOs[0].imageFile}}|" width="100" height="100">
                                             </th:block>
                                         </td>
+
 
                                         <!-- 상품종류(카테고리 유형) -->
                                         <td class="product-name" th:if="${data != null}">
@@ -164,7 +200,7 @@
                                         <!-- 상품명 -->
                                         <td class="product-name">
                                             <h5>
-                                                <a th:href="@{/admin_product_indetail(productId=${data.productId})}" th:text="${data.productName}">상품이름</a>
+                                                <a th:href="@{/product/(productId=${data.productId})}" th:text="${data.productName}">상품이름</a>
                                             </h5>
                                         </td>
 

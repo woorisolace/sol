@@ -57,11 +57,15 @@ public class SecurityConfig {
         //antMatchers("/test")는 정확한 /test URL만 일치.
         //mvcMatchers("/test")는 /test, /test/, /test.html, /test.xyz 등 다양하게 일치.
         http.authorizeHttpRequests((auth) -> {
+
+            //모두 이용 가능
             auth.antMatchers("/", "/login", "/register").permitAll();
-            // "/noticelist", "/qnalist", "/productlist", "/livinglist", "/kitchenlist", "/restroomlist", "/salelist"
-            auth.antMatchers("/logout",
-                "/mypage", "/myinfo_detail", "/member_oderlist", "/myreviewlist", "/mylikelist").hasRole("USER");//회원로그인시
-            auth.antMatchers("/logout").hasRole("ADMIN");//관리자로그인시
+
+            //회원로그인시
+            auth.antMatchers("/logout", "/mypage", "/myinfo_detail", "/member_oderlist", "/myreviewlist", "/mylikelist").hasRole("USER");
+
+            //관리자로그인시
+            auth.antMatchers("/logout").hasRole("ADMIN");
         });
 
         //로그인처리에 대한 설정

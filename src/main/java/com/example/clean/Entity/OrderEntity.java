@@ -41,12 +41,28 @@ public class OrderEntity extends BaseEntity {
   @JoinColumn(name="productId")
   private ProductEntity productEntity;
 
-  //상품+배송비(주문 최종금액)
-  private Integer totalPrice;
+  @Column(name ="productNum", nullable = false)
+  private Integer productNum;               //회원 구매수량
 
-  //결제방법
-  private String payment_method;
+  @Column(name ="productTotal", nullable = false)
+  private Integer productTotal;             //합계 = 판매가 * 구매수량
 
-  private Integer product_num;
+  @Column(name ="productDelivery")
+  private Integer productDelivery;         //배송비
+
+  @Column(name ="orderPrice", nullable = false)
+  private Integer orderPrice;             //상품+배송비(주문 최종금액)
+
+  @Column(name ="paymentMethod", nullable = false)
+  private String paymentMethod;          //결제방법
+
+  private Integer orderNum;                 //회원별 주문 목록 숫자
+
+
+  // 이미지 리스트를 가져오는 메서드
+  public List<ImageEntity> getProductImages() {
+    return this.productEntity.getProductImages();
+  }
 
 }
+

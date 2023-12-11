@@ -2,6 +2,7 @@ package com.example.clean.Controller;
 
 import com.example.clean.Constant.AdminNoticeRole;
 import com.example.clean.DTO.AdminNoticeDTO;
+import com.example.clean.Repository.AdminNoticeRepository;
 import com.example.clean.Service.AdminNoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,11 +30,12 @@ import java.util.stream.Collectors;
 public class AdminNoticeController {
 
   private final AdminNoticeService adminNoticeService;
-
+  private final AdminNoticeRepository adminNoticeRepository;
 
   //공지목록 -> 버튼, 검색창 추가 수정 필요
   @GetMapping("/admin_noticelist")
   public String noticelistForm(@PageableDefault(page = 1) Pageable pageable, Model model) throws Exception {
+
     Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.findAll("","","",pageable);
 
 
@@ -182,6 +184,7 @@ public class AdminNoticeController {
       return "error";
     }
     AdminNoticeDTO noticeDTO = adminNoticeService.detail(adminnoticeid);
+
     Integer prevNoticeId = adminNoticeService.findPreviousNoticeId(adminnoticeid);
     Integer nextNoticeId = adminNoticeService.findNextNoticeId(adminnoticeid);
 
@@ -201,6 +204,5 @@ public class AdminNoticeController {
 
     return "redirect:/admin_noticelist";
   }
-
 
 }

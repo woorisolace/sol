@@ -131,7 +131,7 @@
                             <th scope="row" class="notice-padding" id="imageDTOs[2]">상세이미지</th>
                             <td class="notice-info">
                                 <img th:if="${productDTO.imageDTOs[2] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[2].imageFile}}|"
-                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';"  width="300" height="300">
+                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';" style="width:50%;">
                             </td>
                         </tr>
 

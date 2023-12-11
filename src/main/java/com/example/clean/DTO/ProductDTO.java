@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductDTO {
 
+  //상품등록 부분
   //기본키
   private Integer productId;
 
@@ -39,12 +40,6 @@ public class ProductDTO {
   //판매가(할인가)
   @NotNull(message = "가격은 필수 입력입니다.")
   private Integer productPrice;
-
-  //회원 구매수량
-  private Integer productNum;
-
-  //합계 = 판매가 * 옵션 선택 수량
-  private Integer producTotal;
 
   //할인율 = (정가 -할인가)/정가
   private Integer productDis;
@@ -78,6 +73,14 @@ public class ProductDTO {
   private LocalDateTime reDate;
 
   private LocalDateTime modDate;
+  
+  
+  //구매 부분
+  //회원 구매수량
+  //private Integer productNum;
+
+  //합계 = 판매가 * 구매수량
+  //private Integer productTotal;
 
 
 }

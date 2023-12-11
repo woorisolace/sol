@@ -7,17 +7,14 @@ import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
-import com.example.clean.Repository.ImageRepository;
 import com.example.clean.Repository.ProductRepository;
-import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,15 +32,10 @@ public class ProductService {
   private final ModelMapper modelMapper = new ModelMapper();
 
   private final ProductRepository productRepository;
-  //파일이 저장될 경로
-  @Value("${imgUploadLocation}")
-  private String imgUploadLocation;
-  //파일저장을 위한 클래스
-  private final S3Uploader s3Uploader;
 
-  private final ImageRepository imageRepository;
+
   //삽입
-  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFile) throws Exception {
+  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFiles) throws Exception {
     List<ImageDTO> dataDTO = productDTO.getImageDTOs();  //이미지테이블정보 분리
     List<MultipartFile> images = productDTO.getImages(); //이미지파일 분리
 
@@ -55,13 +47,6 @@ public class ProductService {
     //신규 상품 등록
     ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
     ProductEntity dataEntity = productRepository.save(data);
-
-    String orignalFileName = imageFile.get(0).getOriginalFilename(); //저장할 파일명
-    String newFileName = ""; //새로 만든 파일명
-
-    if(orignalFileName != null) { //파일이 존재하면
-      newFileName = s3Uploader.upload(imageFile.get(0),imgUploadLocation);
-    }
 
     int index = 0;
     for (MultipartFile file : images) {
@@ -84,40 +69,21 @@ public class ProductService {
   // 전체 상품 목록 조회 (검색 포함, 페이징 처리) -> 회원용
   public Page<ProductDTO> findALl(String type, String keyword, String sellState, String categoryType, Pageable page) throws Exception {
 
-    //int currentPage = page.getPageNumber() - 1;
-    //int pageLimit = 8;    //한페이지에 총 8개의 상품 진열
-
-    int currentPage = page.getPageNumber() - 1;
+    int currentPage = page.getPageNumber() -1;
     int itemsPerPage = 8; // 한 페이지에 표시되는 총 상품 수
 
-    // 한 행에 표시되는 상품 수와 행 수를 정의
-    int itemsPerRow = 4;
-    //int rowsPerPage = itemsPerPage / itemsPerRow;
-
-    // 한 페이지에 표시될 총 상품 수를 새로운 값으로 설정
-    int pageLimit = itemsPerPage * itemsPerRow;
 
     //제품번호 기준 역순으로 정렬
-    Pageable pageable = PageRequest.of(currentPage, pageLimit, Sort.by(Sort.Direction.DESC, "productId"));
+    Pageable pageable = PageRequest.of(currentPage, itemsPerPage, Sort.by(Sort.Direction.DESC, "productId"));
 
 
     //검색조건 (제품명, 제품명+내용, 카테고리 유형, 판매상태)
-    // Page<ProductEntity> productEntityPage;
     Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
 
-    /*
-    if ("n".equals(type) && keyword != null) {
-      productEntityPage = productRepository.findProductName(keyword, pageable);
-    } else if ("nc".equals(type) && keyword != null) {
-      productEntityPage = productRepository.findProNameContent(keyword, pageable);
-    } else if ("ca".equals(categoryType)) {
-      productEntityPage = productRepository.findByCategoryType(CategoryTypeRole.valueOf(categoryType), pageable);
-    } else if ("s".equals(sellState)) {
-      productEntityPage = productRepository.findAllByStateRole(SellStateRole.valueOf(sellState), pageable);
-    } else {
-      productEntityPage = productRepository.findAll(pageable);
-    }
-    */
+    System.out.println("currentPage: " + currentPage);
+    System.out.println("itemsPerPage: " + itemsPerPage);
+    System.out.println("Total Elements: " + productEntityPage.getTotalElements());
+
 
     // 상품정보 및 이미지들을 Entity에서 DTO로 복수전달
     List<ProductDTO> productDTOList = new ArrayList<>();
@@ -139,7 +105,7 @@ public class ProductService {
           .sellStateRole(entity.getSellStateRole())
           .reDate(entity.getReDate())
           .modDate(entity.getModDate())
-          .imageDTOs(mapImagesToDTOs(entity.getProductImages()))
+          .imageDTOs(entity.getProductImages() != null ? mapImagesToDTOs(entity.getProductImages()) : Collections.emptyList())
           .build();
 
       productDTOList.add(productDTO);
@@ -150,13 +116,19 @@ public class ProductService {
 
   //각 상품에 이미지테이블 전달
   private List<ImageDTO> mapImagesToDTOs(List<ImageEntity> imagesEntities) {
-    List<ImageDTO> imageDTOs = new ArrayList<>();
+    if (imagesEntities != null && !imagesEntities.isEmpty()) {
+      List<ImageDTO> imageDTOs = new ArrayList<>();
 
-    for (ImageEntity imageEntity : imagesEntities) {
-      ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class); //  new ImageDTO(/* Populate with necessary fields */);
-      imageDTOs.add(imageDTO);
+      for (ImageEntity imageEntity : imagesEntities) {
+        ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
+        imageDTOs.add(imageDTO);
+      }
+
+      return imageDTOs;
     }
-    return imageDTOs;
+
+    // 이미지가 없는 경우 빈 목록 반환
+    return Collections.emptyList();
   }
 
 
@@ -184,7 +156,6 @@ public class ProductService {
   public void updateProductAndImages(ProductDTO productDTO, List<MultipartFile> imageFiles) throws Exception {
 
     List<ImageDTO> dataDTO = productDTO.getImageDTOs();  //이미지테이블정보 분리
-    //List<MultipartFile> images = productDTO.getImages(); //이미지파일 분리
 
     //맵핑전 불필요한 필드 제외
     modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
@@ -210,11 +181,7 @@ public class ProductService {
   //삭제
   public void delete (Integer productId) throws Exception {
 
-
     ProductEntity productEntity = productRepository.findByProductId(productId); //상품조회
-
-
-    System.out.println("productEntity의 값 : " + productEntity.getProductImages());
 
     if (productEntity == null) {
       return;
@@ -224,18 +191,12 @@ public class ProductService {
     for (OrderEntity orderEntity : productEntity.getOrderEntityList()) {
       orderEntity.setProductEntity(null);
     }
-    
+
     //연결된 이미지 삭제
     List<ImageEntity> imageEntitys = productEntity.getProductImages();
     for (ImageEntity data : imageEntitys) {
       fileService.deleteFile(data.getImageFile());
-      s3Uploader.deleteFile(data.getImageFile(),imgUploadLocation);
-      s3Uploader.listdeleteFile(productEntity.getProductImages(),imgUploadLocation);
     }
-
-    System.out.println("productEntity의 값 : " + productEntity.getProductImages());
-    s3Uploader.listdeleteFile(productEntity.getProductImages(),imgUploadLocation);
-    s3Uploader.deleteFile(imageEntitys.get(0).getImageFile(),imgUploadLocation);
 
     // 상품 삭제
     productRepository.deleteById(productId);

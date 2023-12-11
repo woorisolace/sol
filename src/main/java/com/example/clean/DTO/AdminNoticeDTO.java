@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminNoticeDTO {

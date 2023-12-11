@@ -67,13 +67,12 @@ public class MemberProductController {
 
   //회원 제품 목록 - (카테고리별로 진열)
   @GetMapping("/productlist")
-  public String productlistForm(
-          @RequestParam(value = "type", defaultValue = "") String type,
-          @RequestParam(value = "keyword", defaultValue = "") String keyword,
-          @RequestParam(value = "sellsState", defaultValue = "") String sellState,
-          @RequestParam(value = "categoryType", defaultValue = "") String categoryType,
-          @PageableDefault(page = 1) Pageable pageable,
-          Model model) throws Exception {
+  public String productlistForm(@RequestParam(value = "type", defaultValue = "") String type,
+                                @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                @RequestParam(value = "sellsState", defaultValue = "") String sellState,
+                                @RequestParam(value = "categoryType", defaultValue = "") String categoryType,
+                                @PageableDefault(page = 1) Pageable pageable,
+                                Model model) throws Exception {
 
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
             .map(SellStateRole::getDescription)
@@ -91,7 +90,6 @@ public class MemberProductController {
     Page<ProductEntity> productEntityPage = productRepository.findAllByStateRole(SellStateRole.SELL, pageable);
     Page<ProductEntity> productEntities = productRepository.findByCategoryTypeRole(CategoryTypeRole.MEMBERSALE, pageable);
 
-    //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
     Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
 
     int blockLimit = 5;
@@ -128,15 +126,14 @@ public class MemberProductController {
 
   //제품 카테고리 LIVING 페이지
   @GetMapping("/livinglist")
-  public String livinglistForm(
-      @RequestParam(value = "type", defaultValue = "") String type,
-      @RequestParam(value = "keyword", defaultValue = "") String keyword,
-      @RequestParam(value = "productName", required = false) String productName,
-      @RequestParam(value = "productContent", required = false) String productContent,
-      @RequestParam(value = "sellState", defaultValue = "") String sellState,
-      @RequestParam(value = "categoryType", defaultValue = "LIVING") String categoryType,
-      @PageableDefault(page = 1) Pageable pageable,
-      Model model) throws Exception {
+  public String livinglistForm(@RequestParam(value = "type", defaultValue = "") String type,
+                               @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                               @RequestParam(value = "productName", required = false) String productName,
+                               @RequestParam(value = "productContent", required = false) String productContent,
+                               @RequestParam(value = "sellState", defaultValue = "") String sellState,
+                               @RequestParam(value = "categoryType", defaultValue = "LIVING") String categoryType,
+                               @PageableDefault(page = 1) Pageable pageable,
+                               Model model) throws Exception {
 
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
         .map(SellStateRole::getDescription)
@@ -150,7 +147,6 @@ public class MemberProductController {
         .collect(Collectors.toList());
     model.addAttribute("categoryOptions", categoryOptions);
 
-    //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
     Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
 
     long livingProductsCount = productService.countProductsByCategory(categoryType);
@@ -169,8 +165,6 @@ public class MemberProductController {
     int lastPage = productDTOS.getTotalPages();
 
     model.addAttribute("productDTOS", productDTOS);
-    //model.addAttribute("sellStateOptions", sellStateOptions);   // 판매상태 옵션을 전달
-    //model.addAttribute("categoryOptions", categoryOptions);     // 카테고리 옵션을 전달
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -188,13 +182,12 @@ public class MemberProductController {
 
   //  제품 카테고리 BATHROOM("욕실용품") 페이지
   @GetMapping("/restroomlist")
-  public String RestroomlistForm(
-      @RequestParam(value = "type", defaultValue = "") String type,
-      @RequestParam(value = "keyword", defaultValue = "") String keyword,
-      @RequestParam(value = "sellState", defaultValue = "") String sellState,
-      @RequestParam(value = "categoryType", defaultValue = "BATHROOM") String categoryType,
-      @PageableDefault(page = 1) Pageable pageable,
-      Model model) throws Exception {
+  public String RestroomlistForm(@RequestParam(value = "type", defaultValue = "") String type,
+                                 @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                 @RequestParam(value = "sellState", defaultValue = "") String sellState,
+                                 @RequestParam(value = "categoryType", defaultValue = "BATHROOM") String categoryType,
+                                 @PageableDefault(page = 1) Pageable pageable,
+                                 Model model) throws Exception {
 
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
         .map(SellStateRole::getDescription)
@@ -208,7 +201,6 @@ public class MemberProductController {
         .collect(Collectors.toList());
     model.addAttribute("categoryOptions", categoryOptions);
 
-    //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
     Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
 
     long livingProductsCount = productService.countProductsByCategory(categoryType);
@@ -226,8 +218,6 @@ public class MemberProductController {
     int lastPage = productDTOS.getTotalPages();
 
     model.addAttribute("productDTOS", productDTOS);
-    //model.addAttribute("sellStateOptions", sellStateOptions);   // 판매상태 옵션을 전달
-    //model.addAttribute("categoryOptions", categoryOptions);     // 카테고리 옵션을 전달
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -245,13 +235,13 @@ public class MemberProductController {
 
   // 제품 카테고리 KITCHEN("주방용품") 페이지
   @GetMapping("/kitchenlist")
-  public String KitchenlistForm(
-      @RequestParam(value = "type", defaultValue = "") String type,
-      @RequestParam(value = "keyword", defaultValue = "") String keyword,
-      @RequestParam(value = "sellState", defaultValue = "") String sellState,
-      @RequestParam(value = "categoryType", defaultValue = "KITCHEN") String categoryType,
-      @PageableDefault(page = 1) Pageable pageable,
-      Model model) throws Exception {
+  public String KitchenlistForm(@RequestParam(value = "type", defaultValue = "") String type,
+                                @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                @RequestParam(value = "sellState", defaultValue = "") String sellState,
+                                @RequestParam(value = "categoryType", defaultValue = "KITCHEN") String categoryType,
+                                @PageableDefault(page = 1) Pageable pageable,
+                                Model model) throws Exception {
+
 
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
         .map(SellStateRole::getDescription)
@@ -264,7 +254,6 @@ public class MemberProductController {
         .collect(Collectors.toList());
     model.addAttribute("categoryOptions", categoryOptions);
 
-    //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
     Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
 
     long livingProductsCount = productService.countProductsByCategory(categoryType);
@@ -282,8 +271,6 @@ public class MemberProductController {
     int lastPage = productDTOS.getTotalPages();
 
     model.addAttribute("productDTOS", productDTOS);
-    //model.addAttribute("sellStateOptions", sellStateOptions);   // 판매상태 옵션을 전달
-    //model.addAttribute("categoryOptions", categoryOptions);     // 카테고리 옵션을 전달
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -301,13 +288,13 @@ public class MemberProductController {
 
   // 제품 카테고리 MEMBERSALE("회원전용") 페이지
   @GetMapping("/salelist")
-  public String SalelistForm(
-      @RequestParam(value = "type", defaultValue = "") String type,
-      @RequestParam(value = "keyword", defaultValue = "") String keyword,
-      @RequestParam(value = "sellState", defaultValue = "") String sellState,
-      @RequestParam(value = "categoryType", defaultValue = "MEMBERSALE") String categoryType,
-      @PageableDefault(page = 1) Pageable pageable,
-      Model model) throws Exception {
+  public String SalelistForm(@RequestParam(value = "type", defaultValue = "") String type,
+                             @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                             @RequestParam(value = "sellState", defaultValue = "") String sellState,
+                             @RequestParam(value = "categoryType", defaultValue = "MEMBERSALE") String categoryType,
+                             @PageableDefault(page = 1) Pageable pageable,
+                             Model model) throws Exception {
+
 
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
         .map(SellStateRole::getDescription)
@@ -324,7 +311,6 @@ public class MemberProductController {
     long livingProductsCount = productService.countProductsByCategory(categoryType);
     model.addAttribute("livingProductsCount",livingProductsCount);
 
-    //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
     Page<ProductDTO> productDTOS = productService.findALl(type, keyword,sellState, categoryType, pageable);
 
     productDTOS.getTotalElements();   //전체 게시글 조회
@@ -339,8 +325,6 @@ public class MemberProductController {
     int lastPage = productDTOS.getTotalPages();
 
     model.addAttribute("productDTOS", productDTOS);
-    //model.addAttribute("sellStateOptions", sellStateOptions);   // 판매상태 옵션을 전달
-    //model.addAttribute("categoryOptions", categoryOptions);     // 카테고리 옵션을 전달
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);

@@ -1,10 +1,13 @@
 package com.example.clean.Service;
 
 import com.example.clean.DTO.MemberDTO;
+import com.example.clean.DTO.OrderDTO;
+import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Entity.UserEntity;
 import com.example.clean.Repository.AdminRepository;
 import com.example.clean.Repository.MemberRepository;
+import com.example.clean.Repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 public class AdminService {
 
   private final AdminRepository adminRepository;
+  private final OrderRepository orderRepository;
   private final ModelMapper modelMapper = new ModelMapper();
 
 
@@ -60,6 +64,33 @@ public class AdminService {
       .build());
 
         return memberDTOPage;
+  }
+
+
+  //관리자-회원구매내역
+  public Page<OrderDTO> getAllOrders(Pageable page) throws Exception {
+
+    int currentPage = page.getPageNumber()-1;
+    int pageLimit = 10;
+
+    // 현재 페이지 번호와 페이지 크기를 이용하여 Pageable 객체를 생성
+    Pageable pageable = PageRequest.of(currentPage, pageLimit, Sort.by(Sort.Direction.DESC, "orderId"));
+
+    // 주문 내역을 페이징 처리하여 조회
+    Page<OrderEntity> orderEntityPage = orderRepository.findAll(pageable);
+
+    // 조회된 주문 내역을 OrderDTO로 변환하여 반환
+    Page<OrderDTO> orderDTOPage = orderEntityPage.map(orderEntity -> OrderDTO.builder()
+        .orderId(orderEntity.getOrderId())
+        .userEntity(orderEntity.getUserEntity())
+        .reDate(orderEntity.getReDate())
+        .productEntity(orderEntity.getProductEntity())
+        .orderPrice(orderEntity.getOrderPrice())
+        .orderNum(orderEntity.getOrderNum())
+        .productDelivery(orderEntity.getProductDelivery())
+        .build());
+
+    return orderDTOPage;
   }
 
 }

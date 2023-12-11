@@ -79,10 +79,10 @@ public class MemberNoticeController {
 
 
   @GetMapping("/searchNotices")
-  //RequestParam(html에서 전달받을 변수)(value="변수명",defaultvalue="값이 없을 때 대체할 값"
-  public String searchAdminNotices(
-      @RequestParam(name = "admintitle", defaultValue = "")String admintitle,
-      Model model)throws Exception{
+  //RequestParam(html에서 전달받을 변수)(value="변수명", defaultvalue="값이 없을 때 대체할 값"
+  public String searchAdminNotices(@RequestParam(name = "admintitle", defaultValue = "")String admintitle,
+                                   Model model)throws Exception{
+
     //Service 처리
     List<AdminNoticeDTO> noticeDTOS = adminNoticeService.search(admintitle);
 
@@ -107,7 +107,6 @@ public class MemberNoticeController {
     model.addAttribute("noticeDTO",noticeDTO);
     model.addAttribute("prevNoticeId",prevNoticeId);
     model.addAttribute("nextNoticeId",nextNoticeId);
-
     return "/notice/notice_detail";
   }
 
