@@ -10,6 +10,7 @@ import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -34,6 +35,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminProductController {
 
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+  @Value("${cloud.aws.region.static}")
+  public String region;
+  @Value("${imgUploadLocation}")
+  public String folder;
   private final ProductService productService;
 
   //상품목록
@@ -78,6 +86,11 @@ public class AdminProductController {
     // 모델에 ProductDTO 추가
     model.addAttribute("productDTO", productDTO);
     model.addAttribute("productDTOS", productDTOS);
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket",bucket);
+    model.addAttribute("region",region);
+    model.addAttribute("folder",folder);
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);

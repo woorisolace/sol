@@ -8,9 +8,11 @@ import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Repository.ProductRepository;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductService {
 
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
+  private String imgUploadLocation;
+  //파일저장을 위한 클래스
+  private final S3Uploader s3Uploader;
+
   private final FileService fileService;
   private final ImageService imageService;
   private final OrderService orderService;
@@ -35,7 +43,7 @@ public class ProductService {
 
 
   //삽입
-  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFiles) throws Exception {
+  public void insertProduct(ProductDTO productDTO, List<MultipartFile> imageFile) throws Exception {
     List<ImageDTO> dataDTO = productDTO.getImageDTOs();  //이미지테이블정보 분리
     List<MultipartFile> images = productDTO.getImages(); //이미지파일 분리
 
@@ -43,6 +51,13 @@ public class ProductService {
     modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
     modelMapper.typeMap(ProductDTO.class, ProductEntity.class)
         .addMappings(mapper -> mapper.skip(ProductEntity::setProductImages));
+
+    String orignalFileName = imageFile.get(0).getOriginalFilename(); //저장할 파일명
+    String newFileName = ""; //새로 만든 파일명
+
+    if(orignalFileName != null) { //파일이 존재하면
+      newFileName = s3Uploader.upload(imageFile.get(0),imgUploadLocation);
+    }
 
     //신규 상품 등록
     ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
@@ -197,6 +212,9 @@ public class ProductService {
     for (ImageEntity data : imageEntitys) {
       fileService.deleteFile(data.getImageFile());
     }
+
+    //S3 삭제
+    s3Uploader.deleteFile(productEntity.getProductImages(),imgUploadLocation);
 
     // 상품 삭제
     productRepository.deleteById(productId);

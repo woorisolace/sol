@@ -6,25 +6,13 @@
 <head>
   <meta charset="utf-8">
   <title>ADMIN - Notice List</title>
-
-  <script>
-      function toggleCategoryDropdown() {
-          var typeDropdown = document.getElementById("searchType");
-          var additionalDropdown = document.getElementById("additionalDropdown");
-          if (typeDropdown.value === "c") {
-              additionalDropdown.style.display = "block"; // Show additional dropdown
-          } else {
-              additionalDropdown.style.display = "none"; // Hide additional dropdown
-          }
-      }
-  </script>
-
 </head>
 
 <body>
 <div layout:fragment="content">
   <div class="main-wrapper wrapper-2">
     <div class="breadcrumb-area breadcrumb-padding-8">
+
       <div class="container">
         <div class="breadcrumb-content text-center">
           <div class="breadcrumb-title">
@@ -36,50 +24,32 @@
 
     <div class="wishlist-area bg-white pb-130">
       <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-20">
+        <div class="row justify-content-center">
           <div class="col-lg-3 ">
-
             <div class="sidebar-widget update">
-              <form th:action="@{/admin_noticelist}" method="get">
-                <div class="sidebar-archive-wrap">
-                  <select class="form-select" name="type" id="searchType" onchange="toggleCategoryDropdown()">
-                    <option value="" th:selected="${type == ''}">-- 카테고리 선택 --</option>
-                    <option value="c" th:selected="${type == 'c'}">공지종류</option>
-                    <option value="t" th:selected="${type == 't'}">제목</option>
-                  </select>
-                </div>
-
-                <div class="sidebar-archive-wrap" id="additionalDropdown" style="display: none;">
-                  <select class="form-select" name="additionalType" id="additionalType">
-                    <option>--공지유형--</option>
-                    <option>배송공지</option>
-                    <option>상품공지</option>
-                    <option>이벤트</option>
-                    <option>청소꿀팁</option>
-                    <option>기타</option>
-                  </select>
-                </div>
-
-              </form>
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>공지종류</option>
+                  <option>제목</option>
+                </select>
+              </div>
             </div>
           </div>
-
-          <!-- 검색창
-          <div class="col-lg-6">
+          <div class="col-lg-3">
             <div class="sidebar-widget">
-              <div class="sidebar-search update" th:style="${type == 'c' ? 'margin-left:15px;' : ''}">
-                <form class="sidebar-search-form" th:action="@{/admin_noticelist}" method="post" name="adminnotice">
-                  <input type="text" placeholder="Search" name="adminnotice">
-                  <button type="submit" >
+              <div class="sidebar-search update">
+                <form class="sidebar-search-form" action="#">
+                  <input type="text" placeholder="Search">
+                  <button>
                     <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
                   </button>
                 </form>
               </div>
             </div>
           </div>
-          -->
-
-          <div class="col-lg-3 text-right">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-4">
             <div class="blog-wrap">
               <div class="blog-content">
                 <div class="blog-btn-date-wrap right-btn">
@@ -97,77 +67,84 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <div class="wishlist-table-content">
-              <div class="table-content">
-                <table>
-                  <thead>
-                  <tr>
-                    <th class="width-price">번호</th>
-                    <th class="width-price">공지종류</th>   <!-- 정책공지, 배송공지, 상품공지, 이벤트, 기타 -->
-                    <th class="width-price">제목</th>
-                    <th class="width-price">작성자</th>
-                    <th class="width-price">작성날짜</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr th:each="data : ${noticeDTOn.content}" th:if="${data.admintitle != null and data.admintitle.toLowerCase().contains(title != null ? title.toLowerCase() : '')}">
-                    <td th:text="${data.adminnoticeid}">
-                      번호
-                    </td>
-                    <td th:text="${data.admincategory}">
-                      <h5>
-                        <span th:if="${data.admincategory=='배송공지'}">배송공지</span>
-                        <span th:if="${data.admincategory=='상품공지'}">상품공지</span>
-                        <span th:if="${data.admincategory=='청소꿀팁'}">청소꿀팁</span>
-                        <span th:if="${data.admincategory=='이벤트'}">이벤트</span>
-                        <span th:if="${data.admincategory=='기타'}">기타</span>
-                      </h5>
-                    </td>
-                    <td>
-                      <a th:href="@{/admin_noticeread(adminnoticeid=${data.adminnoticeid})}">
-                        <span th:text="${data.admintitle}"></span>
-                        <span th:text="${data.adminNoticeRole}"></span>
-                      </a>
-                    </td>
-                    <td th:text="${data.adminwriter}">
-                      <h5>관리자</h5>
-                    </td>
-                    <td>
+            <form action="#">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-price">공지종류</th>   <!-- 정책공지, 배송공지, 상품공지, 이벤트, 기타 -->
+                      <th class="width-price">제목</th>
+                      <th class="width-price">작성자</th>
+                      <th class="width-price">작성날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${noticeDTOn}">
+                      <td th:text="${data.adminnoticeid}">
+                        번호
+                      </td>
+                      <td th:text="${data.admincategory}">
+                        <h5>
+                          <span th:if="${data.admincategory=='배송공지'}">배송공지</span>
+                          <span th:if="${data.admincategory=='상품공지'}">상품공지</span>
+                          <span th:if="${data.admincategory=='이벤트'}">이벤트</span>
+                          <span th:if="${data.admincategory=='기타'}">기타</span>
+                        </h5>
+                      </td>
+                      <td>
+                        <a th:href="@{/admin_noticeread(adminnoticeid=${data.adminnoticeid})}" th:text="${data.admintitle}"></a>
+                      </td>
+                      <td th:text="${data.adminwriter}">
+                        <h5>관리자</h5>
+                      </td>
+                      <td>
                       <span th:if="${data.reDate == null and data.modDate != null}"
-                            th:text="${#temporals.format(data.modDate, 'yyyy-MM-dd') + '(Modified)'}"></span>
-                      <span th:if="${data.reDate != null}"
-                            th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}"></span>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+                            th:text="${#temporals.format(data.modDate, 'yyyy-MM-dd') + ' (수정일)'}"></span>
+                        <span th:if="${data.reDate != null}"
+                              th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}"></span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
+                    <ul class="pagination">
+                      <!--startPage가 1번 페이지가 아니면 나타낸다.-->
+                      <li class="page-item" th:unless="${startPage==1}"> <!--첫페이지 이동-->
+                        <a class="page-link" th:href="@{/admin_noticelist(page=1)}">처음</a>
+                      </li>
 
-                <!-- 페이지 번호 추가 -->
-                <div class="pagination-style text-center mt-30">
-                  <ul>
-                    <li th:unless="${startPage == 1}">
-                      <a th:href="@{/admin_noticelist(type=${type}, title=${title}, page=1)}">처음</a>
-                    </li>
-                    <li th:unless="${currentPage == 1}">
-                      <a th:href="@{/admin_noticelist(type=${type}, title=${title}, page=${prevPage})}">&lt;</a>
+                      <span class="page-item" th:unless="${currentPage==1}"> <!--이전페이지 이동-->
+                      <a class="page-link" th:href="@{/admin_noticelist(page=${prevPage})}"><</a>
+                    </span>
+
+                      <span th:each="page:${#numbers.sequence(startPage, endPage)}"> <!--화면에 해당 페이지번호-->
+                    <li class="page-item" th:unless="${page==currentPage}"><!--현재페이지가 아니면-->
+                        <a class="page-link" th:href="@{/admin_noticelist(page=${page})}">
+                          [[${page}]]
+                        </a>
                     </li>
 
-                    <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                      <a th:if="${currentPage != page}" th:href="@{/admin_noticelist(type=${type}, title=${title}, page=${page})}">[[${page}]]</a>
-                      <a th:if="${currentPage == page}" href="#" class="active">[[${page}]]</a>
+                    <li class="page-item active" th:if="${page==currentPage}"><!--현재페이지 이면-->
+                        <a class="page-link" href="#">
+                          [[${page}]]
+                        </a>
                     </li>
+                </span>
 
-                    <li th:unless="${currentPage == lastPage}">
-                      <a th:href="@{/admin_noticelist(type=${type}, title=${title}, page=${nextPage})}">&gt;</a>
-                    </li>
-                    <li th:unless="${endPage == lastPage}">
-                      <a th:href="@{/admin_noticelist(type=${type}, title=${title}, page=${lastPage})}">끝</a>
-                    </li>
-                  </ul>
+                      <span class="page-item" th:unless="${currentPage==lastPage}"> <!--다음페이지 이동-->
+                      <a class="page-link" th:href="@{/admin_noticelist(page=${nextPage})}">></a>
+                    </span>
+
+                      <li class="page-item" th:unless="${endPage==lastPage}"> <!--끝페이지 이동-->
+                        <a class="page-link" th:href="@{/admin_noticelist(page=${lastPage})}">끝</a>
+                      </li>
+                    </ul>
+                  </div><!-- 페이지 번호 추가 끝-->
                 </div>
-                <!-- 페이지 번호 추가 끝 -->
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
