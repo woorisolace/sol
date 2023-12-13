@@ -38,11 +38,21 @@ public class AiController {
   @Autowired
   private Flask flask;
 
-  @Value("${uploadPath}")
-  private String uploadPath;
+//  @Value("${uploadPath}")
+//  private String uploadPath;
+//
+//  @Value("${imgLocation}")
+//  private String imgLocation;
 
-  @Value("${imgLocation}")
-  private String imgLocation;
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+
+  @Value("${cloud.aws.region.static}")
+  public String region;
+
+  @Value("${imgUploadLocation}")
+  public String folder;
 
   private final AiService aiService;
   private final MemberService memberService;
@@ -163,6 +173,11 @@ public class AiController {
       model.addAttribute("currentPage", currentPage);
       model.addAttribute("nextPage", nextPage);
       model.addAttribute("lastPage", lastPage);
+
+      //S3 이미지 정보 전달
+      model.addAttribute("bucket", bucket);
+      model.addAttribute("region", region);
+      model.addAttribute("folder", folder);
 
       return "/ai/img_result";
     } catch (Exception e) {

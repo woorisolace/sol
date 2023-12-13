@@ -35,7 +35,10 @@
                                                 <br>
                                                 <br>
                                                 <!--toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
-                                                <img class="center" src="/images/result.jpg">
+<!--                                                <img class="center" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${result.jpg}|">-->
+                                                <img class="center" th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/home/ubuntu/AI/yolov5/runs/detect/result|}">
+
+                                                <!-- <img class="center" src="/images/result.jpg">-->
                                                 <!-- <input type="text" name="tip" placeholder="청소꿀팁" readonly> -->
                                                 <div class="button-box text-center">
                                                     <br>
@@ -130,14 +133,14 @@
                             <div class="product-img img-zoom mb-4">
                                 <a th:href="@{/product/{productId}(productId=${product.productId})}">
                                     <!-- 대표 이미지를 표시하도록 수정 -->
-                                    <img class="default-img" th:src="|/images/item/@{${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}}|" width="600" height="300">
+                                    <img class="default-img" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}|" width="600" height="300">
                                 </a>
                                 <div class="product-action-wrap">
                                     <button title="Add To Cart">
-                                        <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />
+                                        <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""/>
                                     </button>
                                     <button title="Wishlist">
-                                        <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />
+                                        <img class="injectable" src="assets/images/icon-img/heart.svg" alt=""/>
                                     </button>
                                 </div>
                             </div>
