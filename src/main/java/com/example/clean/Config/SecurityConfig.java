@@ -62,10 +62,11 @@ public class SecurityConfig {
             auth.antMatchers("/", "/login", "/register").permitAll();
 
             //회원로그인시
-            auth.antMatchers("/logout", "/mypage", "/myinfo_detail", "/member_oderlist", "/myreviewlist", "/mylikelist").hasRole("USER");
+            auth.antMatchers("/logout", "/my**", "/member**").hasRole("USER");
 
             //관리자로그인시
             auth.antMatchers("/logout").hasRole("ADMIN");
+            //auth.antMatchers("/logout", "/admin**").hasRole("ADMIN");
         });
 
         //로그인처리에 대한 설정

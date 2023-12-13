@@ -1,5 +1,6 @@
 package com.example.clean.Service;
 
+import com.example.clean.DTO.ImageDTO;
 import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.OrderDTO;
 import com.example.clean.Entity.OrderEntity;
@@ -8,8 +9,10 @@ import com.example.clean.Entity.UserEntity;
 import com.example.clean.Repository.AdminRepository;
 import com.example.clean.Repository.MemberRepository;
 import com.example.clean.Repository.OrderRepository;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +28,13 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class AdminService {
+
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
+  private String imgUploadLocation;
+
+  //파일 저장을 위한 클래스
+  private final S3Uploader s3Uploader;
 
   private final AdminRepository adminRepository;
   private final OrderRepository orderRepository;
@@ -67,6 +77,13 @@ public class AdminService {
   }
 
 
+  //리스트 출력을 위해 이미지 불러오기
+  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) {
+    return orderEntity.getProductEntity().getProductImages().stream()
+        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+        .collect(Collectors.toList());
+  }
+
   //관리자-회원구매내역
   public Page<OrderDTO> getAllOrders(Pageable page) throws Exception {
 
@@ -88,6 +105,8 @@ public class AdminService {
         .orderPrice(orderEntity.getOrderPrice())
         .orderNum(orderEntity.getOrderNum())
         .productDelivery(orderEntity.getProductDelivery())
+        .imageDTOs(getImagesForOrderEntity(orderEntity))
+        .reDate(orderEntity.getReDate())
         .build());
 
     return orderDTOPage;

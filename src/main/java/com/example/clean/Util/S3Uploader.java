@@ -20,41 +20,43 @@ import java.util.Optional;
 import java.util.UUID;
 
 //S3 파일 업로드 클래스
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
-
 
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
+
     //플라스크 AI결과 이미지 업로드
-    public String AIResultS3(File uploadFile, String fileName) {
+    public String AIResultS3(File uploadFile, String fileName) throws IOException {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
     //일반 파일 S3에 업로드
+    //dirName : 업로드된 파일이 S3에서 어떤 디렉토리에 위치할지를 지정
     public String upload(MultipartFile multipartFile, String dirName) throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("파일 전환 실패"));
         return upload(uploadFile, dirName);
     }
 
-    // S3 파일삭제
-    public void deleteFile(List<String> deleteFiles, String dirName) throws IOException {
-        for(String deleteFile : deleteFiles){
-            try {
-                String fileName = deleteFile.substring(deleteFile.lastIndexOf("/")+1);
-                amazonS3Client.deleteObject(bucket, dirName + "/" + fileName);
-            } catch(SdkClientException e) {
-                throw new IOException("Error deleting file from S3", e);
-            }
+    //public void deleteFile(List<ImageEntity> deleteFile, String dirName) throws IOException {
+    //S3 파일삭제
+    //List<ImageEntity> deleteFile -> 단일 파일을 삭제하도록 수정해야함
+    public void deleteFile(String deleteFile, String dirName) throws IOException {
+
+        String fileName = dirName+"/"+deleteFile;
+        try {
+            amazonS3Client.deleteObject(bucket, fileName);
+        } catch(SdkClientException e) {
+            throw new IOException("Error deleting file from S3", e);
         }
     }
-
 
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
@@ -72,6 +74,12 @@ public class S3Uploader {
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
+    }
+
+    // 이미지 URL 가져오기
+    public String getImageUrl(String fileName) {
+        String key = fileName;
+        return amazonS3Client.getUrl(bucket, key).toString();
     }
 
     // 로컬에 저장된 이미지 지우기

@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Data
 public class FlaskResponseDTO {
+
     private List<String> name;
 
 }

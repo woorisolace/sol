@@ -1,6 +1,8 @@
 package com.example.clean.Util;
 
+import com.example.clean.DTO.FlaskResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +23,10 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class Flask {
 
-//    //S3 업로드
-//    private final S3Uploader s3Uploader;
-//    @Value("${imgUploadLocation}")
-//    private String imgUploadLocation;
+    //S3 업로드
+    private final S3Uploader s3Uploader;
+    @Value("${imgUploadLocation}")
+    private String imgUploadLocation;
 
   //Flask 클래스 호출시 반드시 Autowired로 선언해야 한다. 자동주입시 Value가 인식 안된다.
   @Value("${flask.Server.Url}")
@@ -43,8 +45,9 @@ public class Flask {
     byte[] bytes = multipartFile.getBytes();
     return Base64.getEncoder().encodeToString(bytes);
   }
-  //public FlaskResponseDTO requestToFlask(MultipartFile file) throws Exception { 아마도 AWS할때
-  public void requestToFlask(MultipartFile file) throws Exception {
+  
+  public FlaskResponseDTO requestToFlask(MultipartFile file) throws Exception { 
+    
     //다른 서버와 통신을 위한 RestTemplate 선언
     RestTemplate restTemplate = new RestTemplate();
     String originalFileName = file.getOriginalFilename(); //파일명 추출
@@ -75,9 +78,8 @@ public class Flask {
     // JSON으로 전달받은 값 확인을 위한 출력
     System.out.println("Received JSON from Flask: " + jsonobject.toJSONString());
 
-
-//        //JSON으로 전달받은 값 개수확인
-//        System.out.println(jsonobject.size());
+    //JSON으로 전달받은 값 개수확인
+    System.out.println(jsonobject.size());
 
     //플라스크에서 전달받은 파일을 임시저장
     byte[] decodedImageDate = Base64.getDecoder().decode((String) (jsonobject.get("image")));
@@ -87,34 +89,34 @@ public class Flask {
       fos.write(decodedImageDate);
     }
 
-//
-//        //분류내용 처리
-//        //JSONObject jo =(JSONObject)jsonobject.get("class");
-//        JSONArray jsonArray = (JSONArray) jsonobject.get("class");
-//        FlaskResponseDTO dto = new FlaskResponseDTO();
-//        dto.setName(jsonArray);
-//
-//        //분리 테스트
-//        for(String name:dto.getName()) {
-//            System.out.println(name);
-//        }
-//
-//        return dto;
+    //분류내용 처리
+    //JSONObject jo =(JSONObject)jsonobject.get("class");
+    JSONArray jsonArray = (JSONArray) jsonobject.get("class");
+    FlaskResponseDTO dto = new FlaskResponseDTO();
+    dto.setName(jsonArray);
 
-    //for(Object name:jsonArray) {
-    //    System.out.println(name);
-    //}
-    //FlaskResponseDTO dto = new FlaskResponseDTO();
-    //dto.setName(jsonobject.get("class"));
+    //분리 테스트
+    for(String name:dto.getName()) {
+      System.out.println(name);
+    }
+
+//    for(Object name:jsonArray) {
+//      System.out.println(name);
+//    }
+//    FlaskResponseDTO dto = new FlaskResponseDTO();
+//    dto.setName(jsonobject.get("class"));
+
     //S3에 파일 전송
-    //File dataFile = new File(outputFilePath);
-    //s3Uploader.AIResultS3(dataFile, imgUploadLocation+"/result.jpg");
+    File dataFile = new File(outputFilePath);
+    s3Uploader.AIResultS3(dataFile, imgUploadLocation+"/result.jpg");
+
 
     //임시파일삭제
-    //File deleteFile = new File(outputFilePath);
-    //if(deleteFile.exists()) { //파일이 존재하면
-    //    deleteFile.delete();
-    //}
+    File deleteFile = new File(outputFilePath);
+    if(deleteFile.exists()) { //파일이 존재하면
+      deleteFile.delete();
+    }
+    return dto;
 
   }
 

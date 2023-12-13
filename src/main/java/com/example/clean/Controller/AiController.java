@@ -5,10 +5,9 @@ import com.example.clean.Constant.SellStateRole;
 import com.example.clean.DTO.AdminNoticeDTO;
 import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.ProductDTO;
-import com.example.clean.Repository.ProductRepository;
 import com.example.clean.Service.AdminNoticeService;
+import com.example.clean.Service.AiService;
 import com.example.clean.Service.MemberService;
-import com.example.clean.Service.ProductService;
 import com.example.clean.Util.Flask;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +44,8 @@ public class AiController {
   @Value("${imgLocation}")
   private String imgLocation;
 
-  private final ProductService productService;
+  private final AiService aiService;
   private final MemberService memberService;
-
-  private final ProductRepository productRepository;
   private final AdminNoticeService adminNoticeService;
 
   //이미지 인식페이지
@@ -106,9 +103,6 @@ public class AiController {
   // 이미지 결과 페이지에 대한 POST 처리
   @PostMapping("/ai_img_result")
   public String imgResultProc(@RequestParam("file") MultipartFile file,
-                              @RequestParam(value = "type", defaultValue = "") String type,
-                              @RequestParam(value = "keyword", defaultValue = "") String keyword,
-                              @RequestParam(value = "sellsState", defaultValue = "") String sellState,
                               @RequestParam(value = "categoryType", defaultValue = "MEMBERSALE") String categoryType,
                               @PageableDefault(page = 1) Pageable pageable,
                               Model model) {
@@ -149,10 +143,7 @@ public class AiController {
 
       Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.findAll("","","",pageable);
 
-      //Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
-      Page<ProductDTO> productDTOS = productService.findALl(type, keyword, sellState, categoryType, pageable);
-
-      productDTOS.getTotalElements();   // 전체 게시글 조회
+      Page<ProductDTO> productDTOS = aiService.memberSaleList(pageable);
 
       int blockLimit = 5;
       int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
@@ -172,9 +163,6 @@ public class AiController {
       model.addAttribute("currentPage", currentPage);
       model.addAttribute("nextPage", nextPage);
       model.addAttribute("lastPage", lastPage);
-
-      model.addAttribute("type", type);
-      model.addAttribute("keyword", keyword);
 
       return "/ai/img_result";
     } catch (Exception e) {

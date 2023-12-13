@@ -81,31 +81,14 @@
               </tbody>
             </table>
 
-              <div class="row">
-
-                <div class="col-lg-9"></div>
-                  <div class="col-lg-3">
-                    <div class="notice-button-container">
-                      <div class="notice-content">
-                        <div class="notice-btn-date-wrap list-btn">
-                          <div class="notice-btn">
-                            <a class="btn btn-outline-primary" th:onclick="|location.href='@{/myinfo_update}'|">수정</a>
-                            <!--                          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/memberupdate}'|">수정</button>&nbsp;&nbsp;&nbsp;-->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="notice-content">
-                        <div class="notice-btn-date-wrap list-btn">
-                          <div class="notice-btn">
-                            <a class="btn btn-outline-primary" th:onclick="|location.href='@{/mypage}'|">목록</a>
-  <!--                          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/mypage}'|">목록</button>-->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div class="row">
+              <div class="col-lg-10"></div>
+              <div class="col-lg-2">
+                <button type="button" class="btn btn-primary admin-primary " name="searchButton" th:onclick=#>수정</button>
+                <button type="button" class="btn btn-primary admin-primary " name="searchButton" th:onclick="|location.href='@{/mypage}'|">목록</button>
               </div>
-        </form>
+            </div>
+          </form>
         </div>
       </div>
     </div>

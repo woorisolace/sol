@@ -64,27 +64,27 @@
                   <div class="col-lg-12">
                     <div class="billing-info mb-20">
                       <label>우편번호 <abbr class="required" title="required">*</abbr></label>
-                      <input th:value="${orderDTO.userEntity.sample6_postcode}" />
+                      <input th:value="${orderDTO.userEntity.sample6_postcode}" disabled/>
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="billing-info mb-20">
                       <label>주소 <abbr class="required" title="required">*</abbr></label>
-                      <input th:value="${orderDTO.userEntity.sample6_detailAddress}" />
+                      <input th:value="${orderDTO.userEntity.sample6_detailAddress}" disabled/>
                       <br>
-                      <input th:value="${orderDTO.userEntity.sample6_extraAddress}" />
+                      <input th:value="${orderDTO.userEntity.sample6_extraAddress}" disabled/>
                     </div>
                   </div>
                   <div class="col-lg-12 col-md-12">
                     <div class="billing-info mb-20">
                       <label>전화번호 <abbr class="required" title="required">*</abbr></label>
-                      <input th:value="${orderDTO.userEntity.tel}" />
+                      <input th:value="${orderDTO.userEntity.tel}" disabled/>
                     </div>
                   </div>
                   <div class="col-lg-12 col-md-12">
                     <div class="billing-info mb-20">
                       <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
-                      <input th:value="${orderDTO.userEntity.email}" />
+                      <input th:value="${orderDTO.userEntity.email}" disabled/>
                     </div>
                   </div>
                 </div>
@@ -95,36 +95,37 @@
               <div class="billing-info-wrap mt-30 mr-50 mb-30">
                 <h3><b>배송 정보</b></h3>
 
-                <div class="row">
+                <div class="row" >
                   <div class="col-lg-12">
                     <div class="billing-info mb-20">
-                      <label>수령인 <abbr class="required" title="required"></abbr></label>
-                      <input type="text">
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6">
-                    <div class="billing-info mb-20">
-                      <label>우편번호 <abbr class="required" title="required"></abbr></label>
-                      <input type="text">
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6">
-                    <div class="billing-info mb-20">
-                      <label>버튼 <abbr class="required" title="required"></abbr></label>
-                      <input type="text">
+                      <label>수령인 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${nickname}" disabled/>
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="billing-info mb-20">
-                      <label>주소 <abbr class="required" title="required"></abbr></label>
-                      <input class="billing-address" placeholder="주소" type="text">
-                      <input placeholder="상세주소" type="text">
+                      <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${sample6_postcode}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${sample6_detailAddress}" disabled/>
+                      <br>
+                      <input th:value="${sample6_extraAddress}" disabled/>
                     </div>
                   </div>
                   <div class="col-lg-12 col-md-12">
                     <div class="billing-info mb-20">
-                      <label>전화번호 <abbr class="required" title="required"></abbr></label>
-                      <input type="text">
+                      <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${tel}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="billing-info mb-20">
+                      <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${email}" disabled/>
                     </div>
                   </div>
                   <div class="additional-info-wrap">

@@ -78,13 +78,11 @@ public class OrderController {
   @PostMapping("/order")
   public String orderInfo(Authentication auth,
                           @ModelAttribute OrderDTO orderDTO,
-                          //@RequestParam("paymentMethod") String paymentMethod,
-                          @RequestParam(value="paymentMethod", required=false) String paymentMethod,
                           RedirectAttributes redirectAttributes,
                           HttpSession session,
                           Model model) throws Exception {
 
-    //상품 정보 조회
+    // 상품 정보 조회
     ProductDTO productDTO = productService.findOne(orderDTO.getProductId());
     model.addAttribute("productDTO", productDTO);
 
@@ -95,14 +93,15 @@ public class OrderController {
 
     try {
       // 주문 정보 저장
-      // resultOrderDTO 객체 :  주문 시 필요한 모든 정보가 포함
-      OrderDTO resultOrderDTO = orderService.orderInfo(memberDTO.getEmail(), productDTO.getProductId(), orderDTO.getProductNum(), orderDTO.getPaymentMethod());
-      log.info("Controller_결제방법 : {}", orderDTO.getPaymentMethod());
+      OrderDTO resultOrderDTO = orderService.orderInfo(memberDTO.getEmail(),
+          productDTO.getProductId(), orderDTO.getProductNum(), orderDTO.getPaymentMethod());
+
+      // 주문 정보 및 사용자 정보를 세션에 저장
+      saveOrderInfoToSession(orderDTO, session);
 
       // RedirectAttributes를 이용하여 주문 정보 전달
       session.setAttribute("orderDTO", resultOrderDTO);
       redirectAttributes.addFlashAttribute("orderId", resultOrderDTO.getOrderId());
-      //redirectAttributes.addFlashAttribute("paymentMethod", resultOrderDTO.getPaymentMethod());
 
       // 주문이 성공적으로 처리되었을 때
       // 리다이렉트 시에 FlashAttribute 사용
@@ -117,18 +116,32 @@ public class OrderController {
     }
   }
 
+  // 메소드로 추출
+  private void saveOrderInfoToSession(OrderDTO orderDTO, HttpSession session) {
+    if (orderDTO.getUserEntity() != null) {
+      // 세션에 주문 정보 설정
+      session.setAttribute("nickname", orderDTO.getUserEntity().getNickname());
+      session.setAttribute("sample6_postcode", orderDTO.getUserEntity().getSample6_postcode());
+      session.setAttribute("sample6_detailAddress", orderDTO.getUserEntity().getSample6_detailAddress());
+      session.setAttribute("sample6_extraAddress", orderDTO.getUserEntity().getSample6_extraAddress());
+      session.setAttribute("tel", orderDTO.getUserEntity().getTel());
+      session.setAttribute("email", orderDTO.getUserEntity().getEmail());
+    }
+  }
 
-
-
-  // 주문완료페이지
-  // 주문이 완료된 후에 주문 완료 페이지를 조회
   @GetMapping("/orderSuccess")
   public String getOrderSuccess(HttpSession session, Model model) throws Exception {
+    // 세션에서 주문 정보 읽기
+    String nickname = (String) session.getAttribute("nickname");
+    String sample6_postcode = (String) session.getAttribute("sample6_postcode");
+    String sample6_detailAddress = (String) session.getAttribute("sample6_detailAddress");
+    String sample6_extraAddress = (String) session.getAttribute("sample6_extraAddress");
+    String tel = (String) session.getAttribute("tel");
+    String email = (String) session.getAttribute("email");
 
-    //HttpSession에서 구매 정보를 가져옴 (회원정보, 제품정보 + 배송/결제 정보 등)
     OrderDTO sessionOrderDTO = (OrderDTO) session.getAttribute("orderDTO");
 
-    //sessionOrderDTO가 null이거나 orderId가 null인 경우 처리
+    // sessionOrderDTO가 null이거나 orderId가 null인 경우 처리
     if (sessionOrderDTO == null || sessionOrderDTO.getOrderId() == null) {
       log.error("세션에서 주문 정보 또는 주문 번호를 가져오지 못했습니다.");
       return "error";
@@ -138,11 +151,16 @@ public class OrderController {
     Integer orderId = sessionOrderDTO.getOrderId();
     OrderDTO orderDTO = orderService.getOrderSuccess(orderId);
 
-    // 주문 정보를 페이지에 전달
+    // 주문 정보와 세션에서 가져온 값을 모델에 추가
     model.addAttribute("orderDTO", orderDTO);
-    return "cartorder/orderSuccess";
+    model.addAttribute("nickname", nickname);
+    model.addAttribute("sample6_postcode", sample6_postcode);
+    model.addAttribute("sample6_detailAddress", sample6_detailAddress);
+    model.addAttribute("sample6_extraAddress", sample6_extraAddress);
+    model.addAttribute("tel", tel);
+    model.addAttribute("email", email);
 
+    return "cartorder/orderSuccess";
   }
 
 }
-

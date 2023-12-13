@@ -22,22 +22,17 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
   //상품 고유번호
   ProductEntity findByProductId(Integer productId);
 
-  //카테고리별 상품 수
-  long countByCategoryTypeRole(CategoryTypeRole categoryTypeRole);
-
-  //조회수가 높은 베스트 상품순 n개 노출
-  List<ProductEntity> findTopByOrderByProductViewcntDesc();
-
-
+  //상품진열(카테고리 유형별)
+  @Query("SELECT p FROM ProductEntity p WHERE p.categoryTypeRole = :categoryTypeRole AND p.sellStateRole = :sellStateRole")
+  Page<ProductEntity> findProductEntityByCategoryTypeRoleAndSellState (@Param("categoryTypeRole") CategoryTypeRole categoryTypeRole, @Param("sellStateRole") SellStateRole sellStateRole, Pageable pageable);
 
   //상품진열(판매상태) - SELL(판매중)
   @Query("SELECT p FROM ProductEntity p WHERE p.sellStateRole = :SELL")
   Page<ProductEntity> findAllByStateRole (@Param("SELL") SellStateRole SELL, Pageable pageable);
 
-  //상품진열(카테고리) - MEMBERSALE(회원전용)제외
+  //상품진열(카테고리) - MEMBERSALE(회원전용)
   @Query("SELECT p FROM ProductEntity p WHERE p.categoryTypeRole = :MEMBERSALE")
   Page<ProductEntity> findByCategoryTypeRole(@Param("MEMBERSALE") CategoryTypeRole MEMBERSALE, Pageable pageable);
-
 
 
   //검색부분
@@ -56,7 +51,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
   // 판매 상태로 상품 조회
   @Query("SELECT p FROM ProductEntity p WHERE p.sellStateRole = :sellState")
   Page<ProductEntity> findBySellStateRole(@Param("sellState") SellStateRole sellStateRole, Pageable pageable);
-
 
 
 }

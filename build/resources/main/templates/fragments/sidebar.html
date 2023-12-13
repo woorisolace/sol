@@ -24,17 +24,16 @@
             <li>
               <a href="#">PRODUCT</a>
               <ul>
-                <li><a href="/productlist">All</a></li>
-                <li><a href="/livinglist">Living</a></li>
-                <li><a href="/kitchenlist">Kitchen</a></li>
-                <li><a href="/restroomlist">Restroom</a></li>
-                <li><a href="/salelist">Sale</a></li>
+                <li><a href="/productlist/ALL">ALL</a></li>
+                <li><a href="/productlist/LIVING">LIVING</a></li>
+                <li><a href="/productlist/KITCHEN">KITCHEN</a></li>
+                <li><a href="/productlist/BATHROOM">BATHROOM</a></li>
               </ul>
             </li>
             <li>
               <a href="#">Notice</a>
               <ul>
-                <li><a href="/noticelist">Notice</a></li>
+                <li><a href="/notice_list">Notice</a></li>
                 <li><a href="/qnalist">Q&A</a></li>
               </ul>
             </li>
@@ -60,7 +59,7 @@
             <li sec:authorize="isAuthenticated()">
               <a href="/logout">Logout</a>
             </li>
-            <li>
+            <li sec:authorize="hasRole('ADMIN')">
               <a href="/admin">ADMIN</a>
             </li>
           </ul>

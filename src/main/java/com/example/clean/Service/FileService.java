@@ -1,6 +1,8 @@
 package com.example.clean.Service;
 
 
+import com.example.clean.Util.S3Uploader;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.File;
@@ -13,11 +15,13 @@ import java.util.UUID;
 //각 이미지에 대해 파일을 업로드하고 이미지 엔티티를 생성
 
 @Service
+@RequiredArgsConstructor
 public class FileService {
 
-  //저장할 경로, 파일명, 데이터값
+  //파일을 저장할 경로, 파일명, 데이터값
   @Value("${imgLocation}")
   private String imgLocation;
+
 
   //저장할 경로,파일명,데이터 값
   public String uploadFile(String originalFileName,  byte[] filedata) throws Exception {
@@ -37,6 +41,7 @@ public class FileService {
 
   // 파일 삭제 (상품을 수정시 기존 파일을 삭제하고 새로운 파일을 저장)
   public void deleteFile(String fileName) throws Exception {
+
     String deleteFileName = imgLocation + fileName;
 
     File deleteFile = new File(deleteFileName);

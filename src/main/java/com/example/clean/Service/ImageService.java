@@ -3,6 +3,7 @@ import com.example.clean.DTO.ImageDTO;
 import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Repository.ImageRepository;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,18 +26,23 @@ public class ImageService {
   //파일업로드
   private final FileService fileService;
   private final ModelMapper modelMapper = new ModelMapper();
-
   private final ImageRepository imageRepository;
 
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
+  private String imgUploadLocation;
 
+  //파일 저장을 위한 클래스
+  private final S3Uploader s3Uploader;
 
   // 삽입
   public void uploadImage(ImageDTO imageDTO, ProductEntity entity, MultipartFile imageFile) throws Exception {
-    String originalFileName = imageFile.getOriginalFilename(); //기존파일명
-    String newFileName=""; //UUID로 생성된 새로운 파일명
+    String originalFileName = imageFile.getOriginalFilename();  //저장 할 파일명
+    String newFileName="";                                      //UUID로 생성된 새로운 파일명
 
-    if(originalFileName != null && originalFileName.length() >0) { //파일존재시 업로드 진행
-      newFileName = fileService.uploadFile(originalFileName, imageFile.getBytes());
+    if(originalFileName != null && originalFileName.length() >0) {    //파일존재시 업로드 진행
+      //newFileName = fileService.uploadFile(originalFileName, imageFile.getBytes());
+      newFileName = s3Uploader.upload(imageFile, imgUploadLocation);
     }
 
     imageDTO.setImageFile(newFileName); //새로운 이름으로 변경
@@ -60,8 +66,8 @@ public class ImageService {
 
     // 해당 이미지 존재 여부 확인
     ImageEntity imageEntity = imageRepository
-            .findById(imageDTO.getImageId())
-            .orElseThrow();
+        .findById(imageDTO.getImageId())
+        .orElseThrow();
 
     String deleteFileName = imageEntity.getImageFile();    // 이전 파일명
 
@@ -69,7 +75,8 @@ public class ImageService {
       if (deleteFileName.length() != 0) {      // 이전 파일 존재시 삭제
         fileService.deleteFile(deleteFileName);
       }
-      newFileName = fileService.uploadFile(originalFileName, imageFile.getBytes());
+      //newFileName = fileService.uploadFile(originalFileName, imageFile.getBytes());
+      newFileName = s3Uploader.upload(imageFile, imgUploadLocation);
 
       imageDTO.setImageFile(newFileName);
       imageDTO.setImageId(imageEntity.getImageId());    // 새로운 파일명을 재등록
@@ -86,10 +93,18 @@ public class ImageService {
     }
   }
 
+
   //삭제
-  public void deleteImage (Integer imageId) throws Exception {
+  public void deleteImage(ProductEntity productEntity, Integer imageId) throws Exception {
+
+    ImageEntity imageEntity = imageRepository.findById(imageId).orElseThrow();
+    //이미지 리스트를 받아 삭제(productEntity.getProductImages())중이니까 imageId를 이용하여 단일 삭제하도록 수정
+    s3Uploader.deleteFile(imageEntity.getImageFile(), imgUploadLocation);
     imageRepository.deleteById(imageId);
+
+    //s3Uploader.deleteFile(productEntity.getProductImages(), imgUploadLocation);
 
   }
 
 }
+

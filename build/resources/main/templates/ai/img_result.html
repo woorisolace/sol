@@ -6,20 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Img Result</title>
-    <!-- 이미지 분석 실패 시 에러메시지창으로 표시 "이미지 분류에 실패했습니다. 다른 사진을 첨부해주세요." -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <th:block layout:fragment="script">
-        <script type="text/javascript">
-            $(document).ready(function(){
-                var errorMessage = "[[${errorMessage}]]"; // 서버로부터 메세지 받기
-
-                if (errorMessage != null && errorMessage.length > 0) { // 오류 메세지를 받았으면
-                    alert(errorMessage); // 메세지를 대화상자(메시지 창)로 출력
-                    window.location.href = '/ai_img_search'; // 이동하고 싶은 페이지로 이동
-                }
-            });
-        </script>
-    </th:block>
 </head>
 
 
@@ -48,8 +34,8 @@
                                                 <div><h1><span th:text="${roomType}" /></h1></div>
                                                 <br>
                                                 <br>
-                                                    <!--toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
-                                                    <img class="center" src="/images/result.jpg">
+                                                <!--toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
+                                                <img class="center" src="/images/result.jpg">
                                                 <!-- <input type="text" name="tip" placeholder="청소꿀팁" readonly> -->
                                                 <div class="button-box text-center">
                                                     <br>

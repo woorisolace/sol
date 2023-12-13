@@ -18,21 +18,21 @@
                         <h2>Clean Product</h2>
                     </div>
                     <ul data-aos="fade-up" data-aos-delay="300">
-                        <li>
-                            <a href="/productlist">All</a>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/ALL' ? 'active' : ''}">
+                            <a href="/productlist/ALL">ALL</a>
                         </li>
-                        <li>
-                            <a href="/livinglist">Living</a>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/LIVING' ? 'active' : ''}">
+                            <a href="/productlist/LIVING">LIVING</a>
                         </li>
-                        <li>
-                            <a href="/kitchenlist">Kitchen</a>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/KITCHEN' ? 'active' : ''}">
+                            <a href="/productlist/KITCHEN">KITCHEN</a>
                         </li>
-                        <li>
-                            <a href="/restroomlist">Restroom</a>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
+                            <a href="/productlist/BATHROOM">BATHROOM</a>
                         </li>
                         <!--
-                        <li>
-                            <a href="/salelist">sale</a>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
+                            <a href="/productlist/MEMBERSALE">MEMBERSALE</a>
                         </li>
                         -->
                     </ul>

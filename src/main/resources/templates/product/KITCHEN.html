@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product list</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title" data-aos="fade-up" data-aos-delay="200">
+                        <h2>Clean Product</h2>
+                    </div>
+                    <ul data-aos="fade-up" data-aos-delay="300">
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/ALL' ? 'active' : ''}">
+                            <a href="/productlist/ALL">ALL</a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/LIVING' ? 'active' : ''}">
+                            <a href="/productlist/LIVING">LIVING</a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/KITCHEN' ? 'active' : ''}">
+                            <a href="/productlist/KITCHEN">KITCHEN</a>
+                        </li>
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
+                            <a href="/productlist/BATHROOM">BATHROOM</a>
+                        </li>
+                        <!--
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
+                            <a href="/productlist/MEMBERSALE">MEMBERSALE</a>
+                        </li>
+                        -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="shop-area section-padding-lr-1 pb-235">
+            <div class="container-fluid">
+                <div class="shop-page-wrap margin-none">
+                    <div class="shop-top-bar shop-top-bar-responsive">
+                        <div class="show-wrap" data-aos="fade-up" data-aos-delay="200">
+                            <input type="hidden" name="categoryTypeRole" th:value="${categoryTypeRole}">
+                            Total <b><span th:text="${totalElements}">0</span></b> <!-- 전체 상품 수 -->
+                        </div>
+                        <div class="sorting-filter-wrap">
+                            <div class="shop-sorting-area">
+                                <select class="nice-select nice-select-style-2">
+                                    <option>인기순</option>
+                                    <option>신상품</option>
+                                    <option>낮은 가격</option>
+                                    <option>조회수</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-54-row-col">
+                        <div class="row">
+                            <!-- 상품 목록 생성 -->
+                            <div th:each="product:${productDTOS}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75"
+                                 th:if="${product.sellStateRole == T(com.example.clean.Constant.SellStateRole).SELL}">
+                                <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
+                                    <div class="product-img img-zoom mb-4">
+                                        <a th:href="@{/product/{productId}(productId=${product.productId})}">
+                                            <img class="default-img" th:if="${not product.imageDTOs?.isEmpty()}" th:src="@{/images/item/{imageName}(imageName=${product.imageDTOs[0]?.imageFile})}" width="600" height="300">
+                                            <img class="default-img" th:if="${product.imageDTOs?.isEmpty()}" th:src="@{/images/item/default-image.jpg}" width="600" height="300">
+                                        </a>
+                                        <div class="product-action-wrap">
+                                            <button title="Add To Cart">
+                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />
+                                            </button>
+                                            <button title="Wishlist">
+                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="product-content text-center">
+                                        <h3>
+                                            <a th:href="@{/product/{productId}(productId=${product.productId})}" th:text="${product.productName}" />
+                                        </h3>
+                                        <div class="product-price">
+                                            <span th:text="${product.productPrice}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 반복문 끝 -->
+                        </div>
+                    </div>
+
+                    <!-- 페이지 번호 추가 -->
+                    <div class="pagination-style text-center mt-30">
+                        <ul data-aos="fade-up" data-aos-delay="300">
+                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/ALL' ? 'active' : ''}">
+                                <a href="/productlist/ALL">All</a>
+                            </li>
+                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/LIVING' ? 'active' : ''}">
+                                <a href="/productlist/LIVING">Living</a>
+                            </li>
+                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/KITCHEN' ? 'active' : ''}">
+                                <a href="/productlist/KITCHEN">Kitchen</a>
+                            </li>
+                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
+                                <a href="/productlist/BATHROOM">Restroom</a>
+                            </li>
+                            <!--
+                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
+                                <a href="/productlist/MEMBERSALE">Sale</a>
+                            </li>
+                            -->
+                        </ul>
+                    </div>
+                    <!-- 페이지 번호 추가 끝 -->
+                </div>
+            </div>
+        </div>
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
+    </div>
+</div>
+</body>
+</html>

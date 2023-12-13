@@ -67,7 +67,6 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <form action="#">
               <div class="wishlist-table-content">
                 <div class="table-content">
                   <table>
@@ -108,43 +107,32 @@
                     </tr>
                     </tbody>
                   </table>
-                  <div class="pagination-style text-center mt-30">        <!-- 페이지 번호 추가 -->
-                    <ul class="pagination">
-                      <!--startPage가 1번 페이지가 아니면 나타낸다.-->
-                      <li class="page-item" th:unless="${startPage==1}"> <!--첫페이지 이동-->
-                        <a class="page-link" th:href="@{/admin_noticelist(page=1)}">처음</a>
-                      </li>
+                      <!-- 페이지 번호 추가 -->
+                      <div class="pagination-style text-center mt-30">
+                        <ul>
+                          <li th:unless="${startPage == 1}">
+                            <a th:href="@{/admin_noticelist(page=1)}">처음</a>
+                          </li>
+                          <li th:unless="${currentPage == 1}">
+                            <a th:href="@{/admin_noticelist(page=${prevPage})}">&lt;</a>
+                          </li>
 
-                      <span class="page-item" th:unless="${currentPage==1}"> <!--이전페이지 이동-->
-                      <a class="page-link" th:href="@{/admin_noticelist(page=${prevPage})}"><</a>
-                    </span>
+                          <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                            <a th:if="${currentPage != page}" th:href="@{/admin_noticelist(page=${page})}">[[${page}]]</a>
+                            <a th:if="${currentPage == page}" href="#" class="active">[[${page}]]</a>&nbsp;
+                          </li>
 
-                      <span th:each="page:${#numbers.sequence(startPage, endPage)}"> <!--화면에 해당 페이지번호-->
-                    <li class="page-item" th:unless="${page==currentPage}"><!--현재페이지가 아니면-->
-                        <a class="page-link" th:href="@{/admin_noticelist(page=${page})}">
-                          [[${page}]]
-                        </a>
-                    </li>
-
-                    <li class="page-item active" th:if="${page==currentPage}"><!--현재페이지 이면-->
-                        <a class="page-link" href="#">
-                          [[${page}]]
-                        </a>
-                    </li>
-                </span>
-
-                      <span class="page-item" th:unless="${currentPage==lastPage}"> <!--다음페이지 이동-->
-                      <a class="page-link" th:href="@{/admin_noticelist(page=${nextPage})}">></a>
-                    </span>
-
-                      <li class="page-item" th:unless="${endPage==lastPage}"> <!--끝페이지 이동-->
-                        <a class="page-link" th:href="@{/admin_noticelist(page=${lastPage})}">끝</a>
-                      </li>
-                    </ul>
-                  </div><!-- 페이지 번호 추가 끝-->
+                          <li th:unless="${currentPage == lastPage}">
+                            <a th:href="@{/admin_noticelist(page=${nextPage})}">&gt;</a>
+                          </li>
+                          <li th:unless="${endPage == lastPage}">
+                            <a th:href="@{/admin_noticelist(page=${lastPage})}">끝</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- 페이지 번호 추가 끝 -->
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </div>

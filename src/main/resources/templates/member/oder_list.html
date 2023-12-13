@@ -73,13 +73,13 @@
                   <thead>
                   <tr th:onclick="|location.href='@{/member_oderdetail}'|">    <!-- 행 전체 클릭시 주문내역 상세 -->
                     <th class="width-thumbnail">번호</th>
+                    <th class="width-price">주문번호</th>
                     <th class="width-thumbnail">이미지</th>
                     <th class="width-thumbnail">상품명</th>
                     <th class="width-thumbnail">주문일자</th>
-                    <th class="width-price">주문번호</th>
-                    <th class="width-price">주문금액(수량)</th>
+                    <th class="width-price">결제금액</th>
                     <th class="width-price">주문상태</th>   <!-- 구매완료, 구매확정 -->
-<!--                    <th class="width-price">배송조회</th>   &lt;!&ndash; 배송준비중, 배송중, 배송완료 &ndash;&gt;-->
+                    <th class="width-price">배송조회</th>   <!-- 배송준비중, 배송중, 배송완료 -->
                     <th class="width-price">리뷰작성</th>   <!-- 리뷰작성, 리뷰작성 완료 -->
                   </tr>
                   </thead>
@@ -88,7 +88,9 @@
                     <td class="product-name">
                       <h5><a th:text="${data.orderNum}">구매순서번호</a></h5>
                     </td>
-
+                    <td class="product-name">
+                      <h5><a th:text="${data.orderId}">주문번호</a></h5>
+                    </td>
                     <td class="product-name">
                       <!-- 대표이미지 -->
                       <th:block th:if="${data.imageDTOs != null and data.imageDTOs.size() > 0 and data.imageDTOs[0].imageFile != null}">
@@ -103,19 +105,16 @@
                       <h5><a th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}">주문날짜</a></h5>
                     </td>
                     <td class="product-name">
-                      <h5><a th:text="${data.orderId}">주문번호</a></h5>
+                      <h5><a th:text="${data.orderPrice}"></a>원</h5>
                     </td>
                     <td class="product-name">
-                      <h5><a th:text="${data.orderPrice}"></a>(<a th:text="${data.productNum}">)주문금액(수량)</a></h5>
+                      <h5>구매완료</h5>
                     </td>
                     <td class="product-name">
-                      <h5>주문상태</h5>
+                      <h5>배송완료</h5>
                     </td>
-<!--                    <td class="product-name">-->
-<!--                      <h5>배송조회</h5>-->
-<!--                    </td>-->
                     <td class="product-name">
-                      <h5>리뷰작성</h5>
+                      <h5>리뷰작성 완료</h5>
                     </td>
                   </tr>
 

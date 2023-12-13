@@ -7,28 +7,6 @@
     <meta charset="utf-8">
     <title>ADMIN - Product Insert</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script th:inline="javascript">
-        var error = [[${error}]];
-        var success = [[${success}]];
-
-        console.log("Error:", error);
-        console.log("Success", success);
-
-        var confirmationMessage = error || success;
-
-        if (confirmationMessage) {
-            var userConfirmed = confirm(confirmationMessage);
-
-            if (userConfirmed) {
-                console.log("상품 등록이 완료되었습니다.");
-                location.replace([[${searchUrl}]]);
-            } else {
-                console.log("상품 등록이 취소되었습니다.");
-                location.replace(history.go(-1));
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -71,6 +49,7 @@
                                         <div class="sidebar-archive-wrap">
                                             <select name="CategoryTypeRole" th:field="*{categoryTypeRole}">
                                                 <option th:each="state : ${categoryType}"
+                                                        th:unless="${state.name() == 'ALL'}"
                                                         th:value="${state.name()}"
                                                         th:text="${state.getDescription()}"
                                                         th:selected="${state.name() eq data?.categoryTypeRole?.name()}">
@@ -189,15 +168,7 @@
                                     <div class="notice-content">
                                         <div class="notice-btn-date-wrap list-btn">
                                             <div class="notice-btn">
-                                                <button type="submit" class="btn btn-lg" onclick="insert_alert()">등록</button>
-                                                <script language="javascript">
-                                                    function insert_alert() {
-                                                        // alert을 사용하여 사용자에게 메시지를 표시합니다.
-                                                        alert("상품을 등록하였습니다.");
-                                                        // 폼을 submit합니다.
-                                                        $("form").submit();
-                                                    }
-                                                </script>
+                                                <button type="submit" class="btn btn-lg">등록</button>
                                                 <button type="reset" class="btn btn-lg">다시</button>
                                                 <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_productlist}'|">취소</button>
                                             </div>
@@ -206,6 +177,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

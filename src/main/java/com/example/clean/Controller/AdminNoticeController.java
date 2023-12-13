@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class AdminNoticeController {
 
   private final AdminNoticeService adminNoticeService;
-  private final AdminNoticeRepository adminNoticeRepository;
+
 
   //공지목록 -> 버튼, 검색창 추가 수정 필요
   @GetMapping("/admin_noticelist")
@@ -185,7 +185,6 @@ public class AdminNoticeController {
     }
     AdminNoticeDTO noticeDTO = adminNoticeService.detail(adminnoticeid);
 
-    //이전,다음버튼
     Integer prevNoticeId = adminNoticeService.findPreviousNoticeId(adminnoticeid);
     Integer nextNoticeId = adminNoticeService.findNextNoticeId(adminnoticeid);
 

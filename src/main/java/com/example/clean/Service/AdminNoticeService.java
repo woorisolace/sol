@@ -117,6 +117,39 @@ public class AdminNoticeService {
         }
 
         return new PageImpl<>(adminNoticeDTOList, pageable, adminNoticeEntityPage.getTotalElements());
+//        for(AdminNoticeEntity entity:adminNoticeEntities){
+//            AdminNoticeDTO adminNoticeDTO = AdminNoticeDTO.builder()
+//                    .adminnoticeid(entity.getAdminnoticeid()).admincategory(entity.getAdmincategory())
+//                    .admincontent(entity.getAdmincontent()).admintitle(entity.getAdmintitle())
+//                    .adminwriter(entity.getAdminwriter()).reDate(entity.getReDate()).modDate(entity.getModDate()).build();
+//
+//            adminNoticeDTOList.add(adminNoticeDTO);
+//        }
+//
+//        return new PageImpl<>(adminNoticeDTOList, pageable, adminNoticeEntities.getTotalElements());
+
+
+//        return adminNoticeDTOS;
+
+
+
+        //        Page<AdminNoticeDTO> adminNoticeDTOS = adminNoticeEntities.map(data->AdminNoticeDTO.builder()
+//                .adminnoticeid(data.getAdminnoticeid()).admincategory(data.getAdmincategory())
+//                .admincontent(data.getAdmincontent()).admintitle(data.getAdmintitle())
+//                .adminwriter(data.getAdminwriter()).reDate(data.getReDate()).modDate(data.getModDate()).build());
+
+
+
+
+//        int curPage = page.getPageNumber()-1;
+//        int pageLimit = 10;
+//
+//        Pageable pageable = PageRequest.of(curPage,pageLimit,
+//                Sort.by(Sort.Direction.ASC,"adminnoticeid"));
+//
+//        Page<AdminNoticeEntity> adminNoticeEntities;
+//
+//
     }
 
     //수정
@@ -134,9 +167,24 @@ public class AdminNoticeService {
         adminNoticeEntity.setAdmincontent(adminNoticeDTO.getAdmincontent());
         adminNoticeEntity.setModDate(LocalDateTime.now());
 
-        adminNoticeRepository.save(adminNoticeEntity);
-    }
 
+//      AdminNoticeEntity data = modelMapper.map(adminNoticeDTO,AdminNoticeEntity.class);
+
+        adminNoticeRepository.save(adminNoticeEntity);
+
+
+//        Integer id = adminNoticeDTO.getAdminnoticeid(); //조회에 필요한 변수를 추출
+//
+//        Optional<AdminNoticeEntity> data = adminNoticeRepository.findById(id); //in(int) -> out(Optional<entity>)
+//        //조회한 entity와 작업할 entity
+//        AdminNoticeEntity adminNoticeEntity = data.orElseThrow();
+//
+//        //DTO->Entity 변환(수정할 내용들을 변환)
+//        AdminNoticeEntity update = modelMapper.map(adminNoticeDTO,AdminNoticeEntity.class);
+//        update.setAdminnoticeid(adminNoticeEntity.getAdminnoticeid()); //조회한 내용을 추가
+//
+//        adminNoticeRepository.save(update);
+    }
     //이전버튼
     public Integer findPreviousNoticeId(Integer currentNoticeId) {
 

@@ -1,16 +1,8 @@
 package com.example.clean.Service;
 
-import com.example.clean.DTO.NoticeDTO;
-import com.example.clean.Entity.AdminNoticeEntity;
-import com.example.clean.Entity.NoticeEntity;
-import com.example.clean.Repository.AdminNoticeRepository;
-import com.example.clean.Repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

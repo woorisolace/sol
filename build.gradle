@@ -71,10 +71,10 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
     //S3 추가
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
     compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
+    //https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
 
 
 }

@@ -8,10 +8,12 @@ import com.example.clean.Entity.UserEntity;
 import com.example.clean.Repository.MemberRepository;
 import com.example.clean.Repository.OrderRepository;
 import com.example.clean.Repository.ProductRepository;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,13 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class OrderService {
+
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
+  private String imgUploadLocation;
+
+  //파일 저장을 위한 클래스
+  private final S3Uploader s3Uploader;
 
   private final OrderRepository orderRepository;
   private final MemberRepository memberRepository;
@@ -87,6 +96,9 @@ public class OrderService {
 
     log.info("Controller_paymentMethod_before: {}", paymentMethod);
 
+    // 쉼표를 제거하여 paymentMethod 값을 설정
+    paymentMethod = removeComma(paymentMethod);
+
 
     //주문 정보를 newOrderEntity 저장 (활용도를 높이기 위해)
     OrderEntity newOrderEntity = createOrderEntity(orderDTO, paymentMethod);
@@ -98,6 +110,14 @@ public class OrderService {
     //savedOrderDTO.setOrderId(savedOrderEntity.getOrderId());
 
     return savedOrderDTO;
+  }
+
+  // 쉼표를 제거하는 유틸리티 메서드
+  private String removeComma(String input) {
+    if (input != null) {
+      return input.replace(",", "");
+    }
+    return null; // 혹은 다른 적절한 기본값으로 설정
   }
 
 
@@ -185,5 +205,4 @@ public class OrderService {
         .collect(Collectors.toList());
   }
 }
-
 

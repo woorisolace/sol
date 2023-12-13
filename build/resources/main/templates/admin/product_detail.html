@@ -109,9 +109,10 @@
                         <tr th:if="${#lists.size(productDTO.imageDTOs) > 0}">
                             <th scope="row" class="notice-padding" id="imageDTOs[0]">대표이미지</th>
                             <td class="notice-info">
-                                <!-- 이미지가 있는 경우에만 표시 -->
-                                <img th:if="${productDTO.imageDTOs[0] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[0].imageFile}}|"
-                                     onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="300" height="300">
+                                <!--  S3에서 이미지를 가져와서 출력 (상품의 이미지 중 첫 번째 이미지 가져옴 + 이미지가 없는 경우 빈 이미지 출력) -->
+                                <th:block th:if="${productDTO.imageDTOs != null and productDTO.imageDTOs.size() > 0 and productDTO.imageDTOs[0].imageFile != null}">
+                                    <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|" width="100" height="100">
+                                </th:block>
                             </td>
                         </tr>
 

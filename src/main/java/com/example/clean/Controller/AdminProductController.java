@@ -3,14 +3,9 @@ package com.example.clean.Controller;
 import com.example.clean.Constant.CategoryTypeRole;
 import com.example.clean.Constant.SellStateRole;
 import com.example.clean.DTO.ProductDTO;
-import com.example.clean.Entity.ProductEntity;
-import com.example.clean.Repository.ProductRepository;
-import com.example.clean.Service.ImageService;
 import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,10 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.springframework.beans.factory.annotation.Value;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,13 +31,16 @@ public class AdminProductController {
   //S3 이미지 정보
   @Value("${cloud.aws.s3.bucket}")
   public String bucket;
+
   @Value("${cloud.aws.region.static}")
   public String region;
+
   @Value("${imgUploadLocation}")
   public String folder;
+
   private final ProductService productService;
 
-  //상품목록
+  //전체 상품 목록 조회 (검색 포함, 페이징 처리) -> 관리자
   @GetMapping("/admin_productlist")
   public String listForm(@RequestParam(value = "type", defaultValue = "") String type,
                          @RequestParam(value = "keyword", defaultValue = "") String keyword,
@@ -56,14 +52,14 @@ public class AdminProductController {
 
     // SellStateRole 열거형의 한글 설명을 리스트로 가져오기
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
-            .map(SellStateRole::getDescription)
-            .collect(Collectors.toList());
+        .map(SellStateRole::getDescription)
+        .collect(Collectors.toList());
     model.addAttribute("sellStateOptions", sellStateOptions); // 판매상태 옵션을 전달
 
     // CategoryTypeRole 열거형의 한글 설명을 리스트로 가져오기
     List<String> categoryOptions = Arrays.stream(CategoryTypeRole.values())
-            .map(CategoryTypeRole::getDescription)
-            .collect(Collectors.toList());
+        .map(CategoryTypeRole::getDescription)
+        .collect(Collectors.toList());
     model.addAttribute("categoryOptions", categoryOptions);
 
     Page<ProductDTO> productDTOS = productService.adminFindAll(type, keyword, sellState, categoryType, pageable);
@@ -87,11 +83,6 @@ public class AdminProductController {
     model.addAttribute("productDTO", productDTO);
     model.addAttribute("productDTOS", productDTOS);
 
-    //S3 이미지 정보 전달
-    model.addAttribute("bucket",bucket);
-    model.addAttribute("region",region);
-    model.addAttribute("folder",folder);
-
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
     model.addAttribute("prevPage", prevPage);
@@ -101,6 +92,11 @@ public class AdminProductController {
 
     model.addAttribute("type", type);
     model.addAttribute("keyword", keyword);
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket", bucket);
+    model.addAttribute("region", region);
+    model.addAttribute("folder", folder);
 
     return "/admin/product_list";
 
@@ -134,18 +130,6 @@ public class AdminProductController {
 
     try {
       productService.insertProduct(productDTO, imageFiles);
-      return "redirect:/admin_productlist";
-    } catch (Exception e) {
-      e.printStackTrace();
-      model.addAttribute("error", "상품 수정에 실패하였습니다.");
-      model.addAttribute("searchUrl", "/admin_product_insert");
-      return "message";
-    }
-
-
-    /*
-    try {
-      productService.insertProduct(productDTO, imageFiles);
       model.addAttribute("success", "상품 등록이 완료되었습니다.");
       model.addAttribute("searchUrl", "/admin_productlist");
       return "message";
@@ -154,10 +138,9 @@ public class AdminProductController {
       model.addAttribute("searchUrl", "/admin_product_insert");
       return "message";
     }
-*/
 
-    //return "redirect:/admin_productlist";
   }
+
 
 
   //제품 상세페이지
@@ -225,3 +208,5 @@ public class AdminProductController {
   }
 
 }
+
+

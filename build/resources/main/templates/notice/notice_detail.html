@@ -55,26 +55,12 @@
                         </tbody>
                     </table>
 
-
                     <div class="row">
                         <div class="col-lg-9"></div>
                         <div class="col-lg-3">
-                            <div class="notice-button-container">
-                                <div class="notice-content">
-                                    <div class="notice-btn-date-wrap list-btn">
-                                        <div class="notice-btn">
-                                            <button type="button" class="btn btn-lg btn-outline-primary" style="margin-right: 5px;"
-                                                    th:if="${prevNoticeId != null}"
-                                                    th:onclick="|location.href='@{/notice_detail(adminnoticeid=${prevNoticeId})}'|">이전</button>
-                                            <button type="button" class="btn btn-lg btn-outline-primary"
-                                                    th:onclick="|location.href='@{/notice_list}'|">목록</button>
-                                            <button type="button" class="btn btn-lg btn-outline-primary" style="margin-left: 5px;"
-                                                    th:if="${nextNoticeId != null && nextNoticeId != -1}"
-                                                    th:onclick="|location.href='@{/notice_detail(adminnoticeid=${nextNoticeId})}'|">다음</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="button" class="btn btn-primary admin-primary " name="searchButton" th:onclick="|location.href='@{/notice_list}'|">목록</button>
+                            <button type="button" class="btn btn-primary admin-primary " name="searchButton" th:if="${prevNoticeId != null}" th:onclick="|location.href='@{/notice_detail(adminnoticeid=${prevNoticeId})}'|">이전</button>
+                            <button type="button" class="btn btn-primary admin-primary " name="searchButton" th:if="${nextNoticeId != null && nextNoticeId != -1}" th:onclick="|location.href='@{/notice_detail(adminnoticeid=${nextNoticeId})}'|">다음</button>
                         </div>
                     </div>
 

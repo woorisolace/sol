@@ -1,5 +1,6 @@
 package com.example.clean.Config;
 
+
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -19,6 +20,7 @@ public class AmazonS3Config {
 
     @Value("${cloud.aws.region.static}")
     private String region;
+
 
     @Bean
     public AmazonS3Client amazonS3Client() {
