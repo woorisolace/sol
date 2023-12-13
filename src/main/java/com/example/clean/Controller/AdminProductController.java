@@ -125,6 +125,8 @@ public class AdminProductController {
 
     //검증오류
     if (bindingResult.hasErrors()) {
+      model.addAttribute("categoryType",CategoryTypeRole.values());
+      model.addAttribute("sellsState",SellStateRole.values());
       return "/admin/product_insert";
     }
 
