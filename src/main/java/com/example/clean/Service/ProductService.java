@@ -50,14 +50,21 @@ public class ProductService {
     //맵핑전 불필요한 필드 제외
     modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
     modelMapper.typeMap(ProductDTO.class, ProductEntity.class)
-        .addMappings(mapper -> mapper.skip(ProductEntity::setProductImages));
+            .addMappings(mapper -> mapper.skip(ProductEntity::setProductImages));
 
     String orignalFileName = imageFile.get(0).getOriginalFilename(); //저장할 파일명
     String newFileName = ""; //새로 만든 파일명
 
-    if(orignalFileName != null) { //파일이 존재하면
-      newFileName = s3Uploader.upload(imageFile.get(0),imgUploadLocation);
+    //이미지 업로드
+    for(MultipartFile image : images){
+      String newFileNameForIm = s3Uploader.upload(image,imgUploadLocation);
     }
+    System.out.println("image.size 값 " + images.size());
+    System.out.println("image.get 0 값 " + images.get(0));
+    System.out.println("image.get 1값 " + images.get(1));
+    System.out.println("image.get 2값 " + images.get(2));
+
+
 
     //신규 상품 등록
     ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
@@ -105,23 +112,23 @@ public class ProductService {
 
     for (ProductEntity entity : productEntityPage) {
       ProductDTO productDTO = ProductDTO.builder()
-          .productId(entity.getProductId())
-          .productName(entity.getProductName())
-          .productContent(entity.getProductContent())
-          .productDetail(entity.getProductDetail())
-          .productCost(entity.getProductCost())
-          .productPrice(entity.getProductPrice())
-          .productDis(entity.getProductDis())
-          .productOpt(entity.getProductOpt())
-          .productCnt(entity.getProductCnt())
-          .productLike(entity.getProductLike())
-          .productViewcnt(entity.getProductViewcnt())
-          .categoryTypeRole(entity.getCategoryTypeRole())
-          .sellStateRole(entity.getSellStateRole())
-          .reDate(entity.getReDate())
-          .modDate(entity.getModDate())
-          .imageDTOs(entity.getProductImages() != null ? mapImagesToDTOs(entity.getProductImages()) : Collections.emptyList())
-          .build();
+              .productId(entity.getProductId())
+              .productName(entity.getProductName())
+              .productContent(entity.getProductContent())
+              .productDetail(entity.getProductDetail())
+              .productCost(entity.getProductCost())
+              .productPrice(entity.getProductPrice())
+              .productDis(entity.getProductDis())
+              .productOpt(entity.getProductOpt())
+              .productCnt(entity.getProductCnt())
+              .productLike(entity.getProductLike())
+              .productViewcnt(entity.getProductViewcnt())
+              .categoryTypeRole(entity.getCategoryTypeRole())
+              .sellStateRole(entity.getSellStateRole())
+              .reDate(entity.getReDate())
+              .modDate(entity.getModDate())
+              .imageDTOs(entity.getProductImages() != null ? mapImagesToDTOs(entity.getProductImages()) : Collections.emptyList())
+              .build();
 
       productDTOList.add(productDTO);
     }
@@ -150,7 +157,7 @@ public class ProductService {
   //상품개별조회
   public ProductDTO findOne(Integer productId) throws Exception {     //개별 조회(상세)
     modelMapper.typeMap(ProductEntity.class, ProductDTO.class)
-        .addMappings(mapper -> mapper.skip(ProductDTO::setImages));
+            .addMappings(mapper -> mapper.skip(ProductDTO::setImages));
 
     Optional<ProductEntity> data = productRepository.findById(productId); // in(int)->out(Optional<entity>)
     System.out.println("Received productId in findOne 출력됨: " + productId);
@@ -159,8 +166,8 @@ public class ProductService {
     //변환
     ProductDTO result = data.map(mapper -> modelMapper.map(mapper, ProductDTO.class)).orElse(null);
     List<ImageDTO> imageDTOS = entity.getProductImages().stream()
-        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
-        .collect(Collectors.toList());
+            .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+            .collect(Collectors.toList());
     result.setImageDTOs(imageDTOS);
 
     return result;
@@ -175,7 +182,7 @@ public class ProductService {
     //맵핑전 불필요한 필드 제외
     modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
     modelMapper.typeMap(ProductDTO.class, ProductEntity.class)
-        .addMappings(mapper -> mapper.skip(ProductEntity::setProductImages));
+            .addMappings(mapper -> mapper.skip(ProductEntity::setProductImages));
 
     //상품 수정 등록
     //ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
@@ -208,13 +215,19 @@ public class ProductService {
     }
 
     //연결된 이미지 삭제
-    List<ImageEntity> imageEntitys = productEntity.getProductImages();
-    for (ImageEntity data : imageEntitys) {
-      fileService.deleteFile(data.getImageFile());
-    }
+    List<ImageEntity> imageEntityes = productEntity.getProductImages();
+    List<String> imageFileNames = imageEntityes.stream()
+            .map(ImageEntity::getImageFile)
+            .collect(Collectors.toList());
 
     //S3 삭제
-    s3Uploader.deleteFile(productEntity.getProductImages(),imgUploadLocation);
+    s3Uploader.deleteFile(imageFileNames,imgUploadLocation);
+
+    for(String imageFileName : imageFileNames){
+      if(imageFileName != null){
+        fileService.deleteFile(imageFileName);
+      }
+    }
 
     // 상품 삭제
     productRepository.deleteById(productId);
@@ -284,23 +297,23 @@ public class ProductService {
 
     for (ProductEntity entity : productEntityPage) {
       ProductDTO productDTO = ProductDTO.builder()
-          .productId(entity.getProductId())
-          .productName(entity.getProductName())
-          .productContent(entity.getProductContent())
-          .productDetail(entity.getProductDetail())
-          .productCost(entity.getProductCost())
-          .productPrice(entity.getProductPrice())
-          .productDis(entity.getProductDis())
-          .productOpt(entity.getProductOpt())
-          .productCnt(entity.getProductCnt())
-          .productLike(entity.getProductLike())
-          .productViewcnt(entity.getProductViewcnt())
-          .categoryTypeRole(entity.getCategoryTypeRole())
-          .sellStateRole(entity.getSellStateRole())
-          .reDate(entity.getReDate())
-          .modDate(entity.getModDate())
-          .imageDTOs(mapImagesToDTOs(entity.getProductImages()))
-          .build();
+              .productId(entity.getProductId())
+              .productName(entity.getProductName())
+              .productContent(entity.getProductContent())
+              .productDetail(entity.getProductDetail())
+              .productCost(entity.getProductCost())
+              .productPrice(entity.getProductPrice())
+              .productDis(entity.getProductDis())
+              .productOpt(entity.getProductOpt())
+              .productCnt(entity.getProductCnt())
+              .productLike(entity.getProductLike())
+              .productViewcnt(entity.getProductViewcnt())
+              .categoryTypeRole(entity.getCategoryTypeRole())
+              .sellStateRole(entity.getSellStateRole())
+              .reDate(entity.getReDate())
+              .modDate(entity.getModDate())
+              .imageDTOs(mapImagesToDTOs(entity.getProductImages()))
+              .build();
 
       productDTOList.add(productDTO);
     }
@@ -308,4 +321,3 @@ public class ProductService {
   }
 
 }
-

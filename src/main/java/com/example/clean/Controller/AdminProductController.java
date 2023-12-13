@@ -56,14 +56,14 @@ public class AdminProductController {
 
     // SellStateRole 열거형의 한글 설명을 리스트로 가져오기
     List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
-        .map(SellStateRole::getDescription)
-        .collect(Collectors.toList());
+            .map(SellStateRole::getDescription)
+            .collect(Collectors.toList());
     model.addAttribute("sellStateOptions", sellStateOptions); // 판매상태 옵션을 전달
 
     // CategoryTypeRole 열거형의 한글 설명을 리스트로 가져오기
     List<String> categoryOptions = Arrays.stream(CategoryTypeRole.values())
-        .map(CategoryTypeRole::getDescription)
-        .collect(Collectors.toList());
+            .map(CategoryTypeRole::getDescription)
+            .collect(Collectors.toList());
     model.addAttribute("categoryOptions", categoryOptions);
 
     Page<ProductDTO> productDTOS = productService.adminFindAll(type, keyword, sellState, categoryType, pageable);
@@ -225,5 +225,3 @@ public class AdminProductController {
   }
 
 }
-
-

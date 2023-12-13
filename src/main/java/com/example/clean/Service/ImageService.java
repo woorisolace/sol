@@ -60,8 +60,8 @@ public class ImageService {
 
     // 해당 이미지 존재 여부 확인
     ImageEntity imageEntity = imageRepository
-        .findById(imageDTO.getImageId())
-        .orElseThrow();
+            .findById(imageDTO.getImageId())
+            .orElseThrow();
 
     String deleteFileName = imageEntity.getImageFile();    // 이전 파일명
 
@@ -93,4 +93,3 @@ public class ImageService {
   }
 
 }
-

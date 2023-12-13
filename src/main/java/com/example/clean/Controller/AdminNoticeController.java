@@ -185,6 +185,7 @@ public class AdminNoticeController {
     }
     AdminNoticeDTO noticeDTO = adminNoticeService.detail(adminnoticeid);
 
+    //이전,다음버튼
     Integer prevNoticeId = adminNoticeService.findPreviousNoticeId(adminnoticeid);
     Integer nextNoticeId = adminNoticeService.findNextNoticeId(adminnoticeid);
 

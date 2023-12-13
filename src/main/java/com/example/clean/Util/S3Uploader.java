@@ -44,14 +44,17 @@ public class S3Uploader {
     }
 
     // S3 파일삭제
-    public void deleteFile(List<ImageEntity> deleteFile, String dirName) throws IOException {
-        String fileName = dirName+"/"+deleteFile;
-        try {
-            amazonS3Client.deleteObject(bucket, fileName);
-        } catch(SdkClientException e) {
-            throw new IOException("Error deleting file from S3", e);
+    public void deleteFile(List<String> deleteFiles, String dirName) throws IOException {
+        for(String deleteFile : deleteFiles){
+            try {
+                String fileName = deleteFile.substring(deleteFile.lastIndexOf("/")+1);
+                amazonS3Client.deleteObject(bucket, dirName + "/" + fileName);
+            } catch(SdkClientException e) {
+                throw new IOException("Error deleting file from S3", e);
+            }
         }
     }
+
 
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
