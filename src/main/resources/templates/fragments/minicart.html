@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Cart</title>
+</head>
+
+
+<body>
+<!-- minicart 영역 -->
+<div th:fragment="minicart">
+  <div class="main-wrapper wrapper-2">
+    <div class="sidebar-cart-active">
+      <div class="sidebar-cart-all">
+        <a class="cart-close" href="#"><i class="las la-times"></i></a>
+        <div class="cart-content">
+          <h3>Shopping Cart</h3>
+          <ul>
+            <li class="single-product-cart">
+              <div class="cart-img">
+                <a href="/productdetail"><img src="assets/images/product/product-1.png" alt=""></a>
+              </div>
+              <div class="cart-title">
+                <h4><a href="#">후드 스웨터</a></h4>
+                <span> 1 × 19,900원 	</span>
+              </div>
+              <div class="cart-delete">
+                <a href="#"><i class="las la-trash"></i></a>
+              </div>
+            </li>
+            <li class="single-product-cart">
+              <div class="cart-img">
+                <a href="#"><img src="assets/images/product/product-2.png" alt=""></a>
+              </div>
+              <div class="cart-title">
+                <h4><a href="/productdetail">청바지</a></h4>
+                <span> 1 × 50,000원	</span>
+              </div>
+              <div class="cart-delete">
+                <a href="#"><i class="las la-trash"></i></a>
+              </div>
+            </li>
+          </ul>
+          <div class="cart-total">
+            <h4>Subtotal: <span>69,900원</span></h4>
+          </div>
+          <div class="btn-style cart-checkout-btn">
+            <a class="btn btn-outline-primary" href="/cart">View cart</a>
+            <a class="btn btn-outline-primary" href="/oder">Order</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

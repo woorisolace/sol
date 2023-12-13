@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MyInfo Update</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-6">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>My Page</h2>
+          </div>
+          <ul>
+            <li>
+              <a href="/mypage">My</a>
+            </li>
+            <li>
+              <a href="/myinfo_detail">나의 정보</a>
+            </li>
+            <li>
+              <a href="/member_oderlist">구매 내역</a>
+            </li>
+            <li>
+              <a href="/myreviewlist">리뷰 내역</a>
+            </li>
+            <li>
+              <a href="/mylikelist">관심 상품</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-area bg-white pb-130">
+      <div class="container">
+        <div class="notice-info-wrap">
+          <form action="/myinfo_update" method="post" th:object="${memberDTO}">
+            <h3 class="special-h3">내 정보 수정</h3>
+            <table class="table notice-table">
+              <tbody>
+              <tr>
+                <input type="hidden" th:value="${memberDTO.id}">
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">이름</th>
+                <td class="notice-info">
+                  <input type="text" id="name" name="name" class="form-control"  th:value="${memberDTO.name}" readonly>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">이메일</th>
+                <td class="notice-info">
+                  <input type="email" id="email" name="email" class="form-control" th:value="${memberDTO.email}" readonly>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">휴대전화</th>
+                <td class="notice-info">
+                  <input type="tel" id="tel" name="tel" th:value="${memberDTO.tel}" class="form-control" placeholder="하이픈 없이 입력해주세요. ex) 01012345678" th:field="*{tel}">
+                  <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="text-danger">Incorrect data</p>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="notice-padding">주소</th>
+                <td class="notice-info">
+                  <!--input type="text" id="address" name="address" class="form-control"-->
+                  <input type="text" id="sample6_postcode" th:value="${memberDTO.sample6_postcode}" placeholder="우편번호" name="sample6_postcode" >
+                  <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" ><br>
+                  <input type="text" id="sample6_address" th:value="${memberDTO.sample6_address}" placeholder="주소" name="sample6_address" ><br>
+                  <input type="text" id="sample6_detailAddress" th:value="${memberDTO.sample6_detailAddress}" placeholder="상세주소" name="sample6_detailAddress" >
+                  <input type="text" id="sample6_extraAddress" th:value="${memberDTO.sample6_extraAddress}" placeholder="참고항목" name="sample6_extraAddress" >
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <div class="notice-button-container justify-content-center">
+                  <div class="notice-content">
+                    <div class="notice-btn-date-wrap list-btn">
+                      <div class="notice-btn">
+                        <button type="submit" class="btn btn-outline-primary">수정</button>
+                        <a class="btn btn-outline-primary" href="/mypage">목록</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+</body>
+</html>

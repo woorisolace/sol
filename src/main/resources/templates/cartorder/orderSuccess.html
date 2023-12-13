@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Order Detail</title>
+  <style>
+      .your-order-info-wrap li {
+          display: flex;
+          justify-content: space-between;
+      }
+
+      .product-left {
+          text-align: left;
+      }
+
+      .product-right {
+          text-align: right;
+      }
+  </style>
+  <script>
+      alert("구매가 성공적으로 완료되었습니다.");
+  </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+
+
+    <div class="breadcrumb-area breadcrumb-padding-6">
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>Order Detail</h2>
+          </div>
+          <ul>
+            <li>
+              <b><h3><a class="text-primary" href="#">주문이 완료되었습니다.</a></h3></b>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="checkout-main-area pb-130">
+      <div class="container">
+        <div class="checkout-wrap pt-30">
+          <div class="row">
+            <div class="col-lg-7">
+              <div class="billing-info-wrap mr-50">
+                <h3><b>주문 정보</b></h3>
+                <!--                <div class="row" th:each="orderDTO : ${orderDTO}">-->
+                <div class="row" >
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>주문자 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${orderDTO.userEntity.nickname}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${orderDTO.userEntity.sample6_postcode}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${orderDTO.userEntity.sample6_detailAddress}" disabled/>
+                      <br>
+                      <input th:value="${orderDTO.userEntity.sample6_extraAddress}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="billing-info mb-20">
+                      <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${orderDTO.userEntity.tel}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="billing-info mb-20">
+                      <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${orderDTO.userEntity.email}" disabled/>
+                    </div>
+                  </div>
+                </div>
+                <div class="checkout-account mt-25">
+                  <hr>
+                </div>
+              </div>
+              <div class="billing-info-wrap mt-30 mr-50 mb-30">
+                <h3><b>배송 정보</b></h3>
+
+                <div class="row" >
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>수령인 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${nickname}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${sample6_postcode}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="billing-info mb-20">
+                      <label>주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${sample6_detailAddress}" disabled/>
+                      <br>
+                      <input th:value="${sample6_extraAddress}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="billing-info mb-20">
+                      <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${tel}" disabled/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="billing-info mb-20">
+                      <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
+                      <input th:value="${email}" disabled/>
+                    </div>
+                  </div>
+                  <div class="additional-info-wrap">
+                    <label>배송 요청 사항</label>
+                    <textarea placeholder="문 앞에 놓아주세요." name="message"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>          <!-- 정보입력 부분 끝 -->
+
+            <div class="col-lg-5">          <!-- 결제 부분 -->
+              <div class="your-order-area">
+                <h3><b>주문 정보</b></h3>
+                <div class="your-order-wrap gray-bg-4">
+                  <div class="your-order-info-wrap" >
+                    <div class="your-order-info">
+                      <ul>
+                        <li><b>상품 </b><span><b>금액</b></span></li>
+                      </ul>
+                    </div>
+
+                    <!-- 주문 정보 추가 -->
+                    <div class="your-order-middle">
+                      <ul>
+                        <li>
+                          <span class="product-left" th:text="${orderDTO.productEntity.productName}"></span>
+                          <span class="product-left" th:text="'x'+${orderDTO.productNum}"></span>
+                          <span class="product-right" th:text="${orderDTO.productTotal} + '원'"></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- 주문 정보 총 합계 -->
+
+                    <div class="your-order-info order-subtotal">
+                      <ul>
+                        <li>배송비<span class="product-right" th:text="${orderDTO.productDelivery}"></span></li>
+                      </ul>
+                    </div>
+                    <div class="your-order-info order-total">
+                      <ul>
+                        <li>
+                          <b>총 금액</b><span class="product-right" th:text="${orderDTO.orderPrice}"></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="your-order-info order-subtotal">
+                      <ul>
+                        <li>
+                          결제방법
+                          <span th:switch="${orderDTO.paymentMethod}">
+                            <span th:case="cheque">무통장 입금</span>
+                            <span th:case="phone">휴대폰 결제</span>
+                            <span th:case="card">카드 결제</span>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="your-order-info order-subtotal">
+                      <ul>
+                        <li><b>결제 상태 </b><span><b>결제 완료 </b></span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="Place-order">
+                  <button type="button" class="btn btn-primary btn-order" th:onclick="|location.href='@{/member_oderlist}'|">확인 완료</button>        <!-- 마이페이지 주문내역으로 이동 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

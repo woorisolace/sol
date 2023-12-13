@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+
+<script th:inline="javascript">
+    var message = [[${message}]];
+    var error = [[${error}]];
+    var success = [[${success}]];
+
+    console.log("Message:", message);
+    console.log("Error:", error);
+    console.log("Success", success);
+
+    var confirmationMessage = message || error || success;
+
+    if (confirmationMessage) {
+        var userConfirmed = confirm(confirmationMessage);
+
+        if (userConfirmed) {
+            console.log("확인되었습니다.");
+            location.replace([[${searchUrl}]]);
+        } else {
+            console.log("취소되었습니다.");
+            location.replace(history.go(-1));
+        }
+    }
+</script>
+
+</body>
+</html>

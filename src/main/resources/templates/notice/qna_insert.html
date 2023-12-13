@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Q&A Insert</title>
+</head>
+
+<body>
+<div layout:fragment="content"><!-- content 시작-->
+    <div class="main-wrapper wrapper-2">
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Q & A</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice-area bg-white pb-130">
+            <div class="container">
+                <div class="notice-info-wrap">
+                    <form action="#">
+                        <table class="table notice-table">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="notice-padding">제목</th>
+                                <td class="notice-info">
+                                    <input type="text" name="qna_title">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">작성자</th>
+                                <td class="notice-info">
+                                    <input type="text" name="userid">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">문의내용</th>
+                                <td class="notice-info">
+                                    <textarea rows="15">
+고객님 안녕하세요!
+원활한 상담을 위해 아래의 정보를 넣어주시면
+더욱 빠르고 정확한 상담이 가능합니다.
+
+성함 :
+전화번호 :
+주문번호 :
+제품명 :
+
+문의내용 :
+</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">첨부파일1</th>
+                                <td class="notice-info">
+                                    <input type="file" name="qna_img[]">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">첨부파일2</th>
+                                <td class="notice-info">
+                                    <input type="file" name="qna_img[]">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="notice-padding">개인정보 수집 및<br>이용 동의</th>
+                                <td class="notice-info">
+                                    <textarea rows="9" readonly id="privacy_agreement" name="privacy_agreement">
+■ 개인정보의 수집·이용 목적
+서비스 제공 및 계약의 이행, 구매 및 대금결제, 물품배송 또는 청구지 발송, 회원관리 등을 위한 목적
+
+■ 수집하려는 개인정보의 항목
+이름, 주소, 연락처, 이메일 등
+
+■ 개인정보의 보유 및 이용 기간
+회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외없이 해당정보를 파기합니다.
+</textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-3">
+                                <div class="notice-button-container">
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" href="/noticelist">목록</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">등록</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notice-content">
+                                        <div class="notice-btn-date-wrap list-btn">
+                                            <div class="notice-btn">
+                                                <a class="btn btn-outline-primary" type="reset">취소</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</div><!-- content 끝-->
+</body>
+</html>

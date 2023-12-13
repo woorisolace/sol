@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <style>
+        .your-order-info-wrap li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-left {
+            text-align: left;
+        }
+
+        .product-right {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper wrapper-2">
+
+
+        <div class="breadcrumb-area breadcrumb-padding-6">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <div class="breadcrumb-title">
+                        <h2>Order</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form th:action="@{/order}" method="post" th:object="${orderDTO}">
+            <!-- orderDTO의 속성과 일치하도록 수정 -->
+            <input type="hidden" name="productId" th:field="*{productId}">
+            <input type="hidden" name="orderId" th:field="*{orderId}">
+            <input type="hidden" name="userId" th:field="*{userId}">
+            <input type="hidden" name="productNum" th:field="*{productNum}">
+            <input type="hidden" name="productTotal" th:field="*{productTotal}">
+            <input type="hidden" name="productDelivery" th:field="*{productDelivery}">
+            <input type="hidden" name="orderPrice" th:field="*{orderPrice}">
+            <input type="hidden" name="paymentMethod" th:field="*{paymentMethod}">
+            <div class="checkout-main-area pb-130">
+                <div class="container">
+                    <div class="checkout-wrap pt-30">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="billing-info-wrap mr-50">
+                                    <h3><b>회원 정보</b></h3>
+                                    <div class="row" th:each="orderDTO:${orderDTO}">
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>주문자 <abbr class="required" title="required">*</abbr></label>
+                                                <input th:value="${orderDTO.userEntity.nickname}" th:readonly="${true}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>우편번호 <abbr class="required" title="required"></abbr></label>
+                                                <input th:value="${orderDTO.userEntity.sample6_postcode}" th:readonly="${true}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-20">
+                                                <label>주소 <abbr class="required" title="required"></abbr></label>
+                                                <input th:value="${orderDTO.userEntity.sample6_detailAddress}" th:readonly="${true}">
+                                                <br/>
+                                                <input th:value="${orderDTO.userEntity.sample6_extraAddress}" th:readonly="${true}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="billing-info mb-20">
+                                                <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                                                <input th:value="${orderDTO.userEntity.tel}" th:readonly="${true}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="billing-info mb-20">
+                                                <label>이메일 주소 <abbr class="required" title="required"></abbr></label>
+                                                <input th:value="${orderDTO.userEntity.email}" th:readonly="${true}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checkout-account mt-25">
+                                        <input id="addressCheckbox" class="checkout-toggle" type="checkbox" checked>
+                                        <label for="addressCheckbox">배송지 입력</label>
+                                    </div>
+
+                                    <div class="different-address open-toggle mt-30">
+                                        <div class="row">
+
+                                            <div class="col-lg-12">
+                                                <div class="billing-info mb-20">
+                                                    <label>수령인 <abbr class="required" title="required">*</abbr></label>
+                                                    <input th:field="*{userEntity.nickname}" th:readonly="${true}" required/>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.nickname')}" th:errors="*{userEntity.nickname}"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="billing-info mb-20">
+                                                    <label>우편번호 <abbr class="required" title="required">*</abbr></label>
+                                                    <input th:field="*{userEntity.sample6_postcode}" required/>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.sample6_postcode')}" th:errors="*{userEntity.sample6_postcode}"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="billing-info mb-20">
+                                                    <label>주소 <abbr class="required" title="required">*</abbr></label>
+                                                    <input th:field="*{userEntity.sample6_detailAddress}" required/>
+                                                    <br/>
+                                                    <input th:field="*{userEntity.sample6_extraAddress}" required/>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.sample6_detailAddress')}" th:errors="*{userEntity.sample6_detailAddress}"></p>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.sample6_extraAddress')}" th:errors="*{userEntity.sample6_extraAddress}"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info mb-20">
+                                                    <label>전화번호 <abbr class="required" title="required">*</abbr></label>
+                                                    <input th:field="*{userEntity.tel}" required/>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.tel')}" th:errors="*{userEntity.tel}"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info mb-20">
+                                                    <label>이메일 주소 <abbr class="required" title="required">*</abbr></label>
+                                                    <input th:field="*{userEntity.email}" th:readonly="${true}" required/>
+                                                    <p class="text-danger" th:if="${#fields.hasErrors('userEntity.email')}" th:errors="*{userEntity.email}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="additional-info-wrap">
+                                        <label>배송 요청 사항</label>
+                                        <textarea placeholder="문 앞에 놓아주세요." name="message"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="your-order-area">
+                                    <h3><b>주문 정보</b></h3>
+                                    <div class="your-order-wrap gray-bg-4">
+                                        <div class="your-order-info-wrap">
+                                            <div class="your-order-info">
+                                                <ul>
+                                                    <li>
+                                                        상품 <span>금액</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="your-order-middle">
+                                                <ul>
+                                                    <li>
+                                                        <span class="product-left" th:text="${productDTO.productName}"></span>
+                                                        <span class="product-right" th:text="'x' + ${orderDTO.productNum}"></span>
+                                                        <span class="product-right" th:text="${orderDTO.productTotal} + '원'"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="your-order-info order-subtotal">
+                                                <ul>
+                                                    <li>
+                                                        배송비
+                                                        <span class="product-right" name="productdelivery" th:text="${orderDTO.productDelivery} + '원'"></span>
+                                                    </li>
+                                                    <li>
+                                                        <span th:text="'50,000원 이상 구매 시 배송비 무료'"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="your-order-info order-total">
+                                                <ul>
+                                                    <li>
+                                                        <b>총 금액</b>
+                                                        <span class="product-right" th:text="${orderDTO.orderPrice} + '원'"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method">
+                                            <div class="pay-top sin-payment">
+                                                <input id="paymentMethod1" class="input-radio" type="radio" value="cheque" name="paymentMethod">
+                                                <label for="paymentMethod1"> 무통장입금 </label>
+                                                <div class="payment-box payment_method_bacs">
+                                                    <p>국민은행 000000-00-000000<br>
+                                                        농협 000000-00-000000<br>
+                                                        신한은행 000000-00-000000<br>
+                                                        기업은행 000000-00-000000<br>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="pay-top sin-payment">
+                                                <input id="paymentMethod2" class="input-radio" type="radio" value="phone" name="paymentMethod">
+                                                <label for="paymentMethod2"> 휴대폰 결제 </label>
+                                                <div class="payment-box payment_method_bacs">
+                                                    <p>휴대폰 번호 인증하기</p>
+                                                </div>
+                                            </div>
+                                            <div class="pay-top sin-payment sin-payment-3">
+                                                <input id="paymentMethod3" class="input-radio" type="radio" value="card" name="paymentMethod">
+                                                <label for="paymentMethod3"> 카드결제 <img alt="" src="assets/images/icon-img/payment.png"><a href="#">What is PayPal?</a></label>
+                                                <div class="payment-box payment_method_bacs"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Place-order">
+                                            <button type="submit" class="btn btn-primary btn-order">주문완료</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // 폼 엘리먼트 가져오기
+                    var form = document.querySelector('form');
+                    var toggleDiv = document.querySelector('.billing-info-wrap .different-address');
+
+                    // 폼에 서브밋 이벤트 리스너 추가
+                    form.addEventListener('submit', function (event) {
+                        // 각각의 라디오 버튼에 대한 이름으로 선택
+                        var paymentMethod1 = document.getElementById('paymentMethod1');
+                        var paymentMethod2 = document.getElementById('paymentMethod2');
+                        var paymentMethod3 = document.getElementById('paymentMethod3');
+
+                        // 최소한 하나의 라디오 버튼이 선택되었는지 확인
+                        if (!(paymentMethod1.checked || paymentMethod2.checked || paymentMethod3.checked)) {
+                            alert('결제 수단을 선택해주세요.');
+                            event.preventDefault(); // 폼 제출 방지
+                        }
+
+
+                    });
+                    // 페이지 로드 시 초기 상태 설정
+                    toggleDiv.style.display = 'block'; // 변경된 부분: 초기에 화면에 나타나도록 설정
+                });
+
+            </script>
+            <!-- 테이블 끝 부분 -->
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminlayout}">
+
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN - Notice List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper wrapper-2">
+    <div class="breadcrumb-area breadcrumb-padding-8">
+
+      <div class="container">
+        <div class="breadcrumb-content text-center">
+          <div class="breadcrumb-title">
+            <h2>Notice</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-area bg-white pb-130">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 ">
+            <div class="sidebar-widget update">
+              <div class="sidebar-archive-wrap">
+                <select>
+                  <option>-- 카테고리 선택 --</option>
+                  <option>공지종류</option>
+                  <option>제목</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="sidebar-widget">
+              <div class="sidebar-search update">
+                <form class="sidebar-search-form" action="#">
+                  <input type="text" placeholder="Search">
+                  <button>
+                    <img class="injectable" src="assets/images/icon-img/search.svg" alt="">
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2"></div>
+          <div class="col-lg-4">
+            <div class="blog-wrap">
+              <div class="blog-content">
+                <div class="blog-btn-date-wrap right-btn">
+                  <div class="blog-btn">
+                    <a class="btn btn-outline-primary" th:href="@{/admin_noticeinsert}">글쓰기</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-20"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+              <div class="wishlist-table-content">
+                <div class="table-content">
+                  <table>
+                    <thead>
+                    <tr>
+                      <th class="width-price">번호</th>
+                      <th class="width-price">공지종류</th>   <!-- 정책공지, 배송공지, 상품공지, 이벤트, 기타 -->
+                      <th class="width-price">제목</th>
+                      <th class="width-price">작성자</th>
+                      <th class="width-price">작성날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="data:${noticeDTOn}">
+                      <td th:text="${data.adminnoticeid}">
+                        번호
+                      </td>
+                      <td th:text="${data.admincategory}">
+                        <h5>
+                          <span th:if="${data.admincategory=='배송공지'}">배송공지</span>
+                          <span th:if="${data.admincategory=='상품공지'}">상품공지</span>
+                          <span th:if="${data.admincategory=='이벤트'}">이벤트</span>
+                          <span th:if="${data.admincategory=='기타'}">기타</span>
+                        </h5>
+                      </td>
+                      <td>
+                        <a th:href="@{/admin_noticeread(adminnoticeid=${data.adminnoticeid})}" th:text="${data.admintitle}"></a>
+                      </td>
+                      <td th:text="${data.adminwriter}">
+                        <h5>관리자</h5>
+                      </td>
+                      <td>
+                      <span th:if="${data.reDate == null and data.modDate != null}"
+                            th:text="${#temporals.format(data.modDate, 'yyyy-MM-dd') + ' (수정일)'}"></span>
+                        <span th:if="${data.reDate != null}"
+                              th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}"></span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                      <!-- 페이지 번호 추가 -->
+                      <div class="pagination-style text-center mt-30">
+                        <ul>
+                          <li th:unless="${startPage == 1}">
+                            <a th:href="@{/admin_noticelist(page=1)}">처음</a>
+                          </li>
+                          <li th:unless="${currentPage == 1}">
+                            <a th:href="@{/admin_noticelist(page=${prevPage})}">&lt;</a>
+                          </li>
+
+                          <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                            <a th:if="${currentPage != page}" th:href="@{/admin_noticelist(page=${page})}">[[${page}]]</a>
+                            <a th:if="${currentPage == page}" href="#" class="active">[[${page}]]</a>&nbsp;
+                          </li>
+
+                          <li th:unless="${currentPage == lastPage}">
+                            <a th:href="@{/admin_noticelist(page=${nextPage})}">&gt;</a>
+                          </li>
+                          <li th:unless="${endPage == lastPage}">
+                            <a th:href="@{/admin_noticelist(page=${lastPage})}">끝</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- 페이지 번호 추가 끝 -->
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main JS -->
+  <script src="assets/js/main.js"></script>
+</div>
+
+</body>
+</html>

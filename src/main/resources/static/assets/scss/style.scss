@@ -1,0 +1,64 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: New Wave - Minimal eCommerce HTML Template
+    Version: 1.0
+
+-----------------------------------------------------------------------------------
+    
+    CSS INDEX
+    ===================
+	
+    01. Template default CSS
+    02. Header style
+    03. Slider style
+    04. Features style
+    05. Section title style
+    06. Product style
+    07. Subscribe style
+    08. Brand logo style
+    09. Footer style
+    10. Instagram style
+    11. Breadcrumb style
+    12. Sidebar style
+    13. Contact us style
+    14. Coming soon style
+    15. About us style
+    16. Blog style
+    17. Product details style
+    18. Cart style
+    19. Wishlist style
+    20. Login register style
+    21. Checkout style
+    22. My account style
+
+-----------------------------------------------------------------------------------*/
+@import "./bootstrap/functions";
+@import "variabls";
+@import "custom-variables";
+@import "./bootstrap/bootstrap";
+
+@import "common";
+@import "header";
+@import "slider";
+@import "features";
+@import "section-title";
+@import "product";
+@import "subscribe";
+@import "banner";
+@import "brand-logo";
+@import "footer";
+@import "instagram";
+@import "breadcrumb";
+@import "sidebar";
+@import "contact-us";
+@import "coming-soon";
+@import "about-us";
+@import "blog";
+@import "product-details";
+@import "cart";
+@import "wishlist";
+@import "login-register";
+@import "checkout";
+@import "my-account";
+
+
