@@ -24,9 +24,8 @@
         <div class="notice-area bg-white pb-130">
             <div class="container">
                 <div class="notice-info-wrap">
-                    <form th:action="@{/admin_noticedetail}" method="post" th:object="${noticeDTO}">
+                    <form th:action="@{'/admin_noticedetail?adminnoticeid=' + ${noticeDTO.adminnoticeid}}" method="post" th:object="${noticeDTO}">
                         <input type="hidden" name="adminnoticeid" th:value="*{adminnoticeid}">
-                        <input type="hidden" name="modDate" th:value="*{modDate}">
                         <table class="table notice-table">
                             <tbody>
                             <tr>
