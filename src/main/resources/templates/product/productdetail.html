@@ -6,6 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Product list</title>
+    <style>
+        .slick-prev.slick-arrow, .slick-next.slick-arrow {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -364,13 +369,15 @@
                     <div th:if="${relatedProduct.categoryTypeRole == productDTO.categoryTypeRole}"
                             class="product-wrap" data-aos="fade-up" data-aos-delay="${relatedProduct.delay}"> <!--th:if="${relatedProduct.categoryTypeRole == productDTO.categoryTypeRole}"-->
                         <div class="product-img img-zoom mb-4">
-                            <a th:href="@{/product/{productId}(productId=${relatedProduct.productId})}">
-                                <!-- 대표 이미지를 표시하도록 수정 -->
-                                <img class="default-img"
-                                     th:if="${relatedProduct.productImages != null and relatedProduct.productImages.size() > 0}"
-                                     th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${relatedProduct.productImages[0]?.getImageFile()}|}"
-                                     width="600" height="300" th:alt="${relatedProduct.productName}" />
-                            </a>
+                                <div style="box-sizing: border-box; margin: 15px; padding: 5px; text-align: center;">
+                                    <a th:href="@{/product/{productId}(productId=${relatedProduct.productId})}">
+                                        <!-- 대표 이미지를 표시하도록 수정 -->
+                                        <img class="default-img"
+                                             th:if="${relatedProduct.productImages != null and relatedProduct.productImages.size() > 0}"
+                                             th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${relatedProduct.productImages[0]?.getImageFile()}|}"
+                                             width="600" height="auto" th:alt="${relatedProduct.productName}" />
+                                    </a>
+                                </div>
                             <div class="product-action-wrap">
                                 <button title="Add To Cart">
                                     <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""/>

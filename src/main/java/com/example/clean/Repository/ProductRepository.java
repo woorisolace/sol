@@ -34,6 +34,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
   @Query("SELECT p FROM ProductEntity p WHERE p.categoryTypeRole = :MEMBERSALE")
   Page<ProductEntity> findByCategoryTypeRole(@Param("MEMBERSALE") CategoryTypeRole MEMBERSALE, Pageable pageable);
 
+  //아이디와 카테고리값
+  @Query("SELECT p FROM ProductEntity p WHERE p.productId <> :productId AND p.categoryTypeRole = :categoryTypeRole")
+  List<ProductEntity> findRelatedProductsByCategoryTypeRole(@Param("productId") Integer productId, @Param("categoryTypeRole") CategoryTypeRole categoryTypeRole);
+
+
 
   //검색부분
   //상품명으로 상품 조회
