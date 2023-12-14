@@ -4,8 +4,10 @@ import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.OrderDTO;
 import com.example.clean.Service.AdminService;
 import com.example.clean.Service.OrderService;
+import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,8 +24,18 @@ import java.security.Principal;
 @Log4j2
 public class AdminController {
 
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+
+  @Value("${cloud.aws.region.static}")
+  public String region;
+
+  @Value("${imgUploadLocation}")
+  public String folder;
+
+  private final ProductService productService;
   private final AdminService adminService;
-  private final OrderService orderService;
 
   //어드민
   @GetMapping("/admin")
@@ -94,6 +106,11 @@ public class AdminController {
     model.addAttribute("currentPage", currentPage);
     model.addAttribute("nextPage", nextPage);
     model.addAttribute("lastPage", lastPage);
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket", bucket);
+    model.addAttribute("region", region);
+    model.addAttribute("folder", folder);
 
     return "admin/order_list";
   }

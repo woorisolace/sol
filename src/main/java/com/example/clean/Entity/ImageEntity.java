@@ -36,6 +36,11 @@ public class ImageEntity extends BaseEntity {
   @JoinColumn(name = "productId")
   private ProductEntity productEntity;
 
+  public String getImageFile() {
+    // 파일 이름을 포함한 완전한 파일 경로를 반환하도록 수정
+    return this.imageFile; // 실제 필드에 따라 수정
+  }
+
 }
 
 

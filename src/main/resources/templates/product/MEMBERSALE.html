@@ -66,17 +66,18 @@
                                 <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
                                     <div class="product-img img-zoom mb-4">
                                         <a th:href="@{/product/{productId}(productId=${product.productId})}">
-                                            <!-- 대표 이미지를 표시하도록 수정 -->
-                                            <img class="default-img" th:src="|/images/item/@{${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}}|" width="600" height="300">
+                                            <img class="default-img" th:if="${not product.imageDTOs?.isEmpty()}"
+                                                 th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs[0]?.imageFile}|}"
+                                                 width="600" height="350">
                                         </a>
-                                        <div class="product-action-wrap">
-                                            <button title="Add To Cart">
-                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />
-                                            </button>
-                                            <button title="Wishlist">
-                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />
-                                            </button>
-                                        </div>
+<!--                                        <div class="product-action-wrap">-->
+<!--                                            <button title="Add To Cart">-->
+<!--                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />-->
+<!--                                            </button>-->
+<!--                                            <button title="Wishlist">-->
+<!--                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />-->
+<!--                                            </button>-->
+<!--                                        </div>-->
                                     </div>
                                     <div class="product-content text-center">
                                         <h3>

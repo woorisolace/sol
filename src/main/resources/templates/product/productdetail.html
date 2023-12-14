@@ -55,9 +55,10 @@
                                     <div th:each="image, iterStat : ${productDTO.imageDTOs}">
                                         <div class="easyzoom-style">
                                             <div class="easyzoom easyzoom--overlay">
-                                                <a th:href="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}">
-                                                    <img th:src="@{/images/item/{imageDTOs}(imageDTOs=${image.imageFile})}"
-                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="500" height="500">
+                                                <a th:href="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs}(imageDTOs=${image.imageFile})|">
+                                                    <img th:if="${productDTO.imageDTOs[0] != null}"
+                                                         th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|"
+                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="400" height="auto">
                                                 </a>
                                             </div>
                                         </div>
@@ -65,15 +66,19 @@
                                 </div>
 
                                 <div class="product-dec-slider-small product-dec-small-style1"> <!-- 서브 이미지 -->
+                                    <!-- iterStat : 반복문의 상태를 나타내는 변수 (현재 반복이 몇 번째인지 등의 정보를 제공) / 3번째이미지가 아닌 것만 진열 (상세이미지 진열 제외) -->
+                                    <!-- ${iterStat.index == 0}는 현재 반복이 첫 번째인 경우에만 'active' 클래스를 추가 -->
+                                    <!-- {filename} 부분에는 image.imageFile의 값 -->
                                     <div th:each="image, iterStat : ${productDTO.imageDTOs}"
                                          th:if="${iterStat.index != 2}"
-                                         class="product-dec-small" th:classappend="${iterStat.index == 0} ? 'active'"> <!--productDTO 이미지의 2번째까지만 노출-->
-                                        <img th:src="@{/images/item/{filename}(filename=${image.imageFile})}"
+                                         class="product-dec-small" th:classappend="${iterStat.index == 0} ? 'active'">
+                                        <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/@{${filename}(filename=${image.imageFile})}|"
                                              onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="150" height="150">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <!--상품설명-->
                         <div class="col-lg-5">
@@ -202,7 +207,6 @@
 
                                             <div class="btn-product-purchase">
                                                 <button type="submit" class="btn btn-primary product-purchase">카카오 구매</button>
-                                                <!-- <button type="button" class="btn btn-primary product-purchase"  th:onclick="|location.href='@{/oauth2/authorization/kakao}'|">카카오 구매</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -233,8 +237,8 @@
                 <div class="tab-style-2 nav mb-70" data-aos="fade-up" data-aos-delay="200">
                     <a class="active" href="#des-details1" data-bs-toggle="tab">상품 상세 정보</a>
                     <a href="#des-details2" data-bs-toggle="tab" class="">배송안내</a>
-                    <a href="#" data-bs-toggle="tab" class="">상품사용후기</a>        <!-- 배지로 수량 표시 -->
-                    <a href="#" data-bs-toggle="tab">상품 Q&A</a>        <!-- 배지로 수량 표시 -->
+                    <a href="#" data-bs-toggle="tab" class="">상품사용후기</a>
+                    <a href="#" data-bs-toggle="tab">상품 Q&A</a>
                 </div>
 
                 <div class="tab-content">
@@ -249,7 +253,8 @@
                                 <div class="col-lg-8">
                                     <div class="pro-description-content text-center" data-aos="fade-up" data-aos-delay="400">
                                         <!-- 이미지가 있는 경우에만 표시 -->
-                                        <img th:if="${productDTO.imageDTOs[2] != null}" th:src="|/images/item/@{${productDTO.imageDTOs[2].imageFile}}|"
+                                        <img th:if="${productDTO.imageDTOs[2] != null}"
+                                             th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/@{${productDTO.imageDTOs[2].imageFile}}|"
                                              onerror="this.onerror=null; this.src='../assets/images/product/null.png';">
                                     </div>
                                 </div>
@@ -357,6 +362,7 @@
             </div>
         </div>
     </div>
+
     <!-- 연관상품 시작 -->
     <div class="related-product section-padding-lr-1 pb-100">
         <div class="container-fluid">
@@ -364,31 +370,37 @@
                 <h2>Related Products</h2>
             </div>
             <div class="related-product-active">
-                <div th:each="relatedProduct : ${relatedProducts}">
-                    <div class="product-plr-1" data-aos="fade-up" data-aos-delay="200">
-                        <div class="product-wrap">
-
-                            <div class="product-img img-zoom mb-4">
-                                <a th:href="@{'/product/' + ${relatedProduct.productId}}">
-                                    <img class="default-img" th:src="@{'/path/to/images/' + ${relatedProduct.imageFileName}}" alt="">
-                                </a>
-                                <div class="product-action-wrap">
-                                    <button title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <img class="injectable" src="assets/images/icon-img/eye.svg" alt="">
-                                    </button>
-                                </div>
+                <!-- 반복문을 통해 상품 목록 생성 -->
+                <div th:each="product:${productDTOS}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75"
+                     th:if="${product.categoryTypeRole eq T(com.example.clean.Constant.CategoryTypeRole).SAME_CATEGORY}">
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
+                        <div class="product-img img-zoom mb-4">
+                            <a th:href="@{/product/{productId}(productId=${product.productId})}">
+                                <!-- 대표 이미지를 표시하도록 수정 -->
+                                <img class="default-img" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}|" width="600" height="300">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button title="Add To Cart">
+                                    <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""/>
+                                </button>
+                                <button title="Wishlist">
+                                    <img class="injectable" src="assets/images/icon-img/heart.svg" alt=""/>
+                                </button>
                             </div>
-                            <div class="product-content text-center">
-                                <h3>
-                                    <a th:href="@{'/product/' + ${relatedProduct.productId}}" th:text="${relatedProduct.productName}"></a>
-                                </h3>
-                                <div class="product-price">
-                                    <span th:text="${relatedProduct.productPrice}"></span>
-                                </div>
+                        </div>
+                        <div class="product-content text-center">
+                            <h3>
+                                <!-- 상품 이름 표시 -->
+                                <a th:href="@{/product/{productId}(productId=${product.productId})}" th:text="${product.productName}" />
+                            </h3>
+                            <div class="product-price">
+                                <!-- 가격을 적절한 방식으로 표시 -->
+                                <span th:text="${product.productPrice}" />
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- 반복문 끝 -->
             </div>
         </div>
     </div>

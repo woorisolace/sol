@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
 @Builder
 @Table(name = "notice")
 @SequenceGenerator(
@@ -25,20 +24,7 @@ public class NoticeEntity extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notice_SEQ")
   private Integer noticeid;
 
-//  @Column(name="category", nullable = false)
-//  private String category;       //공지유형
-//
-//  @Column(name="title",nullable = false,length = 50)
-//  private String title;          //제목
-//
-//  @Column(name="writer", nullable = false,length = 20)
-//  private String writer;         //작성자
-//
-//  @Column(name="content",nullable = false,length = 2000)
-//  private String content;        //공지내용
-//
-//  @ManyToOne
-//  @JoinColumn(name="adminidnoticeid")
-//  private AdminNoticeEntity adminNoticeEntity;
+  @Column(name ="noticeViewCnt")
+  private Integer noticeViewCnt;         //조회수
 
 }

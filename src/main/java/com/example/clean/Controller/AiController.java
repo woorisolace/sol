@@ -3,6 +3,7 @@ package com.example.clean.Controller;
 import com.example.clean.Constant.CategoryTypeRole;
 import com.example.clean.Constant.SellStateRole;
 import com.example.clean.DTO.AdminNoticeDTO;
+import com.example.clean.DTO.FlaskResponseDTO;
 import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Service.AdminNoticeService;
@@ -37,12 +38,6 @@ public class AiController {
 
   @Autowired
   private Flask flask;
-
-//  @Value("${uploadPath}")
-//  private String uploadPath;
-//
-//  @Value("${imgLocation}")
-//  private String imgLocation;
 
   //S3 이미지 정보
   @Value("${cloud.aws.s3.bucket}")
@@ -118,9 +113,17 @@ public class AiController {
                               Model model) {
 
     try {
-      System.out.println("Received file: " + file.getOriginalFilename());
+      //System.out.println("Received file: " + file.getOriginalFilename());
       // 플라스크 서버에 분석할 이미지를 전달하여 처리
-      flask.requestToFlask(file);
+      //flask.requestToFlask(file);
+
+      // 플라스크 서버에 분석할 이미지를 전달하여 처리
+      FlaskResponseDTO dtos = flask.requestToFlask(file);
+      //S3 이미지 정보 전달
+      model.addAttribute("bucket", bucket);
+      model.addAttribute("region", region);
+      model.addAttribute("folder", folder);
+      model.addAttribute("dtos", dtos);
 
       List<String> sellStateOptions = Arrays.stream(SellStateRole.values())
           .map(SellStateRole::getDescription)
@@ -173,11 +176,6 @@ public class AiController {
       model.addAttribute("currentPage", currentPage);
       model.addAttribute("nextPage", nextPage);
       model.addAttribute("lastPage", lastPage);
-
-      //S3 이미지 정보 전달
-      model.addAttribute("bucket", bucket);
-      model.addAttribute("region", region);
-      model.addAttribute("folder", folder);
 
       return "/ai/img_result";
     } catch (Exception e) {

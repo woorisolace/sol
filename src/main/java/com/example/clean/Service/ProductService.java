@@ -10,6 +10,7 @@ import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Repository.ProductRepository;
 import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 // 상품의 이미지를 S3로부터 가져와서 ProductDTO에 설정
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -63,7 +65,7 @@ public class ProductService {
       ImageDTO jobDTO = dataDTO.get(index);
 
       try {
-        imageService.uploadImage(jobDTO, dataEntity, file); //이미지 등록 및 이미지테이블에 정보 등록
+        imageService.uploadImage(jobDTO, dataEntity, file);       //이미지 등록 및 이미지테이블에 정보 등록
       } catch (IOException e) {
         //
       }
@@ -127,13 +129,16 @@ public class ProductService {
   //각 상품에 이미지테이블 전달
   private List<ImageDTO> mapImagesToDTOs(List<ImageEntity> imagesEntities) throws Exception {
     if (imagesEntities != null && !imagesEntities.isEmpty()) {
-      List<ImageDTO> imageDTOs = new ArrayList<>();
+      List<ImageDTO> imageDTOs = new ArrayList<>();     //변환된 ImageDTO 객체를 담을 imageDTOs 리스트를 초기화
 
       for (ImageEntity imageEntity : imagesEntities) {
         ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
 
         // S3에서 이미지 URL 가져오기
-        String imageUrl = s3Uploader.getImageUrl(imageEntity.getImageFile());
+        String imageUrl = s3Uploader.getImageUrl("static", imageEntity.getImageFile());
+
+        log.info("상품 서비스 Image URL: {}", imageUrl);
+
         imageDTO.setImageFile(imageEntity.getImageFile());    //가져올 이미지 파일 이름이나 경로를 저장 또는 imageUrl
 
         imageDTOs.add(imageDTO);
@@ -215,9 +220,9 @@ public class ProductService {
 
     //S3 삭제
     //s3Uploader.deleteFile(productEntity.getProductImages(),imgUploadLocation);
-
     // 상품 삭제
     productRepository.deleteById(productId);
+
   }
 
 

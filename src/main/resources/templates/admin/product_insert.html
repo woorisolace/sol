@@ -52,7 +52,7 @@
                                                         th:unless="${state.name() == 'ALL'}"
                                                         th:value="${state.name()}"
                                                         th:text="${state.getDescription()}"
-                                                        th:selected="${state.name() eq data?.categoryTypeRole?.name()}">
+                                                        th:selected="${state.name() eq data?.categoryTypeRole?.name()}"></option>
                                                 </option>
                                             </select>
                                         </div>
@@ -93,7 +93,8 @@
                                             <select name="SellStateRole">
                                                 <option th:each="state:${sellsState}"
                                                         th:value="${state.name()}"
-                                                        th:text="${state.getDescription()}">
+                                                        th:text="${state.getDescription()}"
+                                                        th:selected="${state.name() eq data?.sellStateRole?.name()}"></option>
                                                 </option>
                                             </select>
                                         </div>

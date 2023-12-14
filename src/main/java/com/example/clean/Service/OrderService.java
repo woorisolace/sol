@@ -36,6 +36,8 @@ public class OrderService {
 
   //파일 저장을 위한 클래스
   private final S3Uploader s3Uploader;
+  private final FileService fileService;
+  private final ImageService imageService;
 
   private final OrderRepository orderRepository;
   private final MemberRepository memberRepository;
@@ -56,12 +58,10 @@ public class OrderService {
 
     //주문테이블 조회 후, 주문에 필요한 내용 추가
     //구매수량, 결제방식은 controller에서 받아와야 함 (controller : 입력 처리 및 유효성 검사는 주로 컨트롤러 레이어의 역할)
-    //OrderEntity orderEntity = new OrderEntity();
     Integer productPrice = productEntity.getProductPrice();         //제품가격
     Integer productTotal = productPrice * productNum;               //제품가격 * 구매수량
     Integer productDelivery = (productTotal >= 50000) ? 0 : 3000;   //배송비 (50,000원 이상 구매시 무료배송)
     Integer orderPrice = productTotal + productDelivery;            //배송비 + 상품금액 = 최종 결제 금액
-    //String paymentMethod = orderEntity.getPaymentMethod();          //결제방법 종류
 
 
     //OrderDTO에 값 설정
@@ -75,7 +75,6 @@ public class OrderService {
     orderDTO.setProductTotal(productTotal);
     orderDTO.setProductDelivery(productDelivery);
     orderDTO.setOrderPrice(orderPrice);
-    //orderDTO.setPaymentMethod(paymentMethod);
 
     return orderDTO;
   }
@@ -87,18 +86,14 @@ public class OrderService {
     //orderForm을 통해서 주문에 필요한 기본 정보를 가져옴
     OrderDTO orderDTO = orderForm(userId, productId, productNum);
 
-
     // 주문 정보가 올바르지 않은 경우
     if (orderDTO == null || orderDTO.getUserEntity() == null || orderDTO.getProductEntity() == null) {
       throw new IllegalArgumentException("주문 정보가 올바르게 구성되지 않았습니다.");
     }
-
-
     log.info("Controller_paymentMethod_before: {}", paymentMethod);
 
     // 쉼표를 제거하여 paymentMethod 값을 설정
     paymentMethod = removeComma(paymentMethod);
-
 
     //주문 정보를 newOrderEntity 저장 (활용도를 높이기 위해)
     OrderEntity newOrderEntity = createOrderEntity(orderDTO, paymentMethod);
@@ -107,10 +102,10 @@ public class OrderService {
     // 저장된 OrderEntity를 OrderDTO로 매핑하여 반환
     OrderDTO savedOrderDTO = modelMapper.map(savedOrderEntity, OrderDTO.class);
     savedOrderDTO.setPaymentMethod(paymentMethod); // 결제방법 설정
-    //savedOrderDTO.setOrderId(savedOrderEntity.getOrderId());
 
     return savedOrderDTO;
   }
+
 
   // 쉼표를 제거하는 유틸리티 메서드
   private String removeComma(String input) {
@@ -137,7 +132,6 @@ public class OrderService {
   }
 
 
-
   //구매완료 내용 보기
   //orderDTO로 주문 정보 가져오기기 (주문 1회에 여러 상품이 담겨도 되기 때문에 굳이 oderInfoDTO사용 필요 없음)
   public OrderDTO getOrderSuccess(Integer orderId) throws Exception {
@@ -158,11 +152,10 @@ public class OrderService {
   }
 
 
-
   //마이페이지에 구매내역 출력
   public Page<OrderDTO> myOrderList(String email, Pageable page) throws Exception {
 
-    int currentPage = page.getPageNumber()-1;
+    int currentPage = page.getPageNumber() - 1;
     int orderList = 10;
     Pageable pageable = PageRequest.of(currentPage, orderList, Sort.by(Sort.Direction.DESC, "orderId"));
 
@@ -199,10 +192,20 @@ public class OrderService {
   }
 
   //리스트 출력을 위해 이미지 불러오기
-  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) {
+  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) throws Exception {
     return orderEntity.getProductEntity().getProductImages().stream()
-        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+        .map(imageEntity -> {
+          ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
+
+          // S3에서 이미지 URL 가져오기
+          String imageUrl = s3Uploader.getImageUrl("static", imageEntity.getImageFile());
+          imageDTO.setImageFile(imageEntity.getImageFile());
+
+          System.out.println("Image URL: " + imageUrl);
+
+          return imageDTO;
+        })
         .collect(Collectors.toList());
   }
-}
 
+}

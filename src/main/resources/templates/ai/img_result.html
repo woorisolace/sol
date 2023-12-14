@@ -31,12 +31,16 @@
                                     <div class="login-form-container">
                                         <div class="login-register-form text-center">
                                             <form action="/ai_img_search" method="post">
+                                                <!--roomType - toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
                                                 <div><h1><span th:text="${roomType}" /></h1></div>
                                                 <br>
                                                 <br>
-                                                <!--toilet이면 BATHROOM, kitchensink이면 KITCHEN, etc가 나오면 LIVING-->
-<!--                                                <img class="center" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${result.jpg}|">-->
-                                                <img class="center" th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/home/ubuntu/AI/yolov5/runs/detect/result|}">
+                                                <!--                                                <img class="center" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${result.jpg}|">-->
+                                                <img class="center" th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/result.jpg|}">
+                                                <!--                                                <div th:each="data:${dtos.name}">-->
+                                                <!--                                                    <p th:text="${data}"></p>-->
+                                                <!--                                                </div>-->
+                                                <!--                                                <img class="center" th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/ubuntu/AI/yolov5/runs/detect/result|}">-->
 
                                                 <!-- <img class="center" src="/images/result.jpg">-->
                                                 <!-- <input type="text" name="tip" placeholder="청소꿀팁" readonly> -->

@@ -15,24 +15,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
 @RequiredArgsConstructor
 public class MemberProductController {
 
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+
+  @Value("${cloud.aws.region.static}")
+  public String region;
+
+  @Value("${imgUploadLocation}")
+  public String folder;
+
   private final ProductService productService;
-
-  @Value("${uploadPath}")
-  private String uploadPath;
-
-  @Value("${imgLocation}")
-  private String imgLocation;
 
   // 제품 상세페이지
   //@PathVariable : URL 경로에서 변수 값을 추출하는 데 사용
   @GetMapping("/product/{productId}")
-  public String memProDetail(@PathVariable Integer productId, Model model) throws Exception {
+  public String memProDetail(@PathVariable Integer productId, Model model, HttpServletRequest request) throws Exception {
+
+    // 현재 페이지의 URL을 세션에 저장
+    HttpSession session = request.getSession();
+    session.setAttribute("originalRequestUrl", "/product/" + productId);
+
 
     ProductDTO productDTO = productService.findOne(productId);
 
@@ -40,6 +51,11 @@ public class MemberProductController {
     model.addAttribute("sellState", SellStateRole.values());
     model.addAttribute("categoryType", CategoryTypeRole.values());
     model.addAttribute("imageDTOs", productDTO.getImageDTOs());
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket", bucket);
+    model.addAttribute("region", region);
+    model.addAttribute("folder", folder);
 
     return "/product/productdetail";
   }
@@ -50,8 +66,12 @@ public class MemberProductController {
   @GetMapping("/productlist/{categoryTypeRole}")
   public String productlistForm(@PathVariable(value = "categoryTypeRole") String categoryTypeRole,
                                 @PageableDefault(page = 1) Pageable pageable,
+                                HttpServletRequest request,
                                 Model model) throws Exception {
 
+    // 현재 페이지의 URL을 세션에 저장
+    HttpSession session = request.getSession();
+    session.setAttribute("originalRequestUrl", "/productlist/" + categoryTypeRole);
 
     Page<ProductDTO> productDTOS = productService.categoryList(categoryTypeRole, pageable);
 
@@ -77,6 +97,11 @@ public class MemberProductController {
     model.addAttribute("lastPage", lastPage);
 
     model.addAttribute("totalElements", productDTOS.getTotalElements());
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket", bucket);
+    model.addAttribute("region", region);
+    model.addAttribute("folder", folder);
 
     //해당 변수의 값을 사용해 동적으로 뷰 이름을 생성
     return "product/" + categoryTypeRole;
