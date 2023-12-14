@@ -49,9 +49,10 @@
                                         <div class="sidebar-archive-wrap">
                                             <select name="CategoryTypeRole" th:field="*{categoryTypeRole}">
                                                 <option th:each="state : ${categoryType}"
+                                                        th:unless="${state.name() == 'ALL'}"
                                                         th:value="${state.name()}"
                                                         th:text="${state.getDescription()}"
-                                                        th:selected="${state.name() eq data?.categoryTypeRole?.name()}"></option>
+                                                        th:selected="${state.name() eq data?.categoryTypeRole?.name()}">
                                                 </option>
                                             </select>
                                         </div>
@@ -92,8 +93,7 @@
                                             <select name="SellStateRole">
                                                 <option th:each="state:${sellsState}"
                                                         th:value="${state.name()}"
-                                                        th:text="${state.getDescription()}"
-                                                        th:selected="${state.name() eq data?.sellStateRole?.name()}"></option>
+                                                        th:text="${state.getDescription()}">
                                                 </option>
                                             </select>
                                         </div>

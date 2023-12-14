@@ -169,9 +169,8 @@ public class AdminNoticeController {
     }
 
     adminNoticeService.update(adminNoticeDTO);
-    redirectAttributes.addAttribute("currentPage",1);
-
-    return "redirect:/admin_noticelist";
+    redirectAttributes.addAttribute("adminnoticeid",adminNoticeDTO.getAdminnoticeid());
+    return  "redirect:/admin_noticeread";
   }
 
 

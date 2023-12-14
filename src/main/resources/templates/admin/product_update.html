@@ -51,6 +51,7 @@
                       <!--수정-->
                       <select name="categoryTypeRole" >
                         <option th:each="state:${categoryType}"
+                                th:unless="${state.name() == 'ALL'}"
                                 th:value="${state.name()}"
                                 th:text="${state.getDescription()}"
                                 th:selected="${state == categoryTypeRole}">
@@ -144,22 +145,22 @@
               </tr>
 
               <script>
-                  // 미리보기 이미지 업데이트 함수
-                  function previewImage(input, imgId) {
-                      var preview = document.getElementById(imgId);
-                      var file = input.files[0];
-                      var reader = new FileReader();
+                // 미리보기 이미지 업데이트 함수
+                function previewImage(input, imgId) {
+                  var preview = document.getElementById(imgId);
+                  var file = input.files[0];
+                  var reader = new FileReader();
 
-                      reader.onloadend = function () {
-                          preview.src = reader.result;
-                      };
+                  reader.onloadend = function () {
+                    preview.src = reader.result;
+                  };
 
-                      if (file) {
-                          reader.readAsDataURL(file);
-                      } else {
-                          preview.src = "";
-                      }
+                  if (file) {
+                    reader.readAsDataURL(file);
+                  } else {
+                    preview.src = "";
                   }
+                }
               </script>
 
               </tbody>

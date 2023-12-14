@@ -78,7 +78,7 @@
                                     <div class="notice-content">
                                         <div class="notice-btn-date-wrap list-btn">
                                             <div class="notice-btn">
-                                                <button type="submit" class="btn btn-lg">수정</button>
+                                                <button type="submit" class="btn btn-lg" th:onclick="|location.href='@{/admin_noticedetail(adminnoticeid=${noticeDTO.adminnoticeid})}'|">수정</button>
                                                 <button type="reset" class="btn btn-lg">다시</button>
                                                 <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_noticelist}'|">취소</button>
                                             </div>
