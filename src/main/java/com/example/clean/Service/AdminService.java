@@ -3,6 +3,7 @@ package com.example.clean.Service;
 import com.example.clean.DTO.ImageDTO;
 import com.example.clean.DTO.MemberDTO;
 import com.example.clean.DTO.OrderDTO;
+import com.example.clean.Entity.ImageEntity;
 import com.example.clean.Entity.OrderEntity;
 import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Entity.UserEntity;
@@ -21,6 +22,8 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,9 @@ public class AdminService {
 
   //파일 저장을 위한 클래스
   private final S3Uploader s3Uploader;
+
+  private final FileService fileService;
+  private final ImageService imageService;
 
   private final AdminRepository adminRepository;
   private final OrderRepository orderRepository;
@@ -83,6 +89,30 @@ public class AdminService {
         .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
         .collect(Collectors.toList());
   }
+
+
+//  //각 상품에 이미지테이블 전달
+//  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) throws Exception {
+//    if (orderEntity != null && !orderEntity.getProductEntity().getProductImages().isEmpty()) {
+//      List<ImageDTO> imageDTOs = new ArrayList<>();     //변환된 ImageDTO 객체를 담을 imageDTOs 리스트를 초기화
+//
+//      for (ImageEntity imageEntity : orderEntity.getProductEntity().getProductImages()) {
+//        ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
+//
+//        // S3에서 이미지 URL 가져오기
+//        String imageUrl = s3Uploader.getImageUrl(imageEntity.getImageFile());
+//        imageDTO.setImageFile(imageEntity.getImageFile());    //가져올 이미지 파일 이름이나 경로를 저장 또는 imageUrl
+//
+//        imageDTOs.add(imageDTO);
+//      }
+//
+//      return imageDTOs;
+//    }
+//
+//    // 이미지가 없는 경우 빈 목록 반환
+//    return Collections.emptyList();
+//  }
+
 
   //관리자-회원구매내역
   public Page<OrderDTO> getAllOrders(Pageable page) throws Exception {

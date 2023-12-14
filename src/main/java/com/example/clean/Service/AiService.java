@@ -27,8 +27,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AiService {
 
+    //파일이 저장될 경로
+    @Value("${imgUploadLocation}")
+    private String imgUploadLocation;
+
+    //파일 저장을 위한 클래스
+    private final S3Uploader s3Uploader;
+
     private final FileService fileService;
     private final ImageService imageService;
+
     private final ModelMapper modelMapper = new ModelMapper();
     private final ProductRepository productRepository;
 
@@ -75,15 +83,20 @@ public class AiService {
 
 
     //각 상품에 이미지테이블 전달
-    private List<ImageDTO> mapImagesToDTOs(List<ImageEntity> imagesEntities) {
+    private List<ImageDTO> mapImagesToDTOs(List<ImageEntity> imagesEntities) throws Exception {
         List<ImageDTO> imageDTOs = new ArrayList<>();
 
         for (ImageEntity imageEntity : imagesEntities) {
-            ImageDTO imageDTO =  modelMapper.map(imageEntity, ImageDTO.class); //
+            ImageDTO imageDTO =  modelMapper.map(imageEntity, ImageDTO.class);
+
+            String imageUrl = s3Uploader.getImageUrl("static", imageEntity.getImageFile()); // S3에서 이미지 가져오기
+            imageDTO.setImageFile(imageUrl); // ImageDTO에 S3 이미지 URL 설정
+
             imageDTOs.add(imageDTO);
         }
         return imageDTOs;
     }
+
 
 
     //상품개별조회

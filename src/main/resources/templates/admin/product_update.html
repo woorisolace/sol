@@ -116,7 +116,7 @@
                   <input type="hidden" name="imageDTOs[0].imageType" value="0">
                   <input type="file" name="images" onchange="previewImage(this, 'previewImg0')">
                   <img id="previewImg0" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" th:if="${imageDTOs[0].imageFile != null}"
-                       th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[0].imageFile}|">
+                       th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[0].imageFile}|" alt="이미지없음">
                 </td>
               </tr>
 
@@ -145,22 +145,22 @@
               </tr>
 
               <script>
-                // 미리보기 이미지 업데이트 함수
-                function previewImage(input, imgId) {
-                  var preview = document.getElementById(imgId);
-                  var file = input.files[0];
-                  var reader = new FileReader();
+                  // 미리보기 이미지 업데이트 함수
+                  function previewImage(input, imgId) {
+                      var preview = document.getElementById(imgId);
+                      var file = input.files[0];
+                      var reader = new FileReader();
 
-                  reader.onloadend = function () {
-                    preview.src = reader.result;
-                  };
+                      reader.onloadend = function () {
+                          preview.src = reader.result;
+                      };
 
-                  if (file) {
-                    reader.readAsDataURL(file);
-                  } else {
-                    preview.src = "";
+                      if (file) {
+                          reader.readAsDataURL(file);
+                      } else {
+                          preview.src = "";
+                      }
                   }
-                }
               </script>
 
               </tbody>

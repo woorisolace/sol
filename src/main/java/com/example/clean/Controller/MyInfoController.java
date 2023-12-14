@@ -6,8 +6,10 @@ import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Repository.MemberRepository;
 import com.example.clean.Service.MemberService;
 import com.example.clean.Service.OrderService;
+import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,11 +25,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class MyInfoController {
-  private MemberRepository memberRepository;
+
+  //S3 이미지 정보
+  @Value("${cloud.aws.s3.bucket}")
+  public String bucket;
+
+  @Value("${cloud.aws.region.static}")
+  public String region;
+
+  @Value("${imgUploadLocation}")
+  public String folder;
 
   private final MemberService memberService;
   private final OrderService orderService;
-  private final PasswordEncoder passwordEncoder;
+  private final ProductService productService;
 
   //마이페이지메인
   @GetMapping("/mypage")
@@ -81,6 +92,11 @@ public class MyInfoController {
     model.addAttribute("currentPage", currentPage);
     model.addAttribute("nextPage", nextPage);
     model.addAttribute("lastPage", lastPage);
+
+    //S3 이미지 정보 전달
+    model.addAttribute("bucket", bucket);
+    model.addAttribute("region", region);
+    model.addAttribute("folder", folder);
 
     return "/member/oder_list";
   }

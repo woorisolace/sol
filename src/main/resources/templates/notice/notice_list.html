@@ -78,6 +78,7 @@
                                             <th class="width-price"> 제목 </th>
                                             <th class="width-price"> 작성자 </th>
                                             <th class="width-price"> 작성날짜 </th>
+                                            <th class="width-price"> 조회수 </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -119,6 +120,11 @@
                                                 <h5 th:text="${#temporals.format(data.reDate, 'yyyy-MM-dd')}">
                                                     23-11-15
                                                 </h5>
+                                            </td>
+                                            <td class="product-name">
+<!--                                                <h5 th:text="${data.noticeViewCnt}">-->
+<!--                                                    23-11-15-->
+<!--                                                </h5>-->
                                             </td>
                                         </tr>
                                         </tbody>

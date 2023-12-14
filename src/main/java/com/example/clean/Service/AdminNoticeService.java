@@ -166,12 +166,12 @@ public class AdminNoticeService {
         adminNoticeEntity.setAdmincategory(adminNoticeDTO.getAdmincategory());
         adminNoticeEntity.setAdmincontent(adminNoticeDTO.getAdmincontent());
         adminNoticeEntity.setModDate(LocalDateTime.now());
-        adminNoticeRepository.save(adminNoticeEntity);
-
-
 
 
 //      AdminNoticeEntity data = modelMapper.map(adminNoticeDTO,AdminNoticeEntity.class);
+
+        adminNoticeRepository.save(adminNoticeEntity);
+
 
 //        Integer id = adminNoticeDTO.getAdminnoticeid(); //조회에 필요한 변수를 추출
 //

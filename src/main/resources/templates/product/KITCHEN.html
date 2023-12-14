@@ -67,17 +67,18 @@
                                 <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
                                     <div class="product-img img-zoom mb-4">
                                         <a th:href="@{/product/{productId}(productId=${product.productId})}">
-                                            <img class="default-img" th:if="${not product.imageDTOs?.isEmpty()}" th:src="@{/images/item/{imageName}(imageName=${product.imageDTOs[0]?.imageFile})}" width="600" height="300">
-                                            <img class="default-img" th:if="${product.imageDTOs?.isEmpty()}" th:src="@{/images/item/default-image.jpg}" width="600" height="300">
+                                            <img class="default-img" th:if="${not product.imageDTOs?.isEmpty()}"
+                                                 th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs[0]?.imageFile}|}"
+                                                 width="600" height="350">
                                         </a>
-                                        <div class="product-action-wrap">
-                                            <button title="Add To Cart">
-                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />
-                                            </button>
-                                            <button title="Wishlist">
-                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />
-                                            </button>
-                                        </div>
+                                        <!--                                        <div class="product-action-wrap">-->
+                                        <!--                                            <button title="Add To Cart">-->
+                                        <!--                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />-->
+                                        <!--                                            </button>-->
+                                        <!--                                            <button title="Wishlist">-->
+                                        <!--                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />-->
+                                        <!--                                            </button>-->
+                                        <!--                                        </div>-->
                                     </div>
                                     <div class="product-content text-center">
                                         <h3>

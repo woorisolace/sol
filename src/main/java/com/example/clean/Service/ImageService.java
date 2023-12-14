@@ -23,17 +23,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class ImageService {
 
-  //파일업로드
-  private final FileService fileService;
-  private final ModelMapper modelMapper = new ModelMapper();
-  private final ImageRepository imageRepository;
-
   //파일이 저장될 경로
   @Value("${imgUploadLocation}")
   private String imgUploadLocation;
 
   //파일 저장을 위한 클래스
   private final S3Uploader s3Uploader;
+
+  //파일업로드
+  private final FileService fileService;
+  private final ModelMapper modelMapper = new ModelMapper();
+  private final ImageRepository imageRepository;
+
 
   // 삽입
   public void uploadImage(ImageDTO imageDTO, ProductEntity entity, MultipartFile imageFile) throws Exception {

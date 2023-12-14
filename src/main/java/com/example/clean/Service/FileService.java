@@ -18,8 +18,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
 
-  //파일을 저장할 경로, 파일명, 데이터값
-  @Value("${imgLocation}")
+//  //파일을 저장할 경로, 파일명, 데이터값
+//  @Value("${imgLocation}")
+//  private String imgLocation;
+
+  //파일이 저장될 경로
+  @Value("${imgUploadLocation}")
   private String imgLocation;
 
 

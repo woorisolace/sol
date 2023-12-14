@@ -45,6 +45,7 @@ public class S3Uploader {
         return upload(uploadFile, dirName);
     }
 
+
     //public void deleteFile(List<ImageEntity> deleteFile, String dirName) throws IOException {
     //S3 파일삭제
     //List<ImageEntity> deleteFile -> 단일 파일을 삭제하도록 수정해야함
@@ -58,12 +59,13 @@ public class S3Uploader {
         }
     }
 
+
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
         String newFileName = UUID.randomUUID() + uploadFile.getName();
         //String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();
-        String fileName = dirName + "/" + newFileName;   // S3에 저장된 파일 이름
-        String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
+        String fileName = dirName + "/" + newFileName;          // S3에 저장된 파일 이름
+        String uploadImageUrl = putS3(uploadFile, fileName);    // s3로 업로드
         removeNewFile(uploadFile);
 
         return newFileName;
@@ -76,11 +78,14 @@ public class S3Uploader {
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
+
     // 이미지 URL 가져오기
-    public String getImageUrl(String fileName) {
-        String key = fileName;
+    public String getImageUrl(String dirName, String fileName) {
+        //String key = fileName;
+        String key = dirName + "/" + fileName;  // dirName 추가
         return amazonS3Client.getUrl(bucket, key).toString();
     }
+
 
     // 로컬에 저장된 이미지 지우기
     private void removeNewFile(File targetFile) {
@@ -90,6 +95,7 @@ public class S3Uploader {
         }
         log.info("File delete fail");
     }
+
 
     private Optional<File> convert(MultipartFile multipartFile) throws IOException{
         //System.out.println(System.getProperty("user.dir"));

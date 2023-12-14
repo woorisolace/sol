@@ -78,8 +78,8 @@ public class AdminNoticeController {
     //    Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.list(pageable);
     //열거형의 한글 설명을 리스트로 가져오기
     List<String> adminnoticeOptions = Arrays.stream(AdminNoticeRole.values())
-            .map(AdminNoticeRole::getDescription)
-            .collect(Collectors.toList());
+        .map(AdminNoticeRole::getDescription)
+        .collect(Collectors.toList());
     model.addAttribute("adminnoticeOptions",adminnoticeOptions); //공지유형 옵션 전달
 
     Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.findAll(type, title, adminNoitce, pageable);
@@ -169,8 +169,9 @@ public class AdminNoticeController {
     }
 
     adminNoticeService.update(adminNoticeDTO);
-    redirectAttributes.addAttribute("adminnoticeid",adminNoticeDTO.getAdminnoticeid());
-    return  "redirect:/admin_noticeread";
+    redirectAttributes.addAttribute("currentPage",1);
+
+    return "redirect:/admin_noticelist";
   }
 
 
