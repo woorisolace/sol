@@ -94,24 +94,25 @@
 
                     <!-- 페이지 번호 추가 -->
                     <div class="pagination-style text-center mt-30">
-                        <ul data-aos="fade-up" data-aos-delay="300">
-                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/ALL' ? 'active' : ''}">
-                                <a href="/productlist/ALL">All</a>
+                        <ul>
+                            <li th:unless="${startPage == 1}">
+                                <a th:href="@{/productlist/KITCHEN(page=1)}">처음</a>
                             </li>
-                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/LIVING' ? 'active' : ''}">
-                                <a href="/productlist/LIVING">Living</a>
+                            <li th:unless="${currentPage == 1}">
+                                <a th:href="@{/productlist/KITCHEN(page=${prevPage})}">&lt;</a>
                             </li>
-                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/KITCHEN' ? 'active' : ''}">
-                                <a href="/productlist/KITCHEN">Kitchen</a>
+
+                            <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                                <a th:if="${currentPage != page}" th:href="@{/productlist/KITCHEN(page=${page})}">[[${page}]]</a>
+                                <a th:if="${currentPage == page}" href="#" class="active">[[${page}]]</a>
                             </li>
-                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
-                                <a href="/productlist/BATHROOM">Restroom</a>
+
+                            <li th:unless="${currentPage == lastPage}">
+                                <a th:href="@{/productlist/KITCHEN(page=${nextPage})}">&gt;</a>
                             </li>
-                            <!--
-                            <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
-                                <a href="/productlist/MEMBERSALE">Sale</a>
+                            <li th:unless="${endPage == lastPage}">
+                                <a th:href="@{/productlist/KITCHEN(page=${lastPage})}">끝</a>
                             </li>
-                            -->
                         </ul>
                     </div>
                     <!-- 페이지 번호 추가 끝 -->

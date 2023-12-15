@@ -85,9 +85,12 @@ public class AdminService {
 
   //리스트 출력을 위해 이미지 불러오기
   private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) {
-    return orderEntity.getProductEntity().getProductImages().stream()
-        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
-        .collect(Collectors.toList());
+    if(orderEntity != null && orderEntity.getProductEntity() != null && orderEntity.getProductEntity().getProductImages() != null){
+      return orderEntity.getProductEntity().getProductImages().stream()
+              .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+              .collect(Collectors.toList());
+    }
+    return Collections.emptyList();
   }
 
 

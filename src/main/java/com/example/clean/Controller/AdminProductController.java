@@ -4,23 +4,24 @@ import com.example.clean.Constant.CategoryTypeRole;
 import com.example.clean.Constant.SellStateRole;
 import com.example.clean.DTO.ProductDTO;
 import com.example.clean.Service.ProductService;
+import com.example.clean.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,6 +38,9 @@ public class AdminProductController {
 
   @Value("${imgUploadLocation}")
   public String folder;
+
+  @Autowired
+  private S3Uploader s3Uploader;
 
   private final ProductService productService;
 
@@ -218,7 +222,6 @@ public class AdminProductController {
     productService.delete(productId);
     return "redirect:/admin_productlist";
   }
-
 }
 
 

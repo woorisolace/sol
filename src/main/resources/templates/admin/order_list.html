@@ -100,11 +100,11 @@
                       </td>
                       <td class="product-name">
                         <th:block th:if="${data.imageDTOs != null and data.imageDTOs.size() > 0 and data.imageDTOs[0].imageFile != null}">
-                          <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${data.imageDTOs[0].imageFile}|" alt="Product Image" width="100" height="100">
+                          <img th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${data.imageDTOs[0].imageFile}|}"  alt="Product Image" width="100" height="100">
                         </th:block>
                       </td>
                       <td class="product-name">
-                        <h5><a th:text="${data.productEntity.productName}">제품명</a></h5>
+                        <h5><a th:if="${data.productEntity != null}" th:text="${data.productEntity.productName}">제품명</a></h5>
                       </td>
                       <td class="product-name">
                         <h5><a th:text="${data.orderPrice}">결제금액</a></h5>
