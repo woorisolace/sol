@@ -54,7 +54,7 @@
                                     <div class="easyzoom-style" th:if="${productDTO.imageDTOs[0] != null}">
                                         <div class="easyzoom easyzoom--overlay">
                                             <a th:href="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|">
-                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|" alt="">
+                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|"  alt="">
                                             </a>
                                         </div>
                                     </div>
@@ -251,7 +251,7 @@
                                 <div class="col-lg-8">
                                     <div class="pro-description-content text-center" data-aos="fade-up" data-aos-delay="400">
                                         <!-- 이미지가 있는 경우에만 표시 -->
-                                        <img th:if="${productDTO.imageDTOs[2] != null}"
+                                        <img th:if="${productDTO.imageDTOs[2] != null}" style="max-width: 700px;"
                                              th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/@{${productDTO.imageDTOs[2].imageFile}}|"
                                              onerror="this.onerror=null; this.src='../assets/images/product/null.png';">
                                     </div>
