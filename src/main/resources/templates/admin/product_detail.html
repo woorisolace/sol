@@ -138,25 +138,9 @@
 
                         </tbody>
                     </table>
-
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="notice-button-container">
-                                <div class="notice-content">
-                                    <div class="notice-btn-date-wrap list-btn">
-                                        <div class="notice-btn">
-                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_productlist}'|">목록</button>
-                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_product_update(productId=${productDTO.productId})}'|">수정</button>
-                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_product_delete(productId=${productDTO.productId})}'|">삭제</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <script th:inline="javascript">
                         function confirmDelete(deleteUrl) {
-                            if (confirm("상품을 삭제하시겠습니까?")) {
+                            if (confirm("정말 삭제하시겠습니까?")) {
                                 // 삭제가 성공하면 알림을 표시하고 현재 페이지를 새로고침합니다.
                                 location.href = deleteUrl;
                                 alert("상품이 삭제되었습니다.");
@@ -165,7 +149,21 @@
                             }
                         }
                     </script>
-
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <div class="notice-button-container">
+                                <div class="notice-content">
+                                    <div class="notice-btn-date-wrap list-btn">
+                                        <div class="notice-btn">
+                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_productlist}'|">목록</button>
+                                            <button type="button" class="btn btn-lg" th:onclick="|location.href='@{/admin_product_update(productId=${productDTO.productId})}'|">수정</button>
+                                            <button type="button" class="btn btn-lg" th:onclick="|confirmDelete('@{/admin_product_delete(productId=${productDTO.productId})}')|">삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

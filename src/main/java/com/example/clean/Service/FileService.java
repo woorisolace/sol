@@ -25,7 +25,7 @@ public class FileService {
   //파일이 저장될 경로
   @Value("${imgUploadLocation}")
   private String imgLocation;
-
+  private final S3Uploader s3Uploader;
 
   //저장할 경로,파일명,데이터 값
   public String uploadFile(String originalFileName,  byte[] filedata) throws Exception {
@@ -45,6 +45,7 @@ public class FileService {
 
   // 파일 삭제 (상품을 수정시 기존 파일을 삭제하고 새로운 파일을 저장)
   public void deleteFile(String fileName) throws Exception {
+    s3Uploader.deleteFile(fileName, imgLocation);
 
     String deleteFileName = imgLocation + fileName;
 

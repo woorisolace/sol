@@ -51,7 +51,6 @@
                       <!--수정-->
                       <select name="categoryTypeRole" >
                         <option th:each="state:${categoryType}"
-                                th:unless="${state.name() == 'ALL'}"
                                 th:value="${state.name()}"
                                 th:text="${state.getDescription()}"
                                 th:selected="${state == categoryTypeRole}">
@@ -116,7 +115,7 @@
                   <input type="hidden" name="imageDTOs[0].imageType" value="0">
                   <input type="file" name="images" onchange="previewImage(this, 'previewImg0')">
                   <img id="previewImg0" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" th:if="${imageDTOs[0].imageFile != null}"
-                       th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[0].imageFile}|" alt="이미지없음">
+                       th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[0].imageFile}|">
                 </td>
               </tr>
 

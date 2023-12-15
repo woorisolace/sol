@@ -26,6 +26,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
   @Query("SELECT p FROM ProductEntity p WHERE p.categoryTypeRole = :categoryTypeRole AND p.sellStateRole = :sellStateRole")
   Page<ProductEntity> findProductEntityByCategoryTypeRoleAndSellState (@Param("categoryTypeRole") CategoryTypeRole categoryTypeRole, @Param("sellStateRole") SellStateRole sellStateRole, Pageable pageable);
 
+  // "MEMBERSALE"이 아니면서 판매 중인 상품 조회
+  @Query("SELECT p FROM ProductEntity p WHERE p.categoryTypeRole != :MEMBERSALE AND p.sellStateRole = :SELL")
+  Page<ProductEntity> findByCategoryTypeRoleNotAndSellStateRole(
+      @Param("MEMBERSALE") CategoryTypeRole MEMBERSALE, @Param("SELL") SellStateRole SELL, Pageable pageable);
+
   //상품진열(판매상태) - SELL(판매중)
   @Query("SELECT p FROM ProductEntity p WHERE p.sellStateRole = :SELL")
   Page<ProductEntity> findAllByStateRole (@Param("SELL") SellStateRole SELL, Pageable pageable);
@@ -56,6 +61,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
   // 판매 상태로 상품 조회
   @Query("SELECT p FROM ProductEntity p WHERE p.sellStateRole = :sellState")
   Page<ProductEntity> findBySellStateRole(@Param("sellState") SellStateRole sellStateRole, Pageable pageable);
-
 
 }

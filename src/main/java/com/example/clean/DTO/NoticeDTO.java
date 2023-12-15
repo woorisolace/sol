@@ -26,8 +26,6 @@ public class NoticeDTO {
     @NotEmpty(message="공지내용은 생략할 수 없습니다.")
     private String content;        //공지내용
 
-    private Integer noticeViewCnt;         //조회수
-
     private LocalDateTime reDate;               // 등록날짜
 
     private LocalDateTime modDate;             // 수정날짜

@@ -62,7 +62,6 @@ public class MemberProductController {
     model.addAttribute("region", region);
     model.addAttribute("folder", folder);
 
-
     return "/product/productdetail";
   }
 

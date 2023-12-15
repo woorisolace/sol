@@ -97,6 +97,23 @@ public class ProductService {
           CategoryTypeRole.valueOf(categoryTypeRole), SellStateRole.SELL, pageable);
     }
 
+
+    // "ALL"이면 모든 카테고리의 상품을 조회하도록 처리
+    if ("ALL".equalsIgnoreCase(categoryTypeRole)) {
+      // MEMBERSALE인 경우 제외하고 조회
+      productEntityPage = productRepository.findByCategoryTypeRoleNotAndSellStateRole(
+          CategoryTypeRole.MEMBERSALE, SellStateRole.SELL, pageable);
+    } else {
+      // 다른 카테고리의 경우 해당 카테고리의 상품을 조회
+      productEntityPage = productRepository.findProductEntityByCategoryTypeRoleAndSellState(
+          CategoryTypeRole.valueOf(categoryTypeRole), SellStateRole.SELL, pageable);
+    }
+
+
+
+
+
+
     // 상품정보 및 이미지들을 Entity에서 DTO로 복수전달
     List<ProductDTO> productDTOList = new ArrayList<>();
 
@@ -288,7 +305,7 @@ public class ProductService {
     return new PageImpl<>(productDTOList, pageable, productEntityPage.getTotalElements());
   }
 
-  //아이디와 카테고리 값
+
 
 }
 

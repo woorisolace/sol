@@ -429,7 +429,7 @@
         fade: false,
         loop: true,
         dots: false,
-        arrows: true,
+        arrows: false,
         responsive: [
             {
                 breakpoint: 991,

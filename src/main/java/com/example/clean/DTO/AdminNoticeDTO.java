@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AdminNoticeDTO {
 
-
     private Integer adminnoticeid;      //번호
 
     @NotBlank(message="공지유형은 생략 할 수 없습니다.")
@@ -36,5 +35,6 @@ public class AdminNoticeDTO {
     private AdminNoticeRole adminNoticeRole;
 
     private LocalDateTime reDate;               // 등록날짜
+
     private LocalDateTime modDate;             // 수정날짜
 }

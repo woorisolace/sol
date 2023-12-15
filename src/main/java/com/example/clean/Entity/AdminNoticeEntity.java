@@ -16,10 +16,10 @@ import javax.persistence.*;
 @Builder
 @Table(name="adminnotice")
 @SequenceGenerator(
-        name = "adminnotice_SEQ",
-        sequenceName = "adminnotice_SEQ",
-        initialValue = 1,
-        allocationSize = 1
+    name = "adminnotice_SEQ",
+    sequenceName = "adminnotice_SEQ",
+    initialValue = 1,
+    allocationSize = 1
 )
 public class AdminNoticeEntity extends BaseEntity{
 
@@ -44,7 +44,5 @@ public class AdminNoticeEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(name="adminnotice")
     private AdminNoticeRole adminNoticeRole;
-
-
 
 }
