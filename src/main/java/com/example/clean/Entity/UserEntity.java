@@ -24,9 +24,6 @@ public class UserEntity extends BaseEntity{
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_SEQ")
     private Integer id;
-
-    //@OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
-    //private List<CartEntity> cartEntities;
     
     @Column(name="email", columnDefinition="VARCHAR(100)", nullable=false, unique=true)
     private String email;

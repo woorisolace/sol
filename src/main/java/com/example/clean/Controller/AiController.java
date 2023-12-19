@@ -113,10 +113,6 @@ public class AiController {
                               Model model) {
 
     try {
-      //System.out.println("Received file: " + file.getOriginalFilename());
-      // 플라스크 서버에 분석할 이미지를 전달하여 처리
-      //flask.requestToFlask(file);
-
       // 플라스크 서버에 분석할 이미지를 전달하여 처리
       FlaskResponseDTO dtos = flask.requestToFlask(file);
       //S3 이미지 정보 전달

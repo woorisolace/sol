@@ -24,7 +24,4 @@ public class NoticeEntity extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notice_SEQ")
   private Integer noticeid;
 
-  @Column(name ="noticeViewCnt")
-  private Integer noticeViewCnt;         //조회수
-
 }

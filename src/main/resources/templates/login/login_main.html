@@ -56,56 +56,17 @@
                                             <form action="/login" method="post">
                                                 <input type="email" id="email" name="email" class="form-control" placeholder="email">
                                                 <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                                                <!--로그인처리후 아이디나 비밀번호가 불일치하면 전달받은 메세지를 출력-->
-                                                <!-- <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p> -->
                                                 <div class="button-box">
-                                                    <!--
-                                                    <div class="login-toggle-btn text-center mb-3">
-                                                        <a href="#">Forgot Password?</a>
-                                                    </div>
-                                                    -->
                                                     <button type="submit" class="btn btn-primary btn-lg">Login</button>&nbsp;&nbsp;
                                                     <!--a class="btn btn-warning btn-lg" th:href="@{/oauth2/authorization/kakao}">KAKAO</a-->
                                                     <a th:href="@{/oauth2/authorization/kakao}">
                                                         <img src="/assets/images/kakao_login_image(3).png" alt="Kakao Login" />
                                                     </a>
                                                 </div>
-                                                <!--csrf() 페이지 위조 방지 적용
-                                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
-                                            </form>
-                                            <!-- 자동 로그인 체크박스 -->
-                                            <!-- <input type="checkbox" id="autoLogin" name="autoLogin"> -->
-                                            <!-- <label for="autoLogin">자동 로그인</label><br> -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--
-                                <script>
-                                    function login() {
-                                        // 로그인 로직 추가
-                                    }
-
-                                    function loginWithKakao() {
-                                        // 카카오 로그인 로직 추가
-                                    }
-                                </script>
-
-                                <div id="lg2" class="tab-pane">
-                                    <div class="login-form-container">
-                                        <div class="login-register-form">
-                                            <form action="#" method="post">
-                                                <input type="text" name="user-name" placeholder="Username">
-                                                <input type="password" name="user-password" placeholder="Password">
-                                                <input name="user-email" placeholder="Email" type="email">
-                                                <div class="button-box">
-                                                    <button type="submit">Register</button>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                                -->
                             </div>
                         </div>
                     </div>

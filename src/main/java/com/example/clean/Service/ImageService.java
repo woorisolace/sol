@@ -76,7 +76,6 @@ public class ImageService {
       if (deleteFileName.length() != 0) {      // 이전 파일 존재시 삭제
         fileService.deleteFile(deleteFileName);
       }
-      //newFileName = fileService.uploadFile(originalFileName, imageFile.getBytes());
       newFileName = s3Uploader.upload(imageFile, imgUploadLocation);
 
       imageDTO.setImageFile(newFileName);
@@ -102,8 +101,6 @@ public class ImageService {
     //이미지 리스트를 받아 삭제(productEntity.getProductImages())중이니까 imageId를 이용하여 단일 삭제하도록 수정
     s3Uploader.deleteFile(imageEntity.getImageFile(), imgUploadLocation);
     imageRepository.deleteById(imageId);
-
-    //s3Uploader.deleteFile(productEntity.getProductImages(), imgUploadLocation);
 
   }
 

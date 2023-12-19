@@ -167,23 +167,23 @@ public class OrderService {
 
     // 회원 이메일에 해당하는 주문 목록만 가져오기 (역순으로 정렬)
     List<OrderEntity> userOrderEntities = orderEntityPage.getContent()
-        .stream()
-        .sorted(Comparator.comparing(OrderEntity::getOrderId).reversed())
-        .collect(Collectors.toList());
+            .stream()
+            .sorted(Comparator.comparing(OrderEntity::getOrderId).reversed())
+            .collect(Collectors.toList());
 
     int orderNum = userOrderEntities.size(); // 구매 순서 번호 초기화
 
 
     for (OrderEntity entity : userOrderEntities) {
       OrderDTO orderDTO = OrderDTO.builder()
-          .productEntity(entity.getProductEntity())
-          .userEntity(entity.getUserEntity())
-          .orderId(entity.getOrderId())
-          .orderPrice(entity.getOrderPrice())
-          .orderNum(orderNum--)  // 역순으로 구매 순서 번호 감소
-          .imageDTOs(getImagesForOrderEntity(entity))
-          .reDate(entity.getReDate())
-          .build();
+              .productEntity(entity.getProductEntity())
+              .userEntity(entity.getUserEntity())
+              .orderId(entity.getOrderId())
+              .orderPrice(entity.getOrderPrice())
+              .orderNum(orderNum--)  // 역순으로 구매 순서 번호 감소
+              .imageDTOs(getImagesForOrderEntity(entity))
+              .reDate(entity.getReDate())
+              .build();
 
       orderDTOList.add(orderDTO);
     }
@@ -194,18 +194,18 @@ public class OrderService {
   //리스트 출력을 위해 이미지 불러오기
   private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) throws Exception {
     return orderEntity.getProductEntity().getProductImages().stream()
-        .map(imageEntity -> {
-          ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
+            .map(imageEntity -> {
+              ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
 
-          // S3에서 이미지 URL 가져오기
-          String imageUrl = s3Uploader.getImageUrl("static", imageEntity.getImageFile());
-          imageDTO.setImageFile(imageEntity.getImageFile());
+              // S3에서 이미지 URL 가져오기
+              String imageUrl = s3Uploader.getImageUrl("static", imageEntity.getImageFile());
+              imageDTO.setImageFile(imageEntity.getImageFile());
 
-          System.out.println("Image URL: " + imageUrl);
+              System.out.println("Image URL: " + imageUrl);
 
-          return imageDTO;
-        })
-        .collect(Collectors.toList());
+              return imageDTO;
+            })
+            .collect(Collectors.toList());
   }
 
 }

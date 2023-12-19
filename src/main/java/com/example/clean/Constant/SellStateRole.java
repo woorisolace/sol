@@ -17,7 +17,3 @@ public enum SellStateRole {
     return description;
   }
 }
-
-//Enum : Java에서 상수를 표현할 때 사용, 상수 간의 관계를 명확하게 표현, 코드의 가독성 향상
-//description : 멤버 변수. 각 상태의 설명
-//getDescription 메서드 : 열거 상수에 대응하는 한글 설명

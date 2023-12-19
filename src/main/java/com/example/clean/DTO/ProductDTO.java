@@ -73,19 +73,7 @@ public class ProductDTO {
   private LocalDateTime reDate;
 
   private LocalDateTime modDate;
-  
-  
-  //구매 부분
-  //회원 구매수량
-  //private Integer productNum;
-
-  //합계 = 판매가 * 구매수량
-  //private Integer productTotal;
-
 
 }
-
-
-//숫자의 경우 Integer로 작성해야 빈칸에 "0"이 안나옴
 
 

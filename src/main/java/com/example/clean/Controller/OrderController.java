@@ -17,10 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
-//Controller : 클라이언트로부터 전달된 요청을 처리하고 응답을 생성하는 역할
-//DTO를 통해 클라이언트로부터 전달된 데이터를 받거나, 비즈니스 로직에 필요한 데이터를 DTO에 담아 비즈니스 로직을 호출
-//비즈니스 로직의 결과를 다시 DTO에 담아 클라이언트에게 응답
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +39,6 @@ public class OrderController {
 
 
     // 로그인한 사용자의 정보를 가져옴
-    //isAuthenticated : 사용자 인증(Authentication) 상태를 나타내는 불리언(Boolean) 값을 반환하는 메서드나 속성
     MemberDTO memberDTO = null;
     if (auth != null && auth.isAuthenticated()) {
       String userId = auth.getName();

@@ -21,14 +21,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
  //주문번호 찾기
  OrderEntity findByOrderId(Integer oderId);
 
- // 회원 찾기
- List<OrderEntity> findAllByUserEntity(UserEntity userEntity);
-
  // 상품 찾기
  List<OrderEntity> findAllByProductEntity(ProductEntity productEntity);
-
- // 주문- 회원 및 주문-상품 관계에서 주문 찾기
- OrderEntity findByUserEntityAndProductEntity(UserEntity userEntity, ProductEntity productEntity);
 
  //해당 유저의 구매 이력을 페이징 정보에 맞게 조회
  @Query("select o from OrderEntity o " + "where o.userEntity.email = :email " + "order by o.reDate desc")

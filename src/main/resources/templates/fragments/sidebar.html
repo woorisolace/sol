@@ -28,6 +28,10 @@
                 <li><a href="/productlist/LIVING">LIVING</a></li>
                 <li><a href="/productlist/KITCHEN">KITCHEN</a></li>
                 <li><a href="/productlist/BATHROOM">BATHROOM</a></li>
+                <!--인증처리된 사용자만 접근가능-->
+                <li sec:authorize="isAuthenticated()">
+                  <a href="/productlist/MEMBERSALE">SALE</a>
+                </li>
               </ul>
             </li>
             <li>

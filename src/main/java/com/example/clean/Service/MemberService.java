@@ -28,7 +28,6 @@ public class MemberService implements UserDetailsService {
     //멤버 등록
     public void saveMember(MemberDTO memberDTO) throws Exception {
         //DTO와 Entity가 매치가 되지 않아 modelmapper는 사용 못함
-        //MemberEntity memberEntity = modelMapper.map(memberDTO, MemberEntity.class);
         String password = passwordEncoder.encode(memberDTO.getPassword());
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(memberDTO.getEmail());

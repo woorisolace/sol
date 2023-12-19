@@ -39,16 +39,6 @@ public class UserService extends DefaultOAuth2UserService {
             // kakao는 kakao_account 내에 email이 존재함.
             email = ((Map<String, Object>) attributes.get("kakao_account")).get("email").toString();
         }
-        /*
-        else if("google".equals(oauthType.toLowerCase())) {
-
-            email = attributes.get("email").toString();
-        }
-        else if("naver".equals(oauthType.toLowerCase())) {
-            // naver는 response 내에 email이 존재함.
-            email = ((Map<String, Object>) attributes.get("response")).get("email").toString();
-        }
-        */
 
         // User 존재여부 확인 및 없으면 생성
         if(getUserByEmailAndOAuthType(email, oauthType) == null) {

@@ -42,15 +42,3 @@ public class ImageEntity extends BaseEntity {
   }
 
 }
-
-
-/*
-enum을 사용하지 않고 이미지타입 분류 하는 방법
-ImageEntity imageEntity = new ImageEntity();
-imageEntity.setImageType(0); // 대표이미지
-
-
-변수명에 "-" 가능한 사용하지 말 것!
-
- */
-

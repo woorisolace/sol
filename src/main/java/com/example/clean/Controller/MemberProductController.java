@@ -3,6 +3,7 @@ package com.example.clean.Controller;
 import com.example.clean.Constant.CategoryTypeRole;
 import com.example.clean.Constant.SellStateRole;
 import com.example.clean.DTO.ProductDTO;
+import com.example.clean.Entity.ProductEntity;
 import com.example.clean.Repository.ProductRepository;
 import com.example.clean.Service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -33,10 +35,11 @@ public class MemberProductController {
   @Value("${imgUploadLocation}")
   public String folder;
 
+  private final ProductRepository productRepository;
   private final ProductService productService;
 
+
   // 제품 상세페이지
-  //@PathVariable : URL 경로에서 변수 값을 추출하는 데 사용
   @GetMapping("/product/{productId}")
   public String memProDetail(@PathVariable Integer productId, Model model, HttpServletRequest request) throws Exception {
 
@@ -46,7 +49,9 @@ public class MemberProductController {
 
 
     ProductDTO productDTO = productService.findOne(productId);
+    List<ProductEntity> relatedProducts = productRepository.findRelatedProductsByCategoryTypeRole(productId, productDTO.getCategoryTypeRole());
 
+    model.addAttribute("relatedProducts",relatedProducts);
     model.addAttribute("productDTO", productDTO);
     model.addAttribute("sellState", SellStateRole.values());
     model.addAttribute("categoryType", CategoryTypeRole.values());
@@ -59,7 +64,6 @@ public class MemberProductController {
 
     return "/product/productdetail";
   }
-
 
 
   //회원 제품 목록 - (카테고리별로 진열)

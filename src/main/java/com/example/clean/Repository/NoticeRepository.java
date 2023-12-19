@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Integer> {
-//    @Query(value = "SELECT n FROM notice n WHERE n.adminidnoticeid = :adminidnoticeid",
-//    nativeQuery = true)
-//    List<NoticeEntity> findByAdminid(Integer adminidnoticeid);
+
 }

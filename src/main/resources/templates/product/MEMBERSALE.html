@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <head>
@@ -30,11 +31,11 @@
                         <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
                             <a href="/productlist/BATHROOM">BATHROOM</a>
                         </li>
-                        <!--
-                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
-                            <a href="/productlist/MEMBERSALE">MEMBERSALE</a>
+                        <!--인증처리된 사용자만 접근가능-->
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}"
+                            sec:authorize="isAuthenticated()">
+                            <a href="/productlist/MEMBERSALE">SALE</a>
                         </li>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -45,7 +46,8 @@
                 <div class="shop-page-wrap margin-none">
                     <div class="shop-top-bar shop-top-bar-responsive">
                         <div class="show-wrap" data-aos="fade-up" data-aos-delay="200">
-                            Total<b><span th:text="${livingProductsCount != null ? livingProductsCount : 0}">00</span></b>
+                            <input type="hidden" name="categoryTypeRole" th:value="${categoryTypeRole}">
+                            Total <b><span th:text="${totalElements}">0</span></b> <!-- 전체 상품 수 -->
                         </div>
                         <div class="sorting-filter-wrap">
                             <div class="shop-sorting-area">
@@ -70,14 +72,6 @@
                                                  th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs[0]?.imageFile}|}"
                                                  width="600" height="350">
                                         </a>
-<!--                                        <div class="product-action-wrap">-->
-<!--                                            <button title="Add To Cart">-->
-<!--                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />-->
-<!--                                            </button>-->
-<!--                                            <button title="Wishlist">-->
-<!--                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />-->
-<!--                                            </button>-->
-<!--                                        </div>-->
                                     </div>
                                     <div class="product-content text-center">
                                         <h3>
@@ -94,41 +88,36 @@
                             <!-- 반복문 끝 -->
                         </div>
                     </div>
-
                     <!-- 페이지 번호 추가 -->
                     <div class="pagination-style text-center mt-30">
                         <ul>
                             <li th:unless="${startPage == 1}">
-                                <a th:href="@{/salelist(type=${type}, keyword=${keyword}, page=1)}">처음</a>
+                                <a th:href="@{/productlist/MEMBERSALE(page=1)}">처음</a>
                             </li>
                             <li th:unless="${currentPage == 1}">
-                                <a th:href="@{/salelist(type=${type}, keyword=${keyword}, page=${prevPage})}">&lt;</a>
+                                <a th:href="@{/productlist/MEMBERSALE(page=${prevPage})}">&lt;</a>
                             </li>
 
-                            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                                <li th:unless="${currentPage == page}"> <!-- 다른 페이지 -->
-                                    <a th:href="@{/salelist(type=${type}, keyword=${keyword}, page=${page})}">[[${page}]]</a>
-                                </li>
-                                <li th:if="${currentPage == page}"> <!-- 활성화(현재 위치) -->
-                                    <a href="#">[[${page}]]</a>
-                                </li>
-                            </span>
+                            <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                                <a th:if="${currentPage != page}" th:href="@{/productlist/MEMBERSALE(page=${page})}">[[${page}]]</a>
+                                <a th:if="${currentPage == page}" href="#" class="active">[[${page}]]</a>
+                            </li>
 
                             <li th:unless="${currentPage == lastPage}">
-                                <a th:href="@{/salelist(type=${type}, keyword=${keyword}, page=${nextPage})}">&gt;</a>
+                                <a th:href="@{/productlist/MEMBERSALE(page=${nextPage})}">&gt;</a>
                             </li>
                             <li th:unless="${endPage == lastPage}">
-                                <a th:href="@{/salelist(type=${type}, keyword=${keyword}, page=${lastPage})}">끝</a>
+                                <a th:href="@{/productlist/MEMBERSALE(page=${lastPage})}">끝</a>
                             </li>
                         </ul>
                     </div>
-                    <!-- 페이지 번호 추가 끝 ({category}는 각각의 카테고리에 따라 "living", "kitchen", "restroom", "sale" 등으로 대체) -->
+                    <!-- 페이지 번호 추가 끝 -->
                 </div>
             </div>
         </div>
         <!-- Main JS -->
         <script src="assets/js/main.js"></script>
-        </div>
     </div>
+</div>
 </body>
 </html>

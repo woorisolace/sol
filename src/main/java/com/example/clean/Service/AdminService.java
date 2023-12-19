@@ -85,33 +85,13 @@ public class AdminService {
 
   //리스트 출력을 위해 이미지 불러오기
   private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) {
-    return orderEntity.getProductEntity().getProductImages().stream()
-        .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
-        .collect(Collectors.toList());
+    if(orderEntity != null && orderEntity.getProductEntity() != null && orderEntity.getProductEntity().getProductImages() != null){
+      return orderEntity.getProductEntity().getProductImages().stream()
+              .map(imageEntity -> modelMapper.map(imageEntity, ImageDTO.class))
+              .collect(Collectors.toList());
+    }
+    return Collections.emptyList();
   }
-
-
-//  //각 상품에 이미지테이블 전달
-//  private List<ImageDTO> getImagesForOrderEntity(OrderEntity orderEntity) throws Exception {
-//    if (orderEntity != null && !orderEntity.getProductEntity().getProductImages().isEmpty()) {
-//      List<ImageDTO> imageDTOs = new ArrayList<>();     //변환된 ImageDTO 객체를 담을 imageDTOs 리스트를 초기화
-//
-//      for (ImageEntity imageEntity : orderEntity.getProductEntity().getProductImages()) {
-//        ImageDTO imageDTO = modelMapper.map(imageEntity, ImageDTO.class);
-//
-//        // S3에서 이미지 URL 가져오기
-//        String imageUrl = s3Uploader.getImageUrl(imageEntity.getImageFile());
-//        imageDTO.setImageFile(imageEntity.getImageFile());    //가져올 이미지 파일 이름이나 경로를 저장 또는 imageUrl
-//
-//        imageDTOs.add(imageDTO);
-//      }
-//
-//      return imageDTOs;
-//    }
-//
-//    // 이미지가 없는 경우 빈 목록 반환
-//    return Collections.emptyList();
-//  }
 
 
   //관리자-회원구매내역

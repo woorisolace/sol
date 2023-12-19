@@ -18,9 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
 
-//  //파일을 저장할 경로, 파일명, 데이터값
-//  @Value("${imgLocation}")
-//  private String imgLocation;
+  private final S3Uploader s3Uploader;
 
   //파일이 저장될 경로
   @Value("${imgUploadLocation}")
@@ -52,5 +50,6 @@ public class FileService {
     if (deleteFile.exists()) {
       deleteFile.delete();
     }
+    s3Uploader.deleteFile(fileName, imgLocation);
   }
 }

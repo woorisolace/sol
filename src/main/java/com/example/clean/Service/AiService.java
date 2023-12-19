@@ -98,13 +98,12 @@ public class AiService {
     }
 
 
-
     //상품개별조회
-    public ProductDTO findOne(Integer productId) throws Exception {     //개별 조회(상세)
+    public ProductDTO findOne(Integer productId) throws Exception {
         modelMapper.typeMap(ProductEntity.class, ProductDTO.class)
                 .addMappings(mapper -> mapper.skip(ProductDTO::setImages));
 
-        Optional<ProductEntity> data = productRepository.findById(productId); // in(int)->out(Optional<entity>)
+        Optional<ProductEntity> data = productRepository.findById(productId);
         ProductEntity entity = data.get();
 
         //변환

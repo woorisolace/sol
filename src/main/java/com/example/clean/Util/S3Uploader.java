@@ -63,13 +63,11 @@ public class S3Uploader {
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
         String newFileName = UUID.randomUUID() + uploadFile.getName();
-        //String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();
         String fileName = dirName + "/" + newFileName;          // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName);    // s3로 업로드
         removeNewFile(uploadFile);
 
         return newFileName;
-        //return uploadImageUrl;
     }
 
     // S3로 업로드
@@ -81,7 +79,6 @@ public class S3Uploader {
 
     // 이미지 URL 가져오기
     public String getImageUrl(String dirName, String fileName) {
-        //String key = fileName;
         String key = dirName + "/" + fileName;  // dirName 추가
         return amazonS3Client.getUrl(bucket, key).toString();
     }
@@ -98,7 +95,6 @@ public class S3Uploader {
 
 
     private Optional<File> convert(MultipartFile multipartFile) throws IOException{
-        //System.out.println(System.getProperty("user.dir"));
         File convertFile = new File(System.getProperty("user.dir") + "/" + multipartFile.getOriginalFilename());
         // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
         if (convertFile.createNewFile()) {

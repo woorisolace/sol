@@ -32,12 +32,8 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         if (session != null) {
             String email = authentication.getName();
             String oauthType = "";
-            //session.setAttribute("user", email);
             userService.userIdToSession(session, email, oauthType);
         }
-
-        //성공시 메인 페이지로 이동
-        //super.setDefaultTargetUrl("/");
 
         // 세션에 저장된 원래 페이지 URL을 가져옴
         String originalRequestUrl = (String) session.getAttribute("originalRequestUrl");

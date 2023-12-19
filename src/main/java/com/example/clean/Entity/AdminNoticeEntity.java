@@ -12,17 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Log4j2
-//@ToString
 @Builder
 @Table(name="adminnotice")
 @SequenceGenerator(
-        name = "adminnotice_SEQ",
-        sequenceName = "adminnotice_SEQ",
-        initialValue = 1,
-        allocationSize = 1
+    name = "adminnotice_SEQ",
+    sequenceName = "adminnotice_SEQ",
+    initialValue = 1,
+    allocationSize = 1
 )
 public class AdminNoticeEntity extends BaseEntity{
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adminnotice_SEQ")
@@ -44,7 +42,5 @@ public class AdminNoticeEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(name="adminnotice")
     private AdminNoticeRole adminNoticeRole;
-
-
 
 }

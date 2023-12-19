@@ -23,6 +23,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addResourceLocations(uploadPath);    //자원의 위치
   }
 
-  //images/item, images/member....
-
 }

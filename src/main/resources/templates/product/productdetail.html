@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <head>
@@ -30,11 +31,11 @@
                         <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
                             <a href="/productlist/BATHROOM">BATHROOM</a>
                         </li>
-                        <!--
-                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
-                            <a href="/productlist/MEMBERSALE">MEMBERSALE</a>
+                        <!--인증처리된 사용자만 접근가능-->
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}"
+                            sec:authorize="isAuthenticated()">
+                            <a href="/productlist/MEMBERSALE">SALE</a>
                         </li>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -50,35 +51,35 @@
                     <div class="row">
                         <!-- 대표 이미지 섹션 수정 -->
                         <div class="col-lg-7">
-                            <div class="product-details-tab" data-aos="fade-up" data-aos-delay="300">
-                                <div class="pro-dec-big-img-slider">
-                                    <div th:each="image, iterStat : ${productDTO.imageDTOs}">
-                                        <div class="easyzoom-style">
+                            <div class="product-details-tab aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                                <div class="container justify-content-center">
+                                    <div class="pro-dec-big-img-slider">
+                                        <!-- 큰 이미지-->
+                                        <div class="easyzoom-style" th:if="${productDTO.imageDTOs[0] != null}">
                                             <div class="easyzoom easyzoom--overlay">
-                                                <a th:href="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs}(imageDTOs=${image.imageFile})|">
-                                                    <img th:if="${productDTO.imageDTOs[0] != null}"
-                                                         th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|"
-                                                         onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="400" height="auto">
-                                                </a>
+                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|"
+                                                     style="width: 530px; height: 530px; object-fit: cover;">
+                                            </div>
+                                        </div>
+                                        <div class="easyzoom-style" th:if="${productDTO.imageDTOs[1] != null}">
+                                            <div class="easyzoom easyzoom--overlay">
+                                                <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[1].imageFile}|"
+                                                     style="width: 530px; height: 530px; object-fit: cover;">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="product-dec-slider-small product-dec-small-style1"> <!-- 서브 이미지 -->
-                                    <!-- iterStat : 반복문의 상태를 나타내는 변수 (현재 반복이 몇 번째인지 등의 정보를 제공) / 3번째이미지가 아닌 것만 진열 (상세이미지 진열 제외) -->
-                                    <!-- ${iterStat.index == 0}는 현재 반복이 첫 번째인 경우에만 'active' 클래스를 추가 -->
-                                    <!-- {filename} 부분에는 image.imageFile의 값 -->
-                                    <div th:each="image, iterStat : ${productDTO.imageDTOs}"
-                                         th:if="${iterStat.index != 2}"
-                                         class="product-dec-small" th:classappend="${iterStat.index == 0} ? 'active'">
-                                        <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/@{${filename}(filename=${image.imageFile})}|"
-                                             onerror="this.onerror=null; this.src='../assets/images/product/null.png';" width="150" height="150">
+                                <div class="product-dec-slider-small product-dec-small-style1">
+                                    <!-- 작은 이미지-->
+                                    <div class="product-dec-small active" th:if="${productDTO.imageDTOs[0] != null}">
+                                        <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[0].imageFile}|">
+                                    </div>
+                                    <div class="product-dec-small" th:if="${productDTO.imageDTOs[1] != null}">
+                                        <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${productDTO.imageDTOs[1].imageFile}|">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <!--상품설명-->
                         <div class="col-lg-5">
@@ -212,17 +213,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- 관심상품
-                            <div class="product-details-wishlist-compare" data-aos="fade-up" data-aos-delay="300">
-                                <div class="product-details-wishlist">
-                                    <a href="#">
-                                        <img class="injectable" src="assets/images/icon-img/heart-2.svg" alt="">
-                                        Add to wishlist
-                                    </a>
-                                </div>
-                            </div>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -362,7 +352,6 @@
             </div>
         </div>
     </div>
-
     <!-- 연관상품 시작 -->
     <div class="related-product section-padding-lr-1 pb-100">
         <div class="container-fluid">
@@ -371,14 +360,19 @@
             </div>
             <div class="related-product-active">
                 <!-- 반복문을 통해 상품 목록 생성 -->
-                <div th:each="product:${productDTOS}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75"
-                     th:if="${product.categoryTypeRole eq T(com.example.clean.Constant.CategoryTypeRole).SAME_CATEGORY}">
-                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="${product.delay}">
+                <div th:each="relatedProduct : ${relatedProducts}" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-75">
+                    <div th:if="${relatedProduct.categoryTypeRole == productDTO.categoryTypeRole}"
+                         class="product-wrap" data-aos="fade-up" data-aos-delay="${relatedProduct.delay}"> <!--th:if="${relatedProduct.categoryTypeRole == productDTO.categoryTypeRole}"-->
                         <div class="product-img img-zoom mb-4">
-                            <a th:href="@{/product/{productId}(productId=${product.productId})}">
-                                <!-- 대표 이미지를 표시하도록 수정 -->
-                                <img class="default-img" th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs?.isEmpty() ? 'default-image.jpg' : product.imageDTOs[0]?.imageFile}|" width="600" height="300">
-                            </a>
+                            <div style="box-sizing: border-box; margin: 15px; padding: 5px; text-align: center;">
+                                <a th:href="@{/product/{productId}(productId=${relatedProduct.productId})}">
+                                    <!-- 대표 이미지를 표시하도록 수정 -->
+                                    <img class="default-img"
+                                         th:if="${relatedProduct.productImages != null and relatedProduct.productImages.size() > 0}"
+                                         th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${relatedProduct.productImages[0]?.getImageFile()}|}"
+                                         width="600" height="auto" th:alt="${relatedProduct.productName}" />
+                                </a>
+                            </div>
                             <div class="product-action-wrap">
                                 <button title="Add To Cart">
                                     <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt=""/>
@@ -390,12 +384,10 @@
                         </div>
                         <div class="product-content text-center">
                             <h3>
-                                <!-- 상품 이름 표시 -->
-                                <a th:href="@{/product/{productId}(productId=${product.productId})}" th:text="${product.productName}" />
+                                <a th:href="@{/product/{productId}(productId=${relatedProduct.productId})}" th:text="${relatedProduct.productName}" />
                             </h3>
                             <div class="product-price">
-                                <!-- 가격을 적절한 방식으로 표시 -->
-                                <span th:text="${product.productPrice}" />
+                                <span th:text="${relatedProduct.productPrice}" />
                             </div>
                         </div>
                     </div>

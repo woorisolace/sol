@@ -63,7 +63,6 @@ public class MyInfoController {
   }
 
 
-
   //나의주문내역
   @GetMapping("/member_oderlist")
   public String myOrderList(Principal principal,
@@ -84,7 +83,7 @@ public class MyInfoController {
 
     orderDTOS.getTotalElements();   //총 주문수수
 
-   model.addAttribute("orderDTOS", orderDTOS);
+    model.addAttribute("orderDTOS", orderDTOS);
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -101,13 +100,6 @@ public class MyInfoController {
     return "/member/oder_list";
   }
 
-  /*
-  //나의주문상세
-  @GetMapping("/member_oderdetail")
-  public String myoderdetailForm() throws Exception {
-    return "/member/oder_detail";
-  }
-  */
 
   //나의리뷰목록
   @GetMapping("/myreviewlist")

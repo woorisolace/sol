@@ -27,14 +27,13 @@
                         <div class="cart-table-content">
                             <div class="table-content table-responsive">
                                 <table>
-                                    <input type="hidden" name="id" th:value="${id}">           <!-- 카트번호 -->
+                                    <input type="hidden" name="id" th:value="${id}">                   <!-- 카트번호 -->
                                     <input type="hidden" name="cartId" th:value="${cartId}">           <!-- 카트번호 -->
                                     <input type="hidden" name="productId" th:value="${productId}">     <!-- 상품번호 -->
                                     <input type="hidden" name="itemId" th:value="${itemId}">           <!-- 카트 상품 정보 -->
-                                    <input type="hidden" name="email" th:value="${email}">           <!-- 카트 상품 정보 -->
-                                    <input type="hidden" name="count" th:value="${count}">           <!-- 카트 상품 정보 -->
-                                    <input type="hidden" name="totalPrice" th:value="${totalPrice}">           <!-- 카트 상품 정보 -->
-
+                                    <input type="hidden" name="email" th:value="${email}">             <!-- 카트 상품 정보 -->
+                                    <input type="hidden" name="count" th:value="${count}">             <!-- 카트 상품 정보 -->
+                                    <input type="hidden" name="totalPrice" th:value="${totalPrice}">   <!-- 카트 상품 정보 -->
                                     <thead>
                                     <tr>
                                         <th class="width-thumbnail">대표이미지</th>
@@ -87,7 +86,6 @@
                                     <div class="cart-clear">
                                         <button th:onclick="|location.href='@{/productlist}'|">쇼핑하기</button>
                                         <a href="#">장바구니 비우기</a>
-                                        <!-- <a th:href="@{/cart/remove(cartId=${data.id})}"><button type="button">삭제</button></a> -->
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +96,6 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-12">
                     <div class="cart-calculate-discount-wrap mb-40">
-                        <!-- <h4>Calculate shipping </h4> -->
                         <div class="calculate-discount-content">
                         </div>
                     </div>
@@ -109,10 +106,8 @@
                             <div class="input-style">
                                 <div class="cart-shiping-update-wrapper">
                                     <div class="cart-shiping-update">
-                                        <!-- 좌측 여백 -->
                                     </div>
                                     <div class="cart-clear">
-                                        <!-- 좌측 여백 -->
                                     </div>
                                 </div>
                             </div>

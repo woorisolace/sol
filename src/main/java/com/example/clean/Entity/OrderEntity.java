@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-//@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -57,7 +56,6 @@ public class OrderEntity extends BaseEntity {
   private String paymentMethod;          //결제방법
 
   private Integer orderNum;                 //회원별 주문 목록 숫자
-
 
   // 이미지 리스트를 가져오는 메서드
   public List<ImageEntity> getProductImages() {

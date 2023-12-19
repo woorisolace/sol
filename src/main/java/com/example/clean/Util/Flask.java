@@ -100,12 +100,6 @@ public class Flask {
       System.out.println(name);
     }
 
-//    for(Object name:jsonArray) {
-//      System.out.println(name);
-//    }
-//    FlaskResponseDTO dto = new FlaskResponseDTO();
-//    dto.setName(jsonobject.get("class"));
-
     //S3에 파일 전송
     File dataFile = new File(outputFilePath);
     s3Uploader.AIResultS3(dataFile, imgUploadLocation+"/result.jpg");

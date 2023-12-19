@@ -19,7 +19,6 @@ import java.util.List;
 
 @Repository
 public interface AdminNoticeRepository extends JpaRepository<AdminNoticeEntity, Integer> {
-    //오름차순(ASC) , 내림차순(DESC)
 
     @Query("SELECT a FROM AdminNoticeEntity a WHERE a.admintitle like %:admintitle% order by a.adminnoticeid ASC ")
     List<AdminNoticeEntity> findSearch(String admintitle);
@@ -41,6 +40,7 @@ public interface AdminNoticeRepository extends JpaRepository<AdminNoticeEntity, 
         @Param("adminnotice") String adminnotice,
         Pageable pageable
     );
+
     @Query("SELECT MAX(a.adminnoticeid) FROM AdminNoticeEntity a WHERE a.adminnoticeid < :currentNoticeId")
     Integer findPreviousNoticeId(@Param("currentNoticeId") Integer currentNoticeId);
 

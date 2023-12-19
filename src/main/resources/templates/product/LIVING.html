@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <head>
@@ -30,11 +31,11 @@
                         <li th:classappend="${#httpServletRequest.requestURI == '/productlist/BATHROOM' ? 'active' : ''}">
                             <a href="/productlist/BATHROOM">BATHROOM</a>
                         </li>
-                        <!--
-                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}">
-                            <a href="/productlist/MEMBERSALE">MEMBERSALE</a>
+                        <!--인증처리된 사용자만 접근가능-->
+                        <li th:classappend="${#httpServletRequest.requestURI == '/productlist/MEMBERSALE' ? 'active' : ''}"
+                            sec:authorize="isAuthenticated()">
+                            <a href="/productlist/MEMBERSALE">SALE</a>
                         </li>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -71,14 +72,6 @@
                                                  th:src="@{|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${product.imageDTOs[0]?.imageFile}|}"
                                                  width="600" height="350">
                                         </a>
-                                        <!--                                        <div class="product-action-wrap">-->
-                                        <!--                                            <button title="Add To Cart">-->
-                                        <!--                                                <img class="injectable" src="assets/images/icon-img/bag-2.svg" alt="" />-->
-                                        <!--                                            </button>-->
-                                        <!--                                            <button title="Wishlist">-->
-                                        <!--                                                <img class="injectable" src="assets/images/icon-img/heart.svg" alt="" />-->
-                                        <!--                                            </button>-->
-                                        <!--                                        </div>-->
                                     </div>
                                     <div class="product-content text-center">
                                         <h3>
@@ -93,7 +86,6 @@
                             <!-- 반복문 끝 -->
                         </div>
                     </div>
-
                     <!-- 페이지 번호 추가 -->
                     <div class="pagination-style text-center mt-30">
                         <ul>

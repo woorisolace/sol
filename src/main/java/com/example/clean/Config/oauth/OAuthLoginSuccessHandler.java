@@ -18,6 +18,7 @@ import java.util.Map;
 
 //소셜로그인 성공시 처리하는 핸들러
 //외부에서 성공한 이메이을 섹션에 등록
+
 @Slf4j
 @Component
 public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -57,7 +58,6 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         HttpSession session = request.getSession();
 
         if(session != null) {
-            //session.setAttribute("user", email);
             userService.userIdToSession(session, email, oauthType);
         }
 

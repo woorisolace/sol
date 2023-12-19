@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -45,9 +44,3 @@ public class OrderDTO {
   private String paymentMethod;             //결제방법
 
 }
-
-//이미지 관리 DTO
-//private List<ImageDTO> imageDTOs;
-
-//이미지파일 처리
-//private List<MultipartFile> images;

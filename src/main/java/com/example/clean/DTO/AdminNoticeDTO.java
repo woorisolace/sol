@@ -1,6 +1,5 @@
 package com.example.clean.DTO;
 
-
 import com.example.clean.Constant.AdminNoticeRole;
 import lombok.*;
 
@@ -8,15 +7,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
-
-
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminNoticeDTO {
-
 
     private Integer adminnoticeid;      //번호
 
@@ -36,5 +32,7 @@ public class AdminNoticeDTO {
     private AdminNoticeRole adminNoticeRole;
 
     private LocalDateTime reDate;               // 등록날짜
+
     private LocalDateTime modDate;             // 수정날짜
+
 }

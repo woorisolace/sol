@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
 @Builder
 @Table(name = "qna")
 @SequenceGenerator(

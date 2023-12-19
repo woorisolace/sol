@@ -38,7 +38,6 @@ public class AdminNoticeController {
 
     Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.findAll("","","",pageable);
 
-
     //페이지 정보
     int blockLimit = 10;
     //시작페이지
@@ -51,7 +50,6 @@ public class AdminNoticeController {
     int currentPage = noticeDTOn.getNumber()+1;    //현재페이지
     int nextPage = noticeDTOn.getNumber()+2;       //다음페이지
     int lastPage = noticeDTOn.getTotalPages();         //마지막페이지
-
 
     model.addAttribute("startPage",startPage);
     model.addAttribute("endPage",endPage);
@@ -75,7 +73,6 @@ public class AdminNoticeController {
                                @PageableDefault(page = 1) Pageable pageable,
                                Model model) throws Exception {
 
-    //    Page<AdminNoticeDTO> noticeDTOn = adminNoticeService.list(pageable);
     //열거형의 한글 설명을 리스트로 가져오기
     List<String> adminnoticeOptions = Arrays.stream(AdminNoticeRole.values())
         .map(AdminNoticeRole::getDescription)
@@ -98,7 +95,6 @@ public class AdminNoticeController {
     int currentPage = noticeDTOn.getNumber()+1;    //현재페이지
     int nextPage = noticeDTOn.getNumber()+2;       //다음페이지
     int lastPage = noticeDTOn.getTotalPages();         //마지막페이지
-
 
     model.addAttribute("startPage",startPage);
     model.addAttribute("endPage",endPage);

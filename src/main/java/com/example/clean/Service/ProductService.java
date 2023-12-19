@@ -97,6 +97,17 @@ public class ProductService {
           CategoryTypeRole.valueOf(categoryTypeRole), SellStateRole.SELL, pageable);
     }
 
+    // "ALL"이면 모든 카테고리의 상품을 조회하도록 처리
+    if ("ALL".equalsIgnoreCase(categoryTypeRole)) {
+      // MEMBERSALE인 경우 제외하고 조회
+      productEntityPage = productRepository.findByCategoryTypeRoleNotAndSellStateRole(
+          CategoryTypeRole.MEMBERSALE, SellStateRole.SELL, pageable);
+    } else {
+      // 다른 카테고리의 경우 해당 카테고리의 상품을 조회
+      productEntityPage = productRepository.findProductEntityByCategoryTypeRoleAndSellState(
+          CategoryTypeRole.valueOf(categoryTypeRole), SellStateRole.SELL, pageable);
+    }
+
     // 상품정보 및 이미지들을 Entity에서 DTO로 복수전달
     List<ProductDTO> productDTOList = new ArrayList<>();
 
@@ -143,10 +154,8 @@ public class ProductService {
 
         imageDTOs.add(imageDTO);
       }
-
       return imageDTOs;
     }
-
     // 이미지가 없는 경우 빈 목록 반환
     return Collections.emptyList();
   }
@@ -186,7 +195,6 @@ public class ProductService {
     //ProductEntity data = modelMapper.map(productDTO, ProductEntity.class);
     ProductEntity productEntity = productRepository.save(modelMapper.map(productDTO, ProductEntity.class));
 
-
     int index = 0;
     for (MultipartFile file : imageFiles) {
       ImageDTO imgDTO = dataDTO.get(index);
@@ -218,13 +226,10 @@ public class ProductService {
       fileService.deleteFile(data.getImageFile());
     }
 
-    //S3 삭제
-    //s3Uploader.deleteFile(productEntity.getProductImages(),imgUploadLocation);
-    // 상품 삭제
+    //S3 + 상품 삭제
     productRepository.deleteById(productId);
 
   }
-
 
 
   //전체 상품 목록 조회 (검색 포함, 페이징 처리) -> 관리자
@@ -287,7 +292,6 @@ public class ProductService {
     }
     return new PageImpl<>(productDTOList, pageable, productEntityPage.getTotalElements());
   }
-
 
 
 }

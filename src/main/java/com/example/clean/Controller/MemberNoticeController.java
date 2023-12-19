@@ -54,10 +54,10 @@ public class MemberNoticeController {
     int endPage = Math.min(startPage + blockLimit - 1, adminNoticeDTOS.getTotalPages());
 
     // 페이지 버튼 정보 (HTML에서 작성도 가능, [첫 이전, 페이지 번호, 다음, 끝]
-    int prevPage = adminNoticeDTOS.getNumber();         // 이전 페이지
+    int prevPage = adminNoticeDTOS.getNumber();           // 이전 페이지
     int currentPage = adminNoticeDTOS.getNumber() + 1;    // 현재 페이지
     int nextPage = adminNoticeDTOS.getNumber() + 2;       // 다음 페이지
-    int lastPage = adminNoticeDTOS.getTotalPages();         // 마지막 페이지
+    int lastPage = adminNoticeDTOS.getTotalPages();       // 마지막 페이지
 
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -77,12 +77,9 @@ public class MemberNoticeController {
   }
 
 
-
   @GetMapping("/searchNotices")
-  //RequestParam(html에서 전달받을 변수)(value="변수명", defaultvalue="값이 없을 때 대체할 값"
   public String searchAdminNotices(@RequestParam(name = "admintitle", defaultValue = "")String admintitle,
                                    Model model)throws Exception{
-
     //Service 처리
     List<AdminNoticeDTO> noticeDTOS = adminNoticeService.search(admintitle);
 
@@ -92,6 +89,7 @@ public class MemberNoticeController {
     return "forward:/notice_list";
 
   }
+
 
   //회원공지사항 상세
   @GetMapping("/notice_detail")

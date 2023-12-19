@@ -25,11 +25,9 @@
       <div class="container">
         <div class="notice-info-wrap">
           <form th:action="@{'/admin_product_update'}" method="post" enctype="multipart/form-data" th:object="${productDTO}">
-
             <input type="hidden" name="productId" th:field="*{productId}">
             <input type="hidden" th:field="*{modDate}" name="modDate">
             <table class="table notice-table">
-
               <tbody>
               <tr>
                 <th scope="row" class="notice-padding" id="productName">상품명</th>
@@ -48,15 +46,14 @@
                 <td class="notice-info">
                   <div class="sidebar-widget update">
                     <div class="sidebar-archive-wrap">
-                      <!--수정-->
                       <select name="categoryTypeRole" >
                         <option th:each="state:${categoryType}"
+                                th:unless="${state.name() == 'ALL'}"
                                 th:value="${state.name()}"
                                 th:text="${state.getDescription()}"
                                 th:selected="${state == categoryTypeRole}">
                         </option>
                       </select>
-                      <!--수정 끝-->
                     </div>
                   </div>
                 </td>
@@ -79,14 +76,12 @@
                   <input type="number" name="productCnt" th:field="*{productCnt}">
                 </td>
               </tr>
-
               <!-- 판매상태 -->
               <tr>
                 <th scope="row" class="notice-padding" id="SellStateRole">판매상태</th>
                 <td class="notice-info">
                   <div class="sidebar-widget update">
                     <div class="sidebar-archive-wrap">
-                      <!---수정-->
                       <select id="sellState" name="sellStateRole"> <!--th:field=*{sellStateRole}>-->
                         <!-- 열거형 값들을 반복하며 옵션을 생성 -->
                         <option th:each="state : ${sellState}"
@@ -94,19 +89,16 @@
                                 th:text="${state.getDescription()}"
                                 th:selected="${state == sellStateRole}"></option>
                       </select>
-                      <!--수정끝-->
                     </div>
                   </div>
                 </td>
               </tr>
-
               <tr>
                 <th scope="row" class="notice-padding" id="productDetail">상품정보</th>
                 <td class="notice-info">
                   <textarea rows="7" name="productDetail" th:field="*{productDetail}"></textarea>
                 </td>
               </tr>
-
               <!-- 대표 이미지 -->
               <tr>
                 <th scope="row" class="notice-padding" id="imageDTOs[0]">대표이미지</th>
@@ -118,7 +110,6 @@
                        th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[0].imageFile}|">
                 </td>
               </tr>
-
               <!-- 서브 이미지 -->
               <tr>
                 <th scope="row" class="notice-padding" id="imageDTOs[0]">서브이미지</th>
@@ -130,7 +121,6 @@
                        th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[1].imageFile}|">
                 </td>
               </tr>
-
               <!-- 상세 이미지 -->
               <tr>
                 <th scope="row" class="notice-padding" id="imageDTOs[2]">상세이미지</th>
@@ -142,29 +132,27 @@
                        th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${imageDTOs[2].imageFile}|">
                 </td>
               </tr>
-
               <script>
-                  // 미리보기 이미지 업데이트 함수
-                  function previewImage(input, imgId) {
-                      var preview = document.getElementById(imgId);
-                      var file = input.files[0];
-                      var reader = new FileReader();
+                // 미리보기 이미지 업데이트 함수
+                function previewImage(input, imgId) {
+                  var preview = document.getElementById(imgId);
+                  var file = input.files[0];
+                  var reader = new FileReader();
 
-                      reader.onloadend = function () {
-                          preview.src = reader.result;
-                      };
+                  reader.onloadend = function () {
+                    preview.src = reader.result;
+                  };
 
-                      if (file) {
-                          reader.readAsDataURL(file);
-                      } else {
-                          preview.src = "";
-                      }
+                  if (file) {
+                    reader.readAsDataURL(file);
+                  } else {
+                    preview.src = "";
                   }
+                }
               </script>
 
               </tbody>
             </table>
-
             <div class="row">
               <div class="col d-flex justify-content-center">
                 <div class="notice-button-container">

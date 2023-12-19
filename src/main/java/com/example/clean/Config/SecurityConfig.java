@@ -43,19 +43,17 @@ public class SecurityConfig {
     private final CustomLoginFailureHandler customLoginFailureHandler;
     private final LogoutSuccessHandler logoutSuccessHandler;
 
-    //1. 보안인증의 암호는 암호화로 처리를 해야한다.
-    //암호는 복원이 불가능하다.
+    //보안인증의 암호는 암호화로 처리
     @Bean
     //사용자가 작성한 변수나 클래스를 스프링부트에 등록
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); //복호화 불가능
     }
 
-    //3. 인가가 필요한 리소스 설정하기(가장 중요)
+    //인가가 필요한 리소스 설정하기
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //antMatchers("/test")는 정확한 /test URL만 일치.
-        //mvcMatchers("/test")는 /test, /test/, /test.html, /test.xyz 등 다양하게 일치.
+
         http.authorizeHttpRequests((auth) -> {
 
             //모두 이용 가능
@@ -80,6 +78,7 @@ public class SecurityConfig {
             .failureHandler(customLoginFailureHandler);
 
         http.csrf().disable();//페이지 변조방지를 사용안함
+
         //로그아웃에 대한 설정
         //logoutRequestMatcher(로그아웃 후 처리할 위치)
         //logoutSuccessUrl(로그아웃시 이동할 페이지)

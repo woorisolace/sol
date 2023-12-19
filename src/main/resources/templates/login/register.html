@@ -26,12 +26,12 @@
                     alert("비밀번호가 일치하지 않습니다.");
                     return false;
                 }
-                return true;
+                // 가정: 회원가입이 성공한 경우를 나타내는 변수 success 가 true 일 때
+                var success = true;
             }
         </script>
     </th:block>
     <!--서버로 부터 메세지 처리 스크립트 끝-->
-
     <!-- 카카오 우편번호 API script-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -152,18 +152,16 @@
                             });
                         </script>
                         <!-- 비밀번호 재확인 script 끝-->
-
                         <!-- 카카오 우편번호 API script 시작-->
                         <script>
                             function sample6_execDaumPostcode() {
                                 new daum.Postcode({
-                                    oncomplete: function(data) { //data는 사용자가 선택한 주소 정보를 담고 있는 객체이며, 상세 설명은 아래 목록에서 확인하실 수 있습니다.
-                                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                                        var addr = ''; // 주소 변수
-                                        var extraAddr = ''; // 참고항목 변수
+                                    oncomplete: function(data) {
+                                        //팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분
+                                        //각 주소의 노출 규칙에 따라 주소 조합
+                                        //내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기
+                                        var addr = '';          // 주소 변수
+                                        var extraAddr = '';     // 참고항목 변수
 
                                         //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                                         if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -203,30 +201,6 @@
                                 }).open();
                             }
                         </script>
-                        <!-- 카카오 우편번호 API script 끝-->
-                        <!--이용약관 들어가야함-->
-                        <!--table>
-                            <tbody>
-                            이용약관 들어가야함
-
-                            <div class="row">
-                                <h3 class="special-h3">전체 동의</h3>
-                                <div class="col-lg-12">
-                                    <div class="billing-info-wrap">
-                                        <div class="checkout-account">
-                                            <input class="checkout-toggle2" type="checkbox">
-                                            <span>이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다.</span>
-                                        </div>
-                                        <div class="checkout-account-toggle open-toggle2">
-                                            <label>[필수]이용약관 동의[자세히보기]</label>
-                                            <input class="checkout-toggle2" type="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </tbody>
-                        </table-->
-
                         <div class="row">       <!--회원가입 버튼-->
                             <div class="col-lg-12 text-center">
                                 <div class="notice-button-container justify-content-center">
