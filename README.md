@@ -36,26 +36,27 @@ AI를 활용하여 공간인식 + 공간안내 및 청소꿀팀, 청소용품 �
 
 ### ⚙ 개발환경
 1. Backend
-   * java
-   * SpringBoot
-   * Jpa
+   * Java, SpringBoot, Jpa
    
 2. Frontend
-     * Bootstrap
-     * HTML
-     * css
-     * Java Script
+     * Bootstrap, HTML, CSS, Java Script
 
 3. DataBase
-     * MariaDB
-     * redis
-     * MySQL
+     * MariaDB, redis, MySQL
    
 4. Cloud (AWS)
-     * EC2 - Tomcat, Flask, RDS, S3
+     * EC2 - Tomcat, Flask
+     * RDS
+     * S3
        
-   
-5. etc
+5. OS
+   * Linux
+
+6. AI
+    * Python, Colab, conda, LabeImg, Spyder
+  
+7. Tool
+    * IntelliJ, Junit5
    
    
 
