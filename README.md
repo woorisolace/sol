@@ -28,10 +28,21 @@ AI를 활용하여 공간인식 + 공간안내 및 청소꿀팀, 청소용품 �
    * Jpa
    
 2. Frontend
+     * Bootstrap
+     * HTML
+     * css
+     * Java Script
+
+3. DataBase
+     * MariaDB
+     * redis
+     * MySQL
    
-3. Cloud
+4. Cloud (AWS)
+     * EC2 - Tomcat, Flask, RDS, S3
+       
    
-4. etc
+5. etc
    
    
 
